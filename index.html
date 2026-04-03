@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Totem Works — Indie Game Studio</title>
+  <meta name="description" content="Totem Works is an indie game studio making original games with soul. Based in the USA. Est. 2024.">
+  <meta name="author" content="Totem Works, LLC">
+  <meta name="theme-color" content="#10121c">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zoneoutreal.github.io/thetotemworks/">
+  <meta property="og:title" content="Totem Works — Indie Game Studio">
+  <meta property="og:description" content="We make original games with soul. Based in the USA. Est. 2024.">
+  <meta property="og:site_name" content="Totem Works">
+
+  <!-- Favicon — matryoshka doll SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2310121c' rx='4'/><text x='4' y='26' font-size='24'>🪆</text></svg>">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* === DESIGN TOKENS === */
+    :root {
+      --ink:        #10121c;
+      --ink-mid:    #1a1d2e;
+      --ink-panel:  #1e2235;
+      --ink-lift:   #252840;
+      --orange:     #e98537;
+      --amber:      #f3a833;
+      --cream:      #f6e8e0;
+      --muted:      #8c78a5;
+      --teal:       #36c5f4;
+      --green:      #5ab552;
+      --red:        #ec273f;
+      --gold:       #dab163;
+
+      --font-pixel: 'Press Start 2P', monospace;
+      --font-mono:  'Space Mono', monospace;
+    }
+
+    /* === RESET & BASE === */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: var(--font-mono);
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+      /* Noise grain */
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.022;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* === NAV === */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 60px;
+      background: rgba(16, 18, 28, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(233, 133, 55, 0.15);
+    }
+
+    .nav-logo {
+      font-family: var(--font-pixel);
+      font-size: 0.65rem;
+      color: var(--orange);
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .nav-logo span { font-size: 1.1rem; }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      transition: color 0.2s;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .nav-links a:hover { color: var(--orange); }
+
+    /* === HERO === */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Pixel grid background */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(233,133,55,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(233,133,55,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-pixel);
+      font-size: 0.55rem;
+      color: var(--orange);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0.8;
+    }
+
+    .hero-doll {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      display: block;
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(233, 133, 55, 0.4));
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    .hero-title {
+      font-family: var(--font-pixel);
+      font-size: clamp(1.4rem, 5vw, 2.8rem);
+      color: var(--cream);
+      line-height: 1.4;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-title .highlight { color: var(--orange); }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-family: var(--font-pixel);
+      font-size: 0.5rem;
+      padding: 0.4em 0.9em;
+      border: 1px solid rgba(233, 133, 55, 0.3);
+      color: var(--muted);
+      border-radius: 2px;
+      letter-spacing: 0.1em;
+    }
+
+    /* === SECTION BASE === */
+    section {
+      padding: 6rem 2rem;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--font-pixel);
+      font-size: 0.5rem;
+      color: var(--orange);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(233, 133, 55, 0.2);
+    }
+
+    .section-title {
+      font-family: var(--font-pixel);
+      font-size: clamp(1rem, 3vw, 1.6rem);
+      color: var(--cream);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .section-body {
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.8;
+    }
+
+    /* === DIVIDER === */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(233,133,55,0.2), transparent);
+      margin: 0 2rem;
+    }
+
+    /* === GAMES SECTION === */
+    #games { background: var(--ink-mid); }
+
+    .games-grid {
+      margin-top: 3rem;
+      display: grid;
+      gap: 2rem;
+    }
+
+    .game-card {
+      background: var(--ink-panel);
+      border: 1px solid rgba(233, 133, 55, 0.15);
+      border-radius: 4px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .game-card:hover {
+      border-color: rgba(233, 133, 55, 0.5);
+      transform: translateY(-2px);
+    }
+
+    /* CSS art: factory scene */
+    .game-card-art {
+      background: var(--ink);
+      min-height: 240px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .factory-scene {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    /* Sky gradient */
+    .factory-scene::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, #0a0c14 0%, #10121c 60%, #1a1d2e 100%);
+    }
+
+    /* Stars */
+    .factory-scene::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 15% 20%, rgba(246,232,224,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 10%, rgba(246,232,224,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 25%, rgba(246,232,224,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 15%, rgba(246,232,224,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 30%, rgba(246,232,224,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 35%, rgba(246,232,224,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 8%, rgba(246,232,224,0.5) 0%, transparent 100%);
+    }
+
+    .bldg {
+      position: absolute;
+      bottom: 0;
+      background: var(--ink-panel);
+      border-top: 2px solid rgba(233, 133, 55, 0.3);
+    }
+
+    .bldg-1 { left: 10%; width: 18%; height: 55%; }
+    .bldg-2 { left: 28%; width: 14%; height: 75%; }
+    .bldg-3 { left: 42%; width: 22%; height: 50%; }
+    .bldg-4 { left: 64%; width: 12%; height: 65%; }
+    .bldg-5 { left: 76%; width: 18%; height: 45%; }
+
+    /* Chimney */
+    .chimney {
+      position: absolute;
+      top: -20%;
+      left: 30%;
+      width: 15%;
+      height: 20%;
+      background: var(--ink-lift);
+      border-top: 2px solid rgba(233, 133, 55, 0.2);
+    }
+
+    /* Smoke */
+    .smoke {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(140, 120, 165, 0.3);
+      animation: smoke-rise 3s ease-out infinite;
+    }
+
+    .smoke:nth-child(2) { animation-delay: 1s; left: 40%; }
+    .smoke:nth-child(3) { animation-delay: 2s; left: 60%; }
+
+    @keyframes smoke-rise {
+      0%   { transform: translate(-50%, 0) scale(0.5); opacity: 0.6; }
+      100% { transform: translate(-50%, -40px) scale(2);   opacity: 0; }
+    }
+
+    /* Beacon light */
+    .beacon {
+      position: absolute;
+      top: -6px;
+      right: 20%;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 8px var(--red);
+      animation: blink 1.4s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.1; }
+    }
+
+    .game-card-info {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .game-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-pixel);
+      font-size: 0.45rem;
+      color: var(--green);
+      letter-spacing: 0.15em;
+    }
+
+    .game-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    .game-title {
+      font-family: var(--font-pixel);
+      font-size: clamp(0.8rem, 2vw, 1.1rem);
+      color: var(--cream);
+      line-height: 1.4;
+    }
+
+    .game-title .game-junk { color: var(--orange); }
+
+    .game-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .game-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-family: var(--font-pixel);
+      font-size: 0.4rem;
+      padding: 0.3em 0.7em;
+      background: var(--ink-lift);
+      color: var(--muted);
+      border-radius: 2px;
+      letter-spacing: 0.08em;
+    }
+
+    .game-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-pixel);
+      font-size: 0.5rem;
+      color: var(--orange);
+      letter-spacing: 0.1em;
+      border: 1px solid var(--orange);
+      padding: 0.7em 1.2em;
+      border-radius: 2px;
+      align-self: flex-start;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .game-link:hover {
+      background: var(--orange);
+      color: var(--ink);
+    }
+
+    /* === ABOUT SECTION === */
+    #about {
+      background: var(--ink);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-top: 3rem;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .about-text p strong {
+      color: var(--cream);
+      font-weight: 700;
+    }
+
+    .about-card {
+      background: var(--ink-panel);
+      border: 1px solid rgba(233, 133, 55, 0.15);
+      border-radius: 4px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .about-card-header {
+      font-family: var(--font-pixel);
+      font-size: 0.55rem;
+      color: var(--orange);
+      letter-spacing: 0.15em;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .about-card-header::before {
+      content: '';
+      width: 8px; height: 8px;
+      background: var(--orange);
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+
+    .about-stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.8rem;
+    }
+
+    .about-stat:last-child { border-bottom: none; }
+
+    .about-stat-label { color: var(--muted); }
+    .about-stat-value {
+      font-family: var(--font-pixel);
+      font-size: 0.5rem;
+      color: var(--cream);
+    }
+
+    /* === CONTACT SECTION === */
+    #contact {
+      background: var(--ink-mid);
+      text-align: center;
+    }
+
+    .contact-inner {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .contact-inner .section-label { justify-content: center; }
+    .contact-inner .section-label::after { display: none; }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 2.5rem;
+    }
+
+    .contact-link {
+      font-family: var(--font-pixel);
+      font-size: 0.5rem;
+      padding: 0.7em 1.4em;
+      letter-spacing: 0.1em;
+      border: 1px solid rgba(233, 133, 55, 0.3);
+      color: var(--muted);
+      border-radius: 2px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    /* === FOOTER === */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(233, 133, 55, 0.1);
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--muted);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-brand {
+      font-family: var(--font-pixel);
+      font-size: 0.45rem;
+      color: var(--orange);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      transition: color 0.2s;
+      font-size: 0.75rem;
+    }
+
+    .footer-links a:hover { color: var(--cream); }
+
+    /* === SCROLL REVEAL === */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 720px) {
+      .game-card {
+        grid-template-columns: 1fr;
+      }
+
+      .game-card-art {
+        min-height: 160px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      nav .nav-links {
+        display: none;
+      }
+
+      footer {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">
+      <span>🪆</span> TOTEM WORKS
+    </div>
+    <ul class="nav-links">
+      <li><a href="#games">Games</a></li>
+      <li><a href="#about">Studio</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Est. 2024 &nbsp;·&nbsp; USA</p>
+    <span class="hero-doll" aria-hidden="true">🪆</span>
+    <h1 class="hero-title">
+      <span class="highlight">TOTEM WORKS</span><br>
+      Indie Game Studio
+    </h1>
+    <p class="hero-sub">
+      We make original games with soul — handcrafted worlds, weird ideas, and systems that reward curiosity.
+    </p>
+    <div class="hero-badges">
+      <span class="badge">INDIE STUDIO</span>
+      <span class="badge">PIXEL ART</span>
+      <span class="badge">GODOT 4</span>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- GAMES -->
+  <section id="games">
+    <div class="container">
+      <p class="section-label reveal">Games</p>
+      <h2 class="section-title reveal">What We're Building</h2>
+      <p class="section-body reveal">One game at a time, made with care.</p>
+
+      <div class="games-grid">
+        <article class="game-card reveal">
+          <!-- CSS art factory scene -->
+          <div class="game-card-art">
+            <div class="factory-scene">
+              <div class="bldg bldg-1">
+                <div class="chimney">
+                  <div class="smoke"></div>
+                  <div class="smoke"></div>
+                </div>
+              </div>
+              <div class="bldg bldg-2">
+                <div class="beacon"></div>
+              </div>
+              <div class="bldg bldg-3">
+                <div class="chimney" style="left:60%;width:12%;">
+                  <div class="smoke"></div>
+                </div>
+              </div>
+              <div class="bldg bldg-4"></div>
+              <div class="bldg bldg-5"></div>
+            </div>
+          </div>
+
+          <div class="game-card-info">
+            <div class="game-status">
+              <span class="game-status-dot"></span>
+              IN DEVELOPMENT
+            </div>
+            <h3 class="game-title">
+              AMERICAN <span class="game-junk">JUNK</span>
+            </h3>
+            <p class="game-desc">
+              Inherit a derelict Midwest factory from your late father. Scavenge the rust belt, wire power grids, and build increasingly absurd American products. A sandbox factory builder set in a lovingly rendered pixel-art USA.
+            </p>
+            <div class="game-tags">
+              <span class="tag">FACTORY BUILDER</span>
+              <span class="tag">SANDBOX</span>
+              <span class="tag">PIXEL ART</span>
+              <span class="tag">MIDWEST</span>
+            </div>
+            <a class="game-link" href="./americanjunk/">
+              VIEW GAME PAGE &rarr;
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <p class="section-label reveal">Studio</p>
+      <h2 class="section-title reveal">About Totem Works</h2>
+
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>
+            <strong>Totem Works, LLC</strong> is a small independent game studio committed to making games that feel like they were built by someone who actually loves games.
+          </p>
+          <p>
+            We believe the best games are dense, weird, and rewarding — the kind that give you a system to play with rather than a movie to watch. We're building those games.
+          </p>
+          <p>
+            Currently in active development on <strong>American Junk</strong>, a sandbox factory builder set in the American rust belt. Built in Godot 4, designed to run in the browser.
+          </p>
+        </div>
+
+        <div class="about-card reveal">
+          <div class="about-card-header">Studio Info</div>
+          <div class="about-stat">
+            <span class="about-stat-label">Founded</span>
+            <span class="about-stat-value">2024</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-label">Location</span>
+            <span class="about-stat-value">USA</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-label">Engine</span>
+            <span class="about-stat-value">GODOT 4</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-label">Genre Focus</span>
+            <span class="about-stat-value">SANDBOX / SIM</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-label">Current Title</span>
+            <span class="about-stat-value">AMERICAN JUNK</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-label">Status</span>
+            <span class="about-stat-value" style="color: var(--green);">IN DEV</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container contact-inner">
+      <p class="section-label reveal">Contact</p>
+      <h2 class="section-title reveal">Get in Touch</h2>
+      <p class="section-body reveal" style="margin: 0 auto;">
+        Press inquiries, collaboration ideas, or just want to say hi — we're reachable.
+      </p>
+      <div class="contact-links reveal">
+        <a class="contact-link" href="https://x.com/ZoneoutReal" target="_blank" rel="noopener">X / TWITTER</a>
+        <a class="contact-link" href="https://youtube.com/@ZoneoutReal" target="_blank" rel="noopener">YOUTUBE</a>
+        <a class="contact-link" href="https://discord.gg/ZoneoutReal" target="_blank" rel="noopener">DISCORD</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-brand">🪆 TOTEM WORKS, LLC</span>
+    <div class="footer-links">
+      <a href="./americanjunk/">American Junk</a>
+      <a href="#about">Studio</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <span>&copy; 2026 Totem Works, LLC</span>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
