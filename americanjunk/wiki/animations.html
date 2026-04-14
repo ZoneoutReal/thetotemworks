@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation Guide — American Junk Wiki</title>
+<meta name="theme-color" content="#10121c">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2310121c' rx='4'/><text x='4' y='26' font-size='24'>⚙</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* Home-page tokens */
+  --ink:#10121c; --ink-mid:#1a1d2e; --ink-panel:#1e2235; --ink-lift:#252840;
+  --orange:#e98537; --amber:#f3a833; --red:#ec273f; --green:#5ab552;
+  --teal:#36c5f4; --cream:#f6e8e0; --muted:#8c78a5;
+  --font-px:'Press Start 2P',monospace;
+  --font-mono:'Space Mono','Courier New',monospace;
+  --glow-orange:0 0 16px rgba(233,133,55,.55),0 0 40px rgba(233,133,55,.2);
+  --ease:cubic-bezier(.25,.46,.45,.94);
+  /* Wiki-compat */
+  --bg:var(--ink); --card:var(--ink-panel); --card-hover:var(--ink-lift);
+  --text:var(--cream); --text2:rgba(246,232,224,.62); --accent:var(--orange);
+  --link:var(--teal); --border:rgba(233,133,55,.18); --danger:var(--red);
+  --code-bg:var(--ink-mid);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--ink);color:var(--cream);font-family:var(--font-mono);font-size:14px;line-height:1.6;padding:0;margin:0;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;opacity:.022;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat}
+.scanlines{position:fixed;inset:0;pointer-events:none;z-index:8999;background:repeating-linear-gradient(180deg,transparent 0,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px)}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:"Courier New",monospace;background:var(--code-bg);padding:2px 6px;border-radius:3px;font-size:13px}
+img{image-rendering:pixelated;max-width:100%;height:auto}
+
+/* HEADER */
+.header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(16,18,28,.96);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(233,133,55,.18);
+  box-shadow:0 4px 24px rgba(0,0,0,.5);
+  padding:14px 24px;
+  display:flex;align-items:center;gap:16px;
+}
+.header h1{font-family:var(--font-px);font-size:11px;color:var(--orange);letter-spacing:2px;text-shadow:var(--glow-orange);white-space:nowrap}
+.header .back{
+  font-family:var(--font-px);font-size:7px;letter-spacing:1px;
+  color:var(--orange);padding:8px 14px;
+  border:1px solid rgba(233,133,55,.4);background:transparent;
+  clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));
+  text-decoration:none;transition:background .2s,color .2s,box-shadow .2s;
+}
+.header .back:hover{background:var(--orange);color:var(--ink);box-shadow:var(--glow-orange);text-decoration:none}
+
+/* LAYOUT */
+.page{max-width:800px;margin:0 auto;padding:16px}
+section{margin-bottom:32px}
+
+h2{font-family:var(--font-px);font-size:12px;color:var(--orange);margin:0 0 16px;padding-bottom:10px;border-bottom:1px solid var(--orange);letter-spacing:2px;text-shadow:var(--glow-orange)}
+h3{font-family:var(--font-mono);font-size:15px;color:var(--cream);margin:18px 0 10px;font-weight:700}
+p{margin-bottom:12px;color:var(--text2);font-size:14px}
+.highlight{color:var(--accent);font-weight:700}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px}
+.card h3{margin-top:0;color:var(--accent)}
+
+/* DIRECTION SELECTOR */
+.dir-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.dir-tab{
+  padding:8px 16px;background:var(--card);border:1px solid var(--border);
+  border-radius:4px;color:var(--text2);cursor:pointer;font-size:13px;
+  font-family:"Courier New",monospace;transition:all .15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.dir-tab:hover,.dir-tab.active{background:var(--card-hover);color:var(--accent);border-color:var(--accent);font-weight:700}
+
+/* ANIMATION DISPLAY */
+.anim-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:12px 0}
+.anim-box{text-align:center}
+.anim-box img{width:160px;height:160px;display:block;margin:0 auto 6px;border-radius:6px;background:var(--card)}
+.anim-label{font-size:11px;color:var(--text2);font-family:"Courier New",monospace}
+
+/* FRAME STRIP */
+.frame-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.frame-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:8px;text-align:center}
+.frame-card img{width:100%;aspect-ratio:1;display:block;margin:0 auto 4px;border-radius:4px}
+.frame-card .label{font-size:11px;color:var(--text2);font-family:"Courier New",monospace}
+.frame-card .num{font-size:10px;color:var(--border)}
+
+/* LAYER EXPLODED VIEW */
+.layer-view{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:12px 0}
+.layer-view img{height:64px;min-width:100%;border-radius:4px}
+
+/* LAYER GRID (mobile stacked) */
+.layer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.layer-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:8px;text-align:center}
+.layer-card img{width:100%;aspect-ratio:1;display:block;margin:0 auto 4px}
+.layer-card .label{font-size:11px;color:var(--text2);font-family:"Courier New",monospace}
+
+/* STEPS */
+.steps{counter-reset:step}
+.step{
+  counter-increment:step;
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:12px;position:relative;padding-left:48px;
+}
+.step::before{
+  content:counter(step);position:absolute;left:14px;top:14px;
+  width:24px;height:24px;background:var(--accent);color:var(--bg);
+  border-radius:50%;font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  font-family:"Courier New",monospace;
+}
+.step h3{margin-top:0;color:var(--text);font-size:14px}
+.step p{margin-bottom:4px;font-size:13px}
+.step code{font-size:12px}
+
+/* SPECS TABLE */
+.specs{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+.specs td,.specs th{padding:8px 12px;border-bottom:1px solid var(--border);text-align:left}
+.specs th{color:var(--text2);font-weight:400;width:40%}
+.specs td{color:var(--text);font-family:"Courier New",monospace}
+
+/* ALL-DIRECTIONS GRID */
+.dir-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:12px 0}
+.dir-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;cursor:pointer;transition:border-color .15s;-webkit-tap-highlight-color:transparent}
+.dir-card:hover,.dir-card.active{border-color:var(--accent)}
+.dir-card img{width:100%;max-width:160px;aspect-ratio:1;display:block;margin:0 auto 6px}
+.dir-card .label{font-size:12px;color:var(--text2);font-family:"Courier New",monospace}
+
+/* STATUS BADGE */
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-family:"Courier New",monospace;font-weight:700}
+.badge-wip{background:#6b2643;color:#fa6e79}
+.badge-done{background:#1e4044;color:#5ab552}
+.badge-planned{background:#3e3b65;color:#b0a7b8}
+
+/* MOBILE */
+@media(max-width:600px){
+  .header h1{font-size:14px}
+  .page{padding:12px}
+  h2{font-size:16px}
+  .frame-strip{grid-template-columns:repeat(2,1fr)}
+  .dir-grid{grid-template-columns:repeat(2,1fr)}
+  .anim-box img{width:128px;height:128px}
+  .step{padding-left:44px}
+  .step::before{left:12px;top:16px;width:22px;height:22px;font-size:12px}
+}
+@media(max-width:380px){
+  .dir-tabs{gap:4px}
+  .dir-tab{padding:6px 10px;font-size:12px}
+  .frame-strip{gap:6px}
+}
+</style>
+</head>
+<body>
+
+<div class="scanlines" aria-hidden="true"></div>
+
+<div class="header">
+  <a href="index.html" class="back">&larr; Wiki</a>
+  <h1><span style="margin-right:8px">⚙</span>ANIMATION GUIDE</h1>
+</div>
+
+<div class="page">
+
+<!-- OVERVIEW -->
+<section>
+  <h2>Pickaxe Swing Animation</h2>
+  <p>4-frame mining swing used when the player hits quarry walls. Plays once at 12fps (0.33s total). The character's facing direction maps to 4 cardinal swing directions.</p>
+
+  <table class="specs">
+    <tr><th>Canvas</th><td>64 x 64 px</td></tr>
+    <tr><th>Frames</th><td>4 per direction</td></tr>
+    <tr><th>Directions</th><td>South, East, West, North</td></tr>
+    <tr><th>FPS</th><td>12 (83ms/frame)</td></tr>
+    <tr><th>Export</th><td>256 x 64 horizontal strip</td></tr>
+    <tr><th>Godot path</th><td><code>assets/sprites/player_swing_{dir}.png</code></td></tr>
+    <tr><th>Status</th><td><span class="badge badge-done">V2 - Hand-drawn arms</span></td></tr>
+  </table>
+</section>
+
+<!-- CURRENT STATE -->
+<section>
+  <h2>Current Swing (All Directions)</h2>
+  <p>Tap a direction to see its frame breakdown below.</p>
+  <div class="dir-grid" id="dir-grid"></div>
+</section>
+
+<!-- FRAME BREAKDOWN -->
+<section>
+  <h2>Frame Breakdown</h2>
+  <p id="frame-desc">Select a direction above.</p>
+  <div class="frame-strip" id="frame-strip"></div>
+
+  <div class="card" style="margin-top:16px;border-color:var(--accent)">
+    <h3 style="color:var(--accent)">V2 Status</h3>
+    <p>Arms are now <span class="highlight">hand-drawn per frame</span> with hands gripping the pickaxe handle. Each frame has unique arm positions using the character's exact skin/sleeve colors. The .aseprite templates remain available for further polish.</p>
+  </div>
+</section>
+
+<!-- LAYER BREAKDOWN -->
+<section>
+  <h2>Body Layer Breakdown</h2>
+  <p>V2 frame breakdown showing the core body (static torso/head/legs) vs. the animated arm + pickaxe layer (hands gripping the handle). Tap a direction above to update.</p>
+
+  <div class="layer-grid" id="layer-grid"></div>
+
+  <p style="font-size:12px;color:var(--border);margin-top:8px">Layered .aseprite templates are in <code>assets/sprites/animations/</code></p>
+</section>
+
+<!-- WORKFLOW -->
+<section>
+  <h2>V2 Animation Workflow</h2>
+  <p>The recommended approach from <a href="https://www.slynyrd.com/blog/2025/3/24/pixelblog-55-top-down-character-animation">SLYNYRD</a> and pixel art community consensus:</p>
+
+  <div class="steps">
+    <div class="step">
+      <h3>Open the layered template</h3>
+      <p>Open <code>pickaxe_swing_{dir}_layered.aseprite</code>. It has 5 layers: reference (50% opacity guide), core, left-arm, right-arm, tool.</p>
+    </div>
+    <div class="step">
+      <h3>Enable onion skinning</h3>
+      <p>Press <strong>F3</strong> in Aseprite. This shows ghosted previous/next frames so you can see the motion arc while drawing.</p>
+    </div>
+    <div class="step">
+      <h3>Animate the arms first</h3>
+      <p>On the arm layers, redraw the arms for each of the 4 frames: <span class="highlight">wind-up</span> (raised), <span class="highlight">mid-swing</span> (coming down), <span class="highlight">impact</span> (extended low), <span class="highlight">recovery</span> (pulling back). Keep thickness and length consistent.</p>
+    </div>
+    <div class="step">
+      <h3>Add the pickaxe on the tool layer</h3>
+      <p>Draw the pickaxe so the handle connects to the hand in each frame. The grip point should track with the right hand across all 4 frames.</p>
+    </div>
+    <div class="step">
+      <h3>Do south first, then translate</h3>
+      <p>Complete one direction fully. Then translate the arm keyframes to the other 3 directions. Check consistency by flipping between directions frame-by-frame.</p>
+    </div>
+    <div class="step">
+      <h3>Export strips</h3>
+      <p>Hide the reference layer. Export as horizontal strip: <code>File &gt; Export Sprite Sheet &gt; Horizontal Strip &gt; 256x64</code>. Save as <code>player_swing_{dir}.png</code>.</p>
+      <p>Or run: <code>python3 tools/build_tool_animations.py pickaxe</code></p>
+    </div>
+  </div>
+</section>
+
+<!-- TOOL PIPELINE -->
+<section>
+  <h2>Tool Animation Pipeline</h2>
+  <p>The same workflow applies to all 5 planned tools. Each shares the base body but needs unique arm poses and tool art.</p>
+
+  <table class="specs">
+    <tr><th>Pickaxe</th><td><span class="badge badge-wip">V1 composite</span> Overhead mining swing</td></tr>
+    <tr><th>Wrench</th><td><span class="badge badge-planned">Planned</span> Rotational twist</td></tr>
+    <tr><th>Hammer</th><td><span class="badge badge-planned">Planned</span> Overhead slam</td></tr>
+    <tr><th>Fire Ext.</th><td><span class="badge badge-planned">Planned</span> Spray forward</td></tr>
+    <tr><th>Throw</th><td><span class="badge badge-planned">Planned</span> Overhand toss</td></tr>
+  </table>
+
+  <div class="card">
+    <h3>Reuse strategy</h3>
+    <p>Per the <a href="https://opengameart.org/forumtopic/lpc-improved-animations-for-axe-pickaxe-warhammer-etc">LPC approach</a>: generate a full swing from only 3 source views (side, 45-degree, rear) by reordering frames per direction. South plays frames 1-2-3-4, North plays 4-3-2-1. This cuts unique art from 16 to ~6 frames.</p>
+  </div>
+</section>
+
+<!-- SPECS REFERENCE -->
+<section>
+  <h2>Asset Specs Quick Ref</h2>
+  <table class="specs">
+    <tr><th>Tile size</th><td>48 x 48 px</td></tr>
+    <tr><th>Character canvas</th><td>64 x 64 px (body ~60%)</td></tr>
+    <tr><th>Item icons</th><td>32 x 32 px</td></tr>
+    <tr><th>Palette</th><td>42 colors (<code>data/palette.json</code>)</td></tr>
+    <tr><th>Outline</th><td>Selective (no heavy black)</td></tr>
+    <tr><th>Shading</th><td>Medium (2-3 tones)</td></tr>
+    <tr><th>View</th><td>High top-down, symmetrical</td></tr>
+  </table>
+</section>
+
+</div><!-- .page -->
+
+<script>
+const CACHE_BUST = Date.now();
+const DIRS = ['south','east','west','north'];
+const DIR_LABELS = {south:'South',east:'East',west:'West',north:'North'};
+const FRAME_LABELS = ['Wind-up','Mid-swing','Impact','Recovery'];
+const LAYER_LABELS = ['Core Body','Arms + Pickaxe','Full Frame'];
+const LAYER_KEYS = ['core','arms_pickaxe','reference'];
+let currentDir = 'south';
+
+function selectDir(d) {
+  currentDir = d;
+  renderDirGrid();
+  renderFrameStrip();
+  renderLayers();
+}
+
+function renderDirGrid() {
+  const el = document.getElementById('dir-grid');
+  el.innerHTML = DIRS.map(d =>
+    `<div class="dir-card${d===currentDir?' active':''}" onclick="selectDir('${d}')">
+      <img src="sprites/pickaxe/swing_${d}.gif?${CACHE_BUST}" alt="${d} swing">
+      <div class="label">${DIR_LABELS[d]}</div>
+    </div>`
+  ).join('');
+}
+
+function renderFrameStrip() {
+  const el = document.getElementById('frame-strip');
+  const desc = document.getElementById('frame-desc');
+  desc.innerHTML = `<strong>${DIR_LABELS[currentDir]}</strong> — 4 frames at 12fps (0.33s total)`;
+  el.innerHTML = FRAME_LABELS.map((label, i) =>
+    `<div class="frame-card">
+      <img src="sprites/pickaxe/swing_${currentDir}_frame${i}.png?${CACHE_BUST}" alt="Frame ${i}">
+      <div class="label">${label}</div>
+      <div class="num">Frame ${i+1}</div>
+    </div>`
+  ).join('');
+}
+
+function renderLayers() {
+  const el = document.getElementById('layer-grid');
+  el.innerHTML = LAYER_KEYS.map((key, i) =>
+    `<div class="layer-card">
+      <img src="sprites/pickaxe/layer_${currentDir}_${key}.png?${CACHE_BUST}" alt="${LAYER_LABELS[i]}">
+      <div class="label">${LAYER_LABELS[i]}</div>
+    </div>`
+  ).join('');
+}
+
+// Init
+selectDir('south');
+</script>
+</body>
+</html>

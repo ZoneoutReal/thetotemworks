@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO -->
+<title>American Junk Wiki — Recipes, Items, Machines</title>
+<meta name="description" content="Full reference wiki for American Junk: recipes, items, machines, buildings, characters, and tier progression. Rebuild America, one scrap at a time.">
+<meta name="author" content="Totem Works, LLC">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#10121c">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thetotemworks.com/americanjunk/wiki/">
+<meta property="og:title" content="American Junk Wiki">
+<meta property="og:description" content="Recipes, items, machines, buildings, characters — full reference for American Junk.">
+<meta property="og:image" content="https://thetotemworks.com/americanjunk/og-image.png">
+<meta property="og:site_name" content="American Junk">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2310121c' rx='4'/><text x='4' y='26' font-size='24'>⚙</text></svg>">
+
+<!-- Pixel & Mono fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ============================================
+   DESIGN TOKENS — synced with American Junk home page
+============================================ */
+:root{
+  /* Home-page palette */
+  --ink:        #10121c;
+  --ink-mid:    #1a1d2e;
+  --ink-panel:  #1e2235;
+  --ink-lift:   #252840;
+  --orange:     #e98537;
+  --amber:      #f3a833;
+  --red:        #ec273f;
+  --rust:       #de5d3a;
+  --green:      #5ab552;
+  --lime:       #9de64e;
+  --teal:       #36c5f4;
+  --gold:       #dab163;
+  --gold-pale:  #e8d282;
+  --cream:      #f6e8e0;
+  --muted:      #8c78a5;
+  --maroon:     #ac2847;
+  --machine:    #cc99ff;
+
+  /* Typography */
+  --font-px:    'Press Start 2P', monospace;
+  --font-mono:  'Space Mono', 'Courier New', monospace;
+
+  /* Glows */
+  --glow-orange: 0 0 16px rgba(233,133,55,.55), 0 0 40px rgba(233,133,55,.2);
+  --glow-teal:   0 0 16px rgba(54,197,244,.5),  0 0 40px rgba(54,197,244,.2);
+  --ease: cubic-bezier(.25,.46,.45,.94);
+
+  /* Wiki-compat vars mapped to home tokens */
+  --bg:          var(--ink);
+  --card:        var(--ink-panel);
+  --card-hover:  var(--ink-lift);
+  --text:        var(--cream);
+  --text2:       rgba(246,232,224,.62);
+  --accent:      var(--orange);
+  --link:        var(--teal);
+  --border:      rgba(233,133,55,.18);
+  --border-soft: rgba(246,232,224,.12);
+  --danger:      var(--red);
+  --success:     var(--green);
+
+  /* Tier colors */
+  --t0:#b0a7b8; --t1:#5ab552; --t2:#f3a833; --t3:#ec273f; --t4:#cc99ff; --ts:#36c5f4;
+
+  /* Layout */
+  --sidebar-w:250px;
+  --site-nav-h:60px;   /* home page nav height */
+  --header-h:56px;     /* wiki sub-header height */
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--ink);
+  color:var(--cream);
+  font-family:var(--font-mono);
+  font-size:14px;
+  line-height:1.55;
+  overflow-x:hidden;
+}
+img{image-rendering:pixelated;image-rendering:crisp-edges;max-width:100%}
+a{color:var(--teal);text-decoration:none;cursor:pointer;transition:color .2s}
+a:hover{color:var(--amber)}
+code,.mono{font-family:var(--font-mono)}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:var(--ink)}
+::-webkit-scrollbar-thumb{background:var(--ink-lift);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--orange)}
+
+/* ============================================
+   NOISE + SCANLINES (from home page)
+============================================ */
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:9000;
+  opacity:.022;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat:repeat;
+}
+.scanlines{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:8999;
+  background:repeating-linear-gradient(180deg,transparent 0,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px);
+}
+
+/* ============================================
+   SITE NAV (shared with home page)
+============================================ */
+.site-nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:1000;
+  height:var(--site-nav-h);
+  padding:0 48px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(16,18,28,.96);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(233,133,55,.18);
+  box-shadow:0 4px 24px rgba(0,0,0,.5);
+}
+.site-nav .nav-logo{
+  font-family:var(--font-px);
+  font-size:11px;
+  color:var(--cream);
+  letter-spacing:1px;
+}
+.site-nav .nav-logo em{color:var(--orange);font-style:normal}
+.site-nav .nav-logo .sep{color:rgba(246,232,224,.3);margin:0 10px}
+.site-nav .nav-logo .wiki-tag{color:var(--teal);font-size:9px;letter-spacing:1.5px}
+.site-nav .nav-links{display:flex;align-items:center;gap:24px;list-style:none}
+.site-nav .nav-links a{
+  font-family:var(--font-px);
+  font-size:7px;
+  color:rgba(246,232,224,.7);
+  letter-spacing:1px;
+  position:relative;
+  padding-bottom:3px;
+  text-decoration:none;
+}
+.site-nav .nav-links a::after{
+  content:'';position:absolute;bottom:0;left:0;
+  width:0;height:2px;background:var(--orange);
+  transition:width .25s var(--ease);
+}
+.site-nav .nav-links a:hover{color:var(--cream)}
+.site-nav .nav-links a:hover::after{width:100%}
+.site-nav .nav-back{
+  font-family:var(--font-px);
+  font-size:7px;
+  color:var(--orange);
+  letter-spacing:1px;
+  padding:8px 14px;
+  border:1px solid rgba(233,133,55,.4);
+  clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));
+  transition:background .2s, color .2s, box-shadow .2s;
+}
+.site-nav .nav-back:hover{
+  background:var(--orange);
+  color:var(--ink);
+  box-shadow:var(--glow-orange);
+}
+
+/* ============================================
+   WIKI SUB-HEADER (search bar)
+============================================ */
+#header{
+  position:fixed;
+  top:var(--site-nav-h);
+  left:0;right:0;
+  height:var(--header-h);
+  background:linear-gradient(180deg,var(--ink-panel) 0%,var(--ink) 100%);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  padding:0 24px;
+  z-index:100;
+  gap:16px;
+}
+#header h1{
+  font-family:var(--font-px);
+  font-size:10px;
+  white-space:nowrap;
+  color:var(--orange);
+  letter-spacing:2px;
+  text-shadow:var(--glow-orange);
+}
+#header h1 span{margin-right:8px;font-size:16px}
+#search-wrap{flex:1;max-width:560px;position:relative}
+#search{
+  width:100%;
+  padding:9px 12px 9px 36px;
+  background:var(--ink-mid);
+  border:1px solid var(--border);
+  border-radius:4px;
+  color:var(--cream);
+  font-size:13px;
+  font-family:var(--font-mono);
+  outline:none;
+  transition:border-color .2s, box-shadow .2s;
+}
+#search:focus{border-color:var(--orange);box-shadow:0 0 0 2px rgba(233,133,55,.15)}
+#search::placeholder{color:rgba(246,232,224,.35)}
+#search-icon{
+  position:absolute;
+  left:10px;top:50%;
+  transform:translateY(-50%);
+  color:rgba(246,232,224,.4);
+  pointer-events:none;
+}
+#result-count{font-size:11px;color:var(--text2);white-space:nowrap;font-family:var(--font-px);letter-spacing:1px}
+#kbd-hint{
+  font-size:10px;color:var(--text2);
+  border:1px solid var(--border);
+  border-radius:3px;
+  padding:2px 6px;
+  white-space:nowrap;
+  font-family:var(--font-mono);
+}
+
+/* ============================================
+   SIDEBAR
+============================================ */
+#sidebar{
+  position:fixed;
+  top:calc(var(--site-nav-h) + var(--header-h));
+  left:0;bottom:0;
+  width:var(--sidebar-w);
+  background:var(--ink-mid);
+  border-right:1px solid var(--border);
+  overflow-y:auto;
+  padding:14px 0;
+  z-index:90;
+}
+.sb-section{padding:0 14px;margin-bottom:18px}
+.sb-title{
+  font-family:var(--font-px);
+  font-size:8px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  color:var(--orange);
+  margin-bottom:10px;
+  padding-left:6px;
+}
+.sb-item{
+  display:block;
+  padding:6px 10px;
+  border-radius:3px;
+  cursor:pointer;
+  font-size:12px;
+  color:rgba(246,232,224,.72);
+  transition:background .15s, color .15s, border-color .15s;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  border-left:2px solid transparent;
+  font-family:var(--font-mono);
+}
+.sb-item:hover{background:var(--ink-lift);color:var(--cream)}
+.sb-item.active{
+  background:rgba(233,133,55,.08);
+  color:var(--amber);
+  font-weight:700;
+  border-left-color:var(--orange);
+}
+.sb-item .icon{margin-right:4px}
+.sb-divider{height:1px;background:var(--border);margin:14px 14px}
+.tier-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
+
+/* ============================================
+   MAIN
+============================================ */
+#main{
+  margin-left:var(--sidebar-w);
+  margin-top:calc(var(--site-nav-h) + var(--header-h));
+  padding:22px 26px;
+  min-height:calc(100vh - var(--site-nav-h) - var(--header-h));
+}
+
+/* ============================================
+   TABS
+============================================ */
+.tabs{
+  display:flex;gap:2px;
+  margin-bottom:20px;
+  border-bottom:1px solid var(--border);
+  padding-bottom:0;
+  flex-wrap:wrap;
+}
+.tab-btn{
+  padding:10px 18px;
+  background:transparent;
+  border:none;
+  color:rgba(246,232,224,.55);
+  font-size:11px;
+  font-family:var(--font-px);
+  letter-spacing:1px;
+  cursor:pointer;
+  border-bottom:2px solid transparent;
+  margin-bottom:-1px;
+  transition:all .15s;
+}
+.tab-btn:hover{color:var(--cream)}
+.tab-btn.active{color:var(--orange);border-bottom-color:var(--orange);text-shadow:var(--glow-orange)}
+
+/* ============================================
+   RECIPE CARDS
+============================================ */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:16px}
+.recipe-card{
+  background:var(--ink-panel);
+  border:1px solid var(--border);
+  border-radius:6px;
+  overflow:hidden;
+  transition:border-color .2s, transform .15s, box-shadow .2s;
+}
+.recipe-card:hover{border-color:var(--orange);transform:translateY(-2px);box-shadow:0 4px 18px rgba(0,0,0,.4)}
+.rc-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;
+  border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.02);
+}
+.rc-machine{font-size:18px;margin-right:8px}
+.rc-name{font-family:var(--font-mono);font-weight:700;font-size:14px;flex:1;color:var(--cream)}
+.tier-badge{
+  font-family:var(--font-px);
+  font-size:8px;
+  padding:4px 8px;
+  border-radius:3px;
+  font-weight:400;
+  white-space:nowrap;
+  letter-spacing:1px;
+}
+.rc-body{padding:12px 14px}
+.rc-io{display:flex;align-items:flex-start;gap:8px}
+.rc-inputs,.rc-outputs{flex:1}
+.rc-arrow{color:var(--orange);font-size:18px;align-self:center;flex-shrink:0;padding:0 4px}
+.rc-io-item{font-size:13px;padding:2px 0}
+.rc-io-item .bullet-in{color:var(--teal)}
+.rc-io-item .bullet-out{color:var(--orange)}
+.rc-io-item .item-link{cursor:pointer}
+.rc-io-item .item-link:hover{text-decoration:underline}
+.rc-io-item .qty{color:var(--text2);font-size:12px}
+.rc-stats{display:flex;gap:12px;flex-wrap:wrap;padding-top:8px;margin-top:8px;border-top:1px solid var(--border);font-size:12px;color:var(--text2)}
+.rc-stats span{white-space:nowrap}
+.rc-desc{font-style:italic;font-size:12px;color:var(--text2);margin-top:6px;opacity:.85}
+.rc-actions{display:flex;gap:6px;margin-top:8px}
+.btn-tree{
+  background:var(--ink-lift);
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:4px 10px;
+  border-radius:3px;
+  cursor:pointer;
+  font-size:11px;
+  font-family:var(--font-mono);
+  transition:all .15s;
+}
+.btn-tree:hover{border-color:var(--orange);color:var(--orange)}
+
+/* ============================================
+   ITEMS TABLE
+============================================ */
+#items-view{overflow-x:auto}
+#items-table{width:100%;border-collapse:collapse;font-size:13px}
+#items-table th{
+  text-align:left;
+  padding:10px;
+  border-bottom:1px solid var(--orange);
+  color:var(--orange);
+  font-family:var(--font-px);
+  font-size:8px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  cursor:pointer;
+  white-space:nowrap;
+  user-select:none;
+  position:sticky;
+  top:0;
+  background:var(--ink);
+  z-index:2;
+}
+#items-table th:hover{color:var(--amber)}
+#items-table th .sort-arrow{margin-left:4px;font-size:10px}
+#items-table td{padding:7px 10px;border-bottom:1px solid rgba(246,232,224,.05)}
+#items-table tr:hover td{background:rgba(233,133,55,.04)}
+#items-table .item-name-cell{font-family:var(--font-mono);cursor:pointer;color:var(--teal)}
+#items-table .item-name-cell:hover{color:var(--amber);text-decoration:underline}
+.tag{display:inline-block;font-size:10px;padding:2px 6px;border-radius:3px;background:rgba(255,255,255,.06);color:var(--text2);margin-left:3px}
+
+/* ============================================
+   MACHINES VIEW
+============================================ */
+.machine-card{background:var(--ink-panel);border:1px solid var(--border);border-radius:6px;margin-bottom:16px;overflow:hidden}
+.mc-header{padding:12px 16px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);display:flex;align-items:center;gap:10px}
+.mc-header .mc-icon{font-size:22px}
+.mc-header h3{font-family:var(--font-mono);color:var(--machine);font-size:15px;font-weight:700}
+.mc-sprite{width:64px;height:64px;image-rendering:pixelated;border:1px solid var(--border);border-radius:4px;background:rgba(0,0,0,.3);object-fit:contain;flex-shrink:0}
+.mc-header .mc-secret{font-family:var(--font-px);font-size:8px;background:var(--teal);color:var(--ink);padding:3px 8px;border-radius:3px;letter-spacing:1px}
+.mc-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;padding:12px 16px;border-bottom:1px solid var(--border)}
+.mc-stat{font-size:13px;color:var(--text2)}
+.mc-stat b{color:var(--cream)}
+.mc-cost{padding:10px 16px;border-bottom:1px solid var(--border);font-size:13px}
+.mc-cost b{color:var(--orange)}
+.mc-recipes{padding:10px 16px}
+.mc-recipes h4{font-family:var(--font-px);font-size:8px;color:var(--orange);margin-bottom:8px;text-transform:uppercase;letter-spacing:1.5px}
+.mc-recipe-item{font-size:13px;padding:2px 0;color:var(--text2)}
+.mc-recipe-item a{color:var(--teal)}
+.mc-desc{padding:8px 16px;font-size:12px;font-style:italic;color:var(--text2);border-bottom:1px solid var(--border)}
+
+/* ============================================
+   TIERS VIEW
+============================================ */
+.tier-timeline{position:relative}
+.tier-block{background:var(--ink-panel);border:1px solid var(--border);border-radius:6px;margin-bottom:16px;overflow:hidden}
+.tb-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px}
+.tb-header .tb-num{font-family:var(--font-px);font-size:20px;color:var(--orange);text-shadow:var(--glow-orange)}
+.tb-header .tb-name{font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--cream)}
+.tb-header .tb-sub{font-size:12px;color:var(--text2);font-style:italic;margin-left:auto}
+.tb-unlock{padding:8px 16px;font-size:13px;color:var(--text2);border-bottom:1px solid var(--border);background:rgba(255,255,255,.015)}
+.tb-unlock b{color:var(--orange)}
+.tb-recipes{padding:12px 16px;display:flex;flex-wrap:wrap;gap:6px}
+.tb-recipe-chip{font-size:12px;padding:4px 10px;border-radius:3px;background:var(--ink-lift);border:1px solid var(--border);cursor:pointer;color:var(--text2);transition:all .15s;font-family:var(--font-mono)}
+.tb-recipe-chip:hover{border-color:var(--orange);color:var(--orange)}
+.tb-arrow{text-align:center;color:var(--text2);font-size:20px;margin:4px 0;opacity:.5}
+
+/* ============================================
+   MODAL
+============================================ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(4px)}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--ink-panel);border:1px solid var(--orange);border-radius:6px;max-width:720px;width:95%;max-height:85vh;overflow-y:auto;position:relative;box-shadow:0 10px 40px rgba(0,0,0,.7), var(--glow-orange)}
+.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;color:var(--text2);font-size:22px;cursor:pointer;z-index:5;transition:color .2s}
+.modal-close:hover{color:var(--red)}
+
+/* ITEM DETAIL MODAL */
+.id-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.id-header h2{font-family:var(--font-mono);font-size:17px;color:var(--cream);flex:1;font-weight:700}
+.id-body{padding:16px 20px}
+.id-desc{font-style:italic;color:var(--text2);margin-bottom:12px}
+.id-stats{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.id-stat{font-size:13px;color:var(--text2)}
+.id-stat b{color:var(--cream)}
+.id-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px}
+.id-tag{font-size:11px;padding:3px 8px;border-radius:3px;border:1px solid var(--border);color:var(--text2)}
+.id-section{margin-bottom:14px}
+.id-section h3{font-family:var(--font-px);font-size:8px;color:var(--orange);margin-bottom:8px;text-transform:uppercase;letter-spacing:1.5px}
+.id-section .id-link{display:block;padding:2px 0;font-size:13px}
+.id-section .id-link a{color:var(--teal);cursor:pointer}
+.id-source{font-size:13px;color:var(--text2);padding:2px 0}
+.id-source .src-badge{display:inline-block;font-size:10px;padding:2px 6px;border-radius:3px;margin-right:4px;font-weight:700;font-family:var(--font-px);letter-spacing:1px}
+.src-rubble{background:rgba(243,168,51,.15);color:var(--amber);border:1px solid rgba(243,168,51,.3)}
+.src-mining{background:rgba(54,197,244,.15);color:var(--teal);border:1px solid rgba(54,197,244,.3)}
+.src-store{background:rgba(204,153,255,.15);color:var(--machine);border:1px solid rgba(204,153,255,.3)}
+.src-crafting{background:rgba(90,181,82,.15);color:var(--green);border:1px solid rgba(90,181,82,.3)}
+
+/* CRAFTING TREE MODAL */
+.ct-modal{max-width:920px;width:97%}
+.ct-header{padding:14px 20px;border-bottom:1px solid var(--border)}
+.ct-header h2{font-family:var(--font-mono);font-size:15px;color:var(--orange);font-weight:700}
+.ct-body{padding:20px;overflow-x:auto}
+.ct-tree{display:flex;flex-direction:column;align-items:center;min-width:fit-content}
+.ct-node{position:relative;display:flex;flex-direction:column;align-items:center}
+.ct-item{background:var(--ink-lift);border:1px solid var(--border);border-radius:4px;padding:7px 12px;font-size:12px;font-family:var(--font-mono);text-align:center;white-space:nowrap;cursor:pointer;transition:border-color .15s, color .15s;min-width:80px;color:var(--cream)}
+.ct-item:hover{border-color:var(--orange);color:var(--orange)}
+.ct-item .ct-qty{color:var(--text2);font-size:11px}
+.ct-item.raw{border-color:var(--green)}
+.ct-item.raw::after{content:"RAW";position:absolute;top:-8px;right:-8px;font-size:7px;background:var(--green);color:var(--ink);padding:1px 5px;border-radius:3px;font-family:var(--font-px);letter-spacing:1px}
+.ct-item.store-bought{border-color:var(--machine)}
+.ct-item.store-bought::after{content:"STORE";position:absolute;top:-8px;right:-8px;font-size:7px;background:var(--machine);color:var(--ink);padding:1px 5px;border-radius:3px;font-family:var(--font-px);letter-spacing:1px}
+.ct-machine{font-size:11px;color:var(--machine);margin:4px 0;padding:2px 8px;border:1px dashed var(--machine);border-radius:3px;background:rgba(204,153,255,.06)}
+.ct-children{display:flex;gap:8px;justify-content:center;position:relative;padding-top:12px}
+.ct-children::before{content:"";position:absolute;top:0;left:50%;width:0;height:12px;border-left:1px dashed var(--border)}
+.ct-branch{display:flex;flex-direction:column;align-items:center;position:relative;padding-top:12px}
+.ct-branch::before{content:"";position:absolute;top:0;left:50%;width:0;height:12px;border-left:1px dashed var(--border)}
+.ct-connector{position:relative;width:100%;height:12px}
+.ct-connector::before{content:"";position:absolute;top:0;left:0;right:0;height:0;border-top:1px dashed var(--border)}
+
+/* ============================================
+   BUILDINGS VIEW
+============================================ */
+.building-section{margin-bottom:32px}
+.building-section h2{font-family:var(--font-px);font-size:14px;color:var(--orange);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--orange);letter-spacing:2px;text-shadow:var(--glow-orange)}
+.building-section h2 .section-icon{margin-right:10px}
+.zone-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:16px}
+.zone-card{background:var(--ink-panel);border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:border-color .2s, transform .15s, box-shadow .2s}
+.zone-card:hover{border-color:var(--orange);transform:translateY(-2px);box-shadow:0 4px 18px rgba(0,0,0,.4)}
+.zc-header{padding:10px 14px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);display:flex;align-items:center;justify-content:space-between}
+.zc-header h3{font-family:var(--font-mono);font-size:14px;color:var(--cream);font-weight:700}
+.zc-tag{font-family:var(--font-px);font-size:8px;padding:3px 8px;border-radius:3px;letter-spacing:1px}
+.zc-body{padding:12px 14px}
+.zc-narrative{font-style:italic;color:var(--text2);font-size:13px;margin-bottom:10px;border-left:2px solid var(--orange);padding-left:10px}
+.zc-stats{display:flex;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--text2);margin-bottom:8px}
+.zc-stats span{background:rgba(255,255,255,.04);padding:2px 8px;border-radius:3px;white-space:nowrap}
+.zc-machines{margin-top:10px}
+.zc-machines h4{font-family:var(--font-px);font-size:7px;color:var(--orange);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.zc-machine-chip{display:inline-block;font-size:12px;padding:3px 10px;border-radius:3px;background:var(--ink-lift);border:1px solid var(--border);margin:2px 3px 2px 0;color:var(--machine);font-family:var(--font-mono)}
+.zc-loot{margin-top:10px}
+.zc-loot h4{font-family:var(--font-px);font-size:7px;color:var(--green);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.zc-loot-item{display:inline-block;font-size:11px;padding:3px 8px;border-radius:3px;background:rgba(90,181,82,.08);border:1px solid rgba(90,181,82,.18);margin:2px 3px 2px 0;color:var(--text2);cursor:pointer;font-family:var(--font-mono)}
+.zc-loot-item:hover{border-color:var(--green);color:var(--green)}
+
+.town-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.town-card{background:var(--ink-panel);border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:border-color .2s, transform .15s, box-shadow .2s}
+.town-card:hover{border-color:var(--orange);transform:translateY(-2px);box-shadow:0 4px 18px rgba(0,0,0,.4)}
+.town-card.closed{opacity:.65}
+.tc-header{padding:10px 14px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);display:flex;align-items:center;justify-content:space-between}
+.tc-header h3{font-family:var(--font-mono);font-size:14px;color:var(--cream);font-weight:700}
+.tc-status{font-family:var(--font-px);font-size:7px;padding:3px 8px;border-radius:3px;letter-spacing:1px}
+.tc-status.open{background:var(--green);color:var(--ink)}
+.tc-status.closed{background:var(--red);color:var(--cream)}
+.tc-body{padding:12px 14px;font-size:13px;color:var(--text2)}
+.tc-body .tc-note{font-style:italic;margin-top:6px;color:var(--text2);opacity:.8}
+.tc-shopkeeper{display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+.tc-shopkeeper .sk-icon{font-size:22px}
+.tc-shopkeeper .sk-name{font-weight:700;color:var(--cream);font-family:var(--font-mono)}
+.tc-shopkeeper .sk-role{font-size:12px;color:var(--text2)}
+
+/* ============================================
+   CHARACTERS VIEW
+============================================ */
+.character-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.char-card{background:var(--ink-panel);border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:border-color .2s, transform .15s, box-shadow .2s}
+.char-card:hover{border-color:var(--orange);transform:translateY(-2px);box-shadow:0 4px 18px rgba(0,0,0,.4)}
+.cc-header{padding:12px 16px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);display:flex;align-items:center;gap:12px}
+.cc-header .cc-icon{font-size:28px}
+.cc-sprite{width:64px;height:64px;image-rendering:pixelated;border:1px solid var(--border);border-radius:4px;background:rgba(0,0,0,.3);object-fit:contain;flex-shrink:0}
+.item-sprite{width:32px;height:32px;image-rendering:pixelated;vertical-align:middle;margin-right:6px}
+.id-sprite{width:64px;height:64px;image-rendering:pixelated;border:1px solid var(--border);border-radius:4px;background:rgba(0,0,0,.3);object-fit:contain}
+.env-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:10px}
+.env-card{background:var(--ink-panel);border:1px solid var(--border);border-radius:4px;padding:10px;text-align:center}
+.env-card img{width:48px;height:48px;image-rendering:pixelated;object-fit:contain;margin-bottom:6px}
+.env-card .env-name{font-size:12px;font-weight:700;color:var(--cream);font-family:var(--font-mono)}
+.env-card .env-desc{font-size:11px;color:var(--text2);margin-top:4px}
+.env-card.hazard{border-color:var(--red)}
+.env-card.furniture{border-color:var(--green)}
+.cc-header h3{font-family:var(--font-mono);font-size:15px;flex:1;color:var(--cream);font-weight:700}
+.cc-role{font-family:var(--font-px);font-size:7px;padding:3px 8px;border-radius:3px;letter-spacing:1px}
+.cc-role.player{background:var(--orange);color:var(--ink)}
+.cc-role.npc{background:var(--teal);color:var(--ink)}
+.cc-role.shopkeeper{background:var(--machine);color:var(--ink)}
+.cc-role.worker{background:var(--green);color:var(--ink)}
+.cc-body{padding:12px 16px}
+.cc-desc{font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.55}
+.cc-dialogue{margin-top:12px}
+.cc-dialogue h4{font-family:var(--font-px);font-size:7px;color:var(--orange);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.cc-dialogue-line{font-size:12px;color:var(--text2);padding:4px 0 4px 12px;border-left:2px solid var(--border);margin-bottom:4px;font-style:italic}
+.cc-dialogue-line .speaker{color:var(--cream);font-weight:700;font-style:normal}
+.cc-location{margin-top:10px;font-size:12px;color:var(--text2)}
+.cc-location b{color:var(--cream)}
+.cc-sells{margin-top:10px}
+.cc-sells h4{font-family:var(--font-px);font-size:7px;color:var(--machine);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.cc-sells-list{display:flex;flex-wrap:wrap;gap:4px}
+.cc-sells-item{font-size:11px;padding:3px 8px;border-radius:3px;background:rgba(204,153,255,.08);border:1px solid rgba(204,153,255,.18);color:var(--text2);font-family:var(--font-mono)}
+
+/* ============================================
+   BACK TO TOP
+============================================ */
+#back-top{
+  position:fixed;
+  bottom:24px;right:24px;
+  width:44px;height:44px;
+  border-radius:0;
+  background:var(--orange);
+  color:var(--ink);
+  border:none;
+  font-size:16px;
+  cursor:pointer;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s, background .2s, box-shadow .2s;
+  z-index:50;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));
+}
+#back-top.show{opacity:1;pointer-events:all}
+#back-top:hover{background:var(--amber);box-shadow:var(--glow-orange)}
+
+/* ============================================
+   SPRITE PREVIEW
+============================================ */
+.sprite-page{max-width:1000px}
+.sprite-page h2{font-family:var(--font-px);font-size:14px;color:var(--orange);margin-bottom:20px;letter-spacing:2px;text-shadow:var(--glow-orange)}
+.sprite-page h3{font-family:var(--font-mono);font-size:15px;color:var(--cream);margin:24px 0 12px;font-weight:700}
+.sprite-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;align-items:center}
+.sprite-toolbar label{font-size:12px;color:var(--text2);margin-right:4px;font-family:var(--font-px);letter-spacing:1px}
+.sprite-btn{padding:7px 14px;background:var(--ink-panel);border:1px solid var(--border);border-radius:3px;color:var(--text2);cursor:pointer;font-size:12px;font-family:var(--font-mono);transition:all .15s}
+.sprite-btn:hover{background:var(--ink-lift);color:var(--cream);border-color:var(--border-soft)}
+.sprite-btn.active{background:var(--ink-lift);color:var(--orange);border-color:var(--orange)}
+.sprite-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.sprite-cell{background:var(--ink-panel);border:1px solid var(--border);border-radius:6px;padding:14px;text-align:center;transition:border-color .2s}
+.sprite-cell:hover{border-color:var(--orange)}
+.sprite-cell img{image-rendering:pixelated;width:128px;height:128px;display:block;margin:0 auto 8px}
+.sprite-cell .dir-label{font-size:11px;color:var(--text2);font-family:var(--font-mono)}
+.sprite-section{margin-bottom:32px;padding:18px;background:var(--ink-panel);border:1px solid var(--border);border-radius:6px}
+.sprite-section h3{margin-top:0;color:var(--orange)}
+.walk-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;align-items:flex-end}
+.walk-cell{text-align:center}
+.walk-cell img{image-rendering:pixelated;width:128px;height:128px;display:block;margin:0 auto 4px}
+.walk-cell .frame-label{font-size:11px;color:var(--text2);font-family:var(--font-mono)}
+.swing-preview{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.swing-preview .swing-cell{text-align:center}
+.swing-preview img{image-rendering:pixelated;width:160px;height:160px;display:block;margin:0 auto 4px}
+.anim-preview{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.anim-preview img{image-rendering:pixelated;width:160px;height:160px;display:block;margin:0 auto 4px}
+.anim-cell{text-align:center}
+.anim-cell .dir-label{font-size:12px;color:var(--text2);font-family:var(--font-mono)}
+
+/* ============================================
+   RESPONSIVE
+============================================ */
+@media(max-width:900px){
+  :root{--sidebar-w:210px}
+  .card-grid{grid-template-columns:1fr}
+  .site-nav{padding:0 20px}
+  .site-nav .nav-links{gap:14px}
+}
+@media(max-width:768px){
+  #sidebar{display:none}
+  #main{margin-left:0}
+  :root{--sidebar-w:0px}
+  #header h1{font-size:9px}
+  #header h1 span{font-size:14px}
+  .site-nav .nav-links li:not(:last-child){display:none}
+}
+@media(max-width:600px){
+  #header{padding:0 14px;gap:10px}
+  #header h1{display:none}
+  #result-count,#kbd-hint{display:none}
+  #main{padding:16px 14px}
+  .tab-btn{padding:8px 12px;font-size:9px}
+}
+
+/* ============================================
+   PRINT
+============================================ */
+@media print{
+  .site-nav,#sidebar,#header,#back-top,.btn-tree,.modal-overlay,.scanlines,body::after{display:none!important}
+  #main{margin:0!important;padding:10px!important}
+  .recipe-card,.machine-card,.tier-block{break-inside:avoid;border:1px solid #ccc}
+  body{background:#fff;color:#000}
+  .rc-name,.mc-header h3{color:#000}
+  a{color:#000;text-decoration:underline}
+}
+</style>
+</head>
+<body>
+
+<!-- Scanlines overlay (from home page) -->
+<div class="scanlines" aria-hidden="true"></div>
+
+<!-- ─── SITE NAV (shared with home page) ────── -->
+<nav class="site-nav" id="site-nav">
+  <a href="/americanjunk/" class="nav-logo">AMERICAN<em>JUNK</em><span class="sep">//</span><span class="wiki-tag">WIKI</span></a>
+  <ul class="nav-links">
+    <li><a href="/americanjunk/#about">About</a></li>
+    <li><a href="/americanjunk/#features">Features</a></li>
+    <li><a href="/americanjunk/#screenshots">Screenshots</a></li>
+    <li><a href="/americanjunk/#studio">Studio</a></li>
+    <li><a href="/americanjunk/" class="nav-back">&larr; Back to Site</a></li>
+  </ul>
+</nav>
+
+<!-- HEADER -->
+<header id="header">
+  <h1><span>&#127981;</span>AMERICAN JUNK WIKI</h1>
+  <div id="search-wrap">
+    <span id="search-icon">&#128269;</span>
+    <input type="text" id="search" placeholder="Search recipes, items, machines, buildings, characters..." autocomplete="off">
+  </div>
+  <span id="result-count"></span>
+  <span id="kbd-hint">/</span>
+</header>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sb-section">
+    <div class="sb-title">Categories</div>
+    <div class="sb-item active" data-cat="all" onclick="filterCat('all')">&#128203; All</div>
+    <div class="sb-item" data-cat="ingots" onclick="filterCat('ingots')">&#129351; Ingots</div>
+    <div class="sb-item" data-cat="components" onclick="filterCat('components')">&#128295; Components</div>
+    <div class="sb-item" data-cat="chemicals" onclick="filterCat('chemicals')">&#129514; Chemicals</div>
+    <div class="sb-item" data-cat="tools" onclick="filterCat('tools')">&#128296; Tools</div>
+    <div class="sb-item" data-cat="infrastructure" onclick="filterCat('infrastructure')">&#9881;&#65039; Infrastructure</div>
+    <div class="sb-item" data-cat="products" onclick="filterCat('products')">&#127873; Products</div>
+    <div class="sb-item" data-cat="recycling" onclick="filterCat('recycling')">&#9851;&#65039; Recycling</div>
+  </div>
+  <div class="sb-divider"></div>
+  <div class="sb-section">
+    <div class="sb-title">Machines</div>
+    <div class="sb-item" data-machine="all" onclick="filterMachine('all')">All Machines</div>
+    <div id="sb-machines"></div>
+  </div>
+  <div class="sb-divider"></div>
+  <div class="sb-section">
+    <div class="sb-title">Tiers</div>
+    <div class="sb-item" data-tier="all" onclick="filterTier('all')">All Tiers</div>
+    <div class="sb-item" data-tier="0" onclick="filterTier(0)"><span class="tier-dot" style="background:var(--t0)"></span>Tier 0 - Scrapper</div>
+    <div class="sb-item" data-tier="1" onclick="filterTier(1)"><span class="tier-dot" style="background:var(--t1)"></span>Tier 1 - Tinkerer</div>
+    <div class="sb-item" data-tier="2" onclick="filterTier(2)"><span class="tier-dot" style="background:var(--t2)"></span>Tier 2 - Patriot</div>
+    <div class="sb-item" data-tier="3" onclick="filterTier(3)"><span class="tier-dot" style="background:var(--t3)"></span>Tier 3 - Collector</div>
+    <div class="sb-item" data-tier="4" onclick="filterTier(4)"><span class="tier-dot" style="background:var(--t4)"></span>Tier 4 - Mogul</div>
+    <div class="sb-item" data-tier="-1" onclick="filterTier(-1)"><span class="tier-dot" style="background:var(--ts)"></span>Secret - Eagle Scout</div>
+  </div>
+  <div class="sb-divider"></div>
+  <div class="sb-section">
+    <div class="sb-title">World</div>
+    <div class="sb-item" onclick="switchTab('buildings')">&#127960; Buildings &amp; Zones</div>
+    <div class="sb-item" onclick="switchTab('characters')">&#128100; Characters &amp; NPCs</div>
+    <div class="sb-item" onclick="switchTab('sprites')">&#127912; Sprite Preview</div>
+    <a class="sb-item" href="animations.html">&#127916; Animation Guide</a>
+    <div class="sb-item" onclick="switchTab('assetref')">&#128444; Asset Reference</div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="recipes" onclick="switchTab('recipes')">&#128220; Recipes</button>
+    <button class="tab-btn" data-tab="items" onclick="switchTab('items')">&#128230; Items</button>
+    <button class="tab-btn" data-tab="machines" onclick="switchTab('machines')">&#9881;&#65039; Machines</button>
+    <button class="tab-btn" data-tab="tiers" onclick="switchTab('tiers')">&#127942; Tiers</button>
+    <button class="tab-btn" data-tab="buildings" onclick="switchTab('buildings')">&#127960; Buildings</button>
+    <button class="tab-btn" data-tab="characters" onclick="switchTab('characters')">&#128100; Characters</button>
+    <button class="tab-btn" data-tab="sprites" onclick="switchTab('sprites')">&#127912; Sprites</button>
+    <button class="tab-btn" data-tab="assetref" onclick="switchTab('assetref')">&#128444; Assets</button>
+  </div>
+  <div id="recipes-view"><div class="card-grid" id="recipe-grid"></div></div>
+  <div id="items-view" style="display:none"></div>
+  <div id="machines-view" style="display:none"></div>
+  <div id="tiers-view" style="display:none"></div>
+  <div id="buildings-view" style="display:none"></div>
+  <div id="characters-view" style="display:none"></div>
+  <div id="sprites-view" style="display:none"></div>
+  <div id="assetref-view" style="display:none"></div>
+</div>
+
+<!-- ITEM DETAIL MODAL -->
+<div class="modal-overlay" id="item-modal-overlay" onclick="if(event.target===this)closeItemModal()">
+  <div class="modal" id="item-modal">
+    <button class="modal-close" onclick="closeItemModal()">&times;</button>
+    <div id="item-modal-content"></div>
+  </div>
+</div>
+
+<!-- CRAFTING TREE MODAL -->
+<div class="modal-overlay" id="tree-modal-overlay" onclick="if(event.target===this)closeTreeModal()">
+  <div class="modal ct-modal" id="tree-modal">
+    <button class="modal-close" onclick="closeTreeModal()">&times;</button>
+    <div id="tree-modal-content"></div>
+  </div>
+</div>
+
+<!-- BACK TO TOP -->
+<button id="back-top" onclick="window.scrollTo({top:0})">&#9650;</button>
+
+<script>
+// ==================== GAME DATA ====================
+const RECIPES={"basic_ingot":{"name":"Basic Ingot","machine":"smelter","category":"ingots","inputs":[{"item":"rusted_metal","count":2}],"outputs":[{"item":"basic_ingot","count":1}],"process_time":4.0,"fail_chance":0.08,"fail_result":"slag","power_cost":20,"unlock_tier":0,"description":"Melt rusty junk into something almost useful."},"copper_ingot":{"name":"Copper Ingot","machine":"smelter","category":"ingots","inputs":[{"item":"copper_wire","count":4}],"outputs":[{"item":"copper_ingot","count":1}],"process_time":5.0,"fail_chance":0.06,"fail_result":"slag","power_cost":20,"unlock_tier":1,"description":"Reclaimed copper. Ben Franklin would be proud."},"iron_ingot":{"name":"Iron Ingot","machine":"smelter","category":"ingots","inputs":[{"item":"iron_ore","count":3}],"outputs":[{"item":"iron_ingot","count":1}],"process_time":5.0,"fail_chance":0.06,"fail_result":"slag","power_cost":20,"unlock_tier":1,"description":"Proper metal. Your dad would approve."},"steel_ingot":{"name":"Steel Ingot","machine":"smelter","category":"ingots","inputs":[{"item":"iron_ingot","count":2},{"item":"coal","count":2}],"outputs":[{"item":"steel_ingot","count":1}],"process_time":7.0,"fail_chance":0.05,"fail_result":"slag","power_cost":25,"unlock_tier":2,"description":"Iron plus fire plus patience. The backbone of industry."},"patriot_ingot":{"name":"Patriot Ingot","machine":"smelter","category":"ingots","inputs":[{"item":"basic_ingot","count":1},{"item":"mystery_gizmo","count":1}],"outputs":[{"item":"patriot_ingot","count":1}],"process_time":8.0,"fail_chance":0.02,"fail_result":"slag","power_cost":30,"unlock_tier":2,"rare":true,"description":"Red, white, and blue. Machines run 10% faster near it."},"copper_plate":{"name":"Copper Plate","machine":"grinder","category":"components","inputs":[{"item":"copper_ingot","count":2}],"outputs":[{"item":"copper_plate","count":3}],"process_time":4.0,"fail_chance":0.05,"fail_result":"scrap_dust","power_cost":20,"unlock_tier":1,"description":"Flattened copper. Shiny side up."},"iron_sheet":{"name":"Iron Sheet","machine":"stamping_press","category":"components","inputs":[{"item":"iron_ingot","count":2}],"outputs":[{"item":"iron_sheet","count":2}],"process_time":5.0,"fail_chance":0.05,"fail_result":"bent_plate","power_cost":30,"unlock_tier":2,"description":"Flat iron. Good for casings and shells."},"steel_sheet":{"name":"Steel Sheet","machine":"stamping_press","category":"components","inputs":[{"item":"steel_ingot","count":2}],"outputs":[{"item":"steel_sheet","count":2}],"process_time":6.0,"fail_chance":0.04,"fail_result":"bent_plate","power_cost":30,"unlock_tier":3,"description":"Pressed steel. Industrial grade."},"iron_rod":{"name":"Iron Rod","machine":"lathe","category":"components","inputs":[{"item":"iron_ingot","count":1}],"outputs":[{"item":"iron_rod","count":2}],"process_time":4.0,"fail_chance":0.05,"fail_result":"metal_shavings","power_cost":25,"unlock_tier":2,"description":"Turned on a lathe. Smooth as freedom."},"steel_rod":{"name":"Steel Rod","machine":"lathe","category":"components","inputs":[{"item":"steel_ingot","count":1}],"outputs":[{"item":"steel_rod","count":2}],"process_time":5.0,"fail_chance":0.04,"fail_result":"metal_shavings","power_cost":25,"unlock_tier":3,"description":"Hardened steel bar. Don't drop on toes."},"copper_tube":{"name":"Copper Tube","machine":"lathe","category":"components","inputs":[{"item":"copper_ingot","count":1}],"outputs":[{"item":"copper_tube","count":2}],"process_time":4.0,"fail_chance":0.04,"fail_result":"metal_shavings","power_cost":25,"unlock_tier":2,"description":"Hollow copper pipe. Plumbers love these."},"metal_casing":{"name":"Metal Casing","machine":"stamping_press","category":"components","inputs":[{"item":"iron_sheet","count":2}],"outputs":[{"item":"metal_casing","count":1}],"process_time":6.0,"fail_chance":0.04,"fail_result":"bent_plate","power_cost":25,"unlock_tier":2,"description":"A box made of metal. Revolutionary."},"gear":{"name":"Gear","machine":"lathe","category":"components","inputs":[{"item":"iron_ingot","count":1},{"item":"copper_plate","count":1}],"outputs":[{"item":"gear","count":2}],"process_time":5.0,"fail_chance":0.06,"fail_result":"metal_shavings","power_cost":25,"unlock_tier":2,"description":"Meshing teeth. The heart of any machine."},"spring":{"name":"Spring","machine":"lathe","category":"components","inputs":[{"item":"copper_wire","count":3},{"item":"iron_rod","count":1}],"outputs":[{"item":"spring","count":3}],"process_time":4.0,"fail_chance":0.05,"fail_result":"metal_shavings","power_cost":25,"unlock_tier":2,"description":"Boing. Boing. Boing."},"adhesive":{"name":"Industrial Adhesive","machine":"chemical_mixer","category":"chemicals","inputs":[{"item":"chemical_base","count":2},{"item":"rubber_compound","count":1}],"outputs":[{"item":"adhesive","count":3}],"process_time":4.0,"fail_chance":0.06,"fail_result":"toxic_sludge","power_cost":15,"unlock_tier":2,"description":"Sticks anything to anything. Including your fingers."},"paint":{"name":"Paint","machine":"chemical_mixer","category":"chemicals","inputs":[{"item":"chemical_base","count":1},{"item":"dye","count":2}],"outputs":[{"item":"paint","count":3}],"process_time":3.0,"fail_chance":0.04,"fail_result":"toxic_sludge","power_cost":15,"unlock_tier":2,"description":"Covers rust beautifully. Doesn't fix rust."},"rubber_gasket":{"name":"Rubber Gasket","machine":"chemical_mixer","category":"chemicals","inputs":[{"item":"rubber_compound","count":2},{"item":"tar_patch","count":1}],"outputs":[{"item":"rubber_gasket","count":2}],"process_time":5.0,"fail_chance":0.03,"fail_result":"toxic_sludge","power_cost":15,"unlock_tier":2,"description":"Keeps the wet out and the dry in."},"solvent":{"name":"Industrial Solvent","machine":"chemical_mixer","category":"chemicals","inputs":[{"item":"chemical_base","count":3}],"outputs":[{"item":"solvent","count":2}],"process_time":3.0,"fail_chance":0.04,"fail_result":"toxic_sludge","power_cost":15,"unlock_tier":2,"description":"Dissolves grease, paint, and ambition."},"gunpowder_mix":{"name":"Gunpowder Mix","machine":"chemical_mixer","category":"chemicals","inputs":[{"item":"gunpowder","count":2},{"item":"chemical_base","count":1}],"outputs":[{"item":"gunpowder_mix","count":2}],"process_time":4.0,"fail_chance":0.08,"fail_result":"toxic_sludge","power_cost":15,"unlock_tier":3,"description":"Volatile. Handle with patriotic care."},"canvas":{"name":"Canvas","machine":"textile_loom","category":"components","inputs":[{"item":"fabric_roll","count":2},{"item":"thread_spool","count":2}],"outputs":[{"item":"canvas","count":2}],"process_time":4.0,"fail_chance":0.04,"fail_result":"tangled_thread","power_cost":10,"unlock_tier":2,"description":"Heavy duty fabric. Flags, tents, and dreams."},"leather_strip":{"name":"Leather Strip","machine":"textile_loom","category":"components","inputs":[{"item":"leather_hide","count":1}],"outputs":[{"item":"leather_strip","count":3}],"process_time":3.0,"fail_chance":0.03,"fail_result":"tangled_thread","power_cost":10,"unlock_tier":2,"description":"Thin leather. Good for handles and straps."},"rope":{"name":"Rope","machine":"textile_loom","category":"components","inputs":[{"item":"thread_spool","count":4}],"outputs":[{"item":"rope","count":2}],"process_time":3.0,"fail_chance":0.02,"fail_result":"tangled_thread","power_cost":10,"unlock_tier":2,"description":"Braided cord. 100 uses, none of them nefarious."},"insulated_wire":{"name":"Insulated Wire","machine":"textile_loom","category":"components","inputs":[{"item":"copper_wire","count":3},{"item":"rubber_compound","count":1}],"outputs":[{"item":"insulated_wire","count":3}],"process_time":4.0,"fail_chance":0.03,"fail_result":"tangled_thread","power_cost":10,"unlock_tier":2,"description":"Won't shock you. Probably."},"plastic_sheet":{"name":"Plastic Sheet","machine":"plastic_extruder","category":"components","inputs":[{"item":"plastic_pellets","count":3}],"outputs":[{"item":"plastic_sheet","count":2}],"process_time":4.0,"fail_chance":0.05,"fail_result":"plastic_blob","power_cost":25,"unlock_tier":3,"description":"Flat plastic. Cheap and everywhere."},"plastic_tube":{"name":"Plastic Tube","machine":"plastic_extruder","category":"components","inputs":[{"item":"plastic_pellets","count":2}],"outputs":[{"item":"plastic_tube","count":3}],"process_time":3.0,"fail_chance":0.04,"fail_result":"plastic_blob","power_cost":25,"unlock_tier":3,"description":"Hollow plastic pipe. Light and cheap."},"plastic_casing":{"name":"Plastic Casing","machine":"injection_molder","category":"components","inputs":[{"item":"plastic_sheet","count":2}],"outputs":[{"item":"plastic_casing","count":1}],"process_time":5.0,"fail_chance":0.04,"fail_result":"plastic_blob","power_cost":30,"unlock_tier":4,"description":"Injection molded shell. Fits anything."},"plastic_handle":{"name":"Plastic Handle","machine":"injection_molder","category":"components","inputs":[{"item":"plastic_pellets","count":2},{"item":"iron_rod","count":1}],"outputs":[{"item":"plastic_handle","count":2}],"process_time":4.0,"fail_chance":0.03,"fail_result":"plastic_blob","power_cost":30,"unlock_tier":4,"description":"Ergonomic grip. Made in America."},"circuit_board":{"name":"Circuit Board","machine":"circuit_assembler","category":"components","inputs":[{"item":"copper_plate","count":2},{"item":"solder_wire","count":1},{"item":"silicon_chip","count":1}],"outputs":[{"item":"circuit_board","count":1}],"process_time":6.0,"fail_chance":0.08,"fail_result":"fried_board","power_cost":20,"unlock_tier":3,"description":"The brain of modern machines. Surprisingly fragile."},"sensor_module":{"name":"Sensor Module","machine":"circuit_assembler","category":"components","inputs":[{"item":"circuit_board","count":1},{"item":"copper_tube","count":1},{"item":"insulated_wire","count":2}],"outputs":[{"item":"sensor_module","count":1}],"process_time":7.0,"fail_chance":0.06,"fail_result":"fried_board","power_cost":20,"unlock_tier":3,"description":"Detects things. Temperature, pressure, freedom levels."},"motor":{"name":"Electric Motor","machine":"circuit_assembler","category":"components","inputs":[{"item":"copper_wire","count":4},{"item":"iron_rod","count":2},{"item":"gear","count":1}],"outputs":[{"item":"motor","count":1}],"process_time":6.0,"fail_chance":0.05,"fail_result":"fried_board","power_cost":20,"unlock_tier":3,"description":"Spins really fast. The muscle of industry."},"steel_frame":{"name":"Steel Frame","machine":"welding_station","category":"components","inputs":[{"item":"steel_rod","count":4},{"item":"steel_sheet","count":2}],"outputs":[{"item":"steel_frame","count":1}],"process_time":8.0,"fail_chance":0.04,"fail_result":"slag","power_cost":35,"unlock_tier":3,"description":"Skeleton of a machine. Strong enough for anything."},"exhaust_pipe":{"name":"Exhaust Pipe","machine":"welding_station","category":"components","inputs":[{"item":"steel_sheet","count":1},{"item":"copper_tube","count":2}],"outputs":[{"item":"exhaust_pipe","count":1}],"process_time":5.0,"fail_chance":0.03,"fail_result":"slag","power_cost":35,"unlock_tier":3,"description":"Vents hot gas. Loud and proud."},"reinforced_plate":{"name":"Reinforced Plate","machine":"welding_station","category":"components","inputs":[{"item":"steel_sheet","count":2},{"item":"iron_rod","count":2}],"outputs":[{"item":"reinforced_plate","count":1}],"process_time":6.0,"fail_chance":0.03,"fail_result":"slag","power_cost":35,"unlock_tier":3,"description":"Double-thick steel. For when single-thick ain't enough."},"conveyor_belt":{"name":"Conveyor Belt","machine":"assembler","category":"infrastructure","inputs":[{"item":"basic_ingot","count":2},{"item":"rusty_bolt","count":4}],"outputs":[{"item":"conveyor_belt","count":1}],"process_time":6.0,"fail_chance":0.05,"fail_result":"jammed_parts","power_cost":15,"unlock_tier":0,"description":"Moves things from A to B. Sometimes C. Rarely D."},"wire_spool":{"name":"Wire Spool","machine":"assembler","category":"infrastructure","inputs":[{"item":"copper_wire","count":3},{"item":"rusty_bolt","count":1}],"outputs":[{"item":"wire_spool","count":5}],"process_time":3.0,"fail_chance":0.03,"fail_result":"tangled_wire","power_cost":10,"unlock_tier":0,"description":"Bundled wiring. Shocking."},"pickaxe":{"name":"Pickaxe","machine":"assembler","category":"tools","inputs":[{"item":"basic_ingot","count":2},{"item":"rusted_metal","count":3}],"outputs":[{"item":"pickaxe","count":1}],"process_time":5.0,"fail_chance":0.04,"fail_result":"jammed_parts","power_cost":15,"unlock_tier":0,"description":"For hitting rocks until they give up minerals."},"repair_kit":{"name":"Repair Kit","machine":"assembler","category":"tools","inputs":[{"item":"rubber_gasket","count":2},{"item":"copper_plate","count":1},{"item":"rusty_bolt","count":2}],"outputs":[{"item":"repair_kit","count":1}],"process_time":7.0,"fail_chance":0.03,"fail_result":"jammed_parts","power_cost":15,"unlock_tier":2,"description":"Seals 3 leaks at once. Dad's secret weapon."},"fuel_canister":{"name":"Fuel Canister","machine":"assembler","category":"tools","inputs":[{"item":"metal_casing","count":1},{"item":"coal","count":2}],"outputs":[{"item":"fuel_canister","count":1}],"process_time":4.0,"fail_chance":0.02,"fail_result":"jammed_parts","power_cost":10,"unlock_tier":2,"description":"60 seconds of generator fuel. Premium garbage."},"wrench":{"name":"Wrench","machine":"assembler","category":"tools","inputs":[{"item":"iron_ingot","count":2},{"item":"leather_strip","count":1}],"outputs":[{"item":"wrench","count":1}],"process_time":5.0,"fail_chance":0.03,"fail_result":"jammed_parts","power_cost":15,"unlock_tier":2,"description":"Tightens and loosens. The duct tape of tools."},"hammer":{"name":"Hammer","machine":"assembler","category":"tools","inputs":[{"item":"iron_rod","count":1},{"item":"leather_strip","count":1},{"item":"rusty_bolt","count":2}],"outputs":[{"item":"hammer","count":1}],"process_time":4.0,"fail_chance":0.03,"fail_result":"jammed_parts","power_cost":15,"unlock_tier":2,"description":"Hits things. Surprisingly effective problem-solving."},"fire_extinguisher":{"name":"Fire Extinguisher","machine":"assembler","category":"tools","inputs":[{"item":"metal_casing","count":1},{"item":"chemical_base","count":2},{"item":"copper_tube","count":1}],"outputs":[{"item":"fire_extinguisher","count":1}],"process_time":6.0,"fail_chance":0.02,"fail_result":"jammed_parts","power_cost":15,"unlock_tier":3,"description":"Puts out fires. Also puts out ambition if sprayed at coworkers."},"canned_food":{"name":"Canned Food","machine":"packaging_station","category":"products","inputs":[{"item":"metal_casing","count":1},{"item":"scrap_metal","count":2}],"outputs":[{"item":"canned_food","count":2}],"process_time":3.0,"fail_chance":0.02,"fail_result":"crushed_box","power_cost":5,"unlock_tier":2,"description":"Mystery meat in a can. Sells well to survivalists."},"boxed_bolts":{"name":"Boxed Bolts","machine":"packaging_station","category":"products","inputs":[{"item":"rusty_bolt","count":10},{"item":"cardboard","count":1}],"outputs":[{"item":"boxed_bolts","count":1}],"process_time":2.0,"fail_chance":0.01,"fail_result":"crushed_box","power_cost":5,"unlock_tier":2,"description":"A box of bolts. Hardware stores love these."},"paint_bucket":{"name":"Paint Bucket","machine":"packaging_station","category":"products","inputs":[{"item":"paint","count":3},{"item":"metal_casing","count":1}],"outputs":[{"item":"paint_bucket","count":1}],"process_time":3.0,"fail_chance":0.02,"fail_result":"crushed_box","power_cost":5,"unlock_tier":2,"description":"A gallon of paint. Home improvement in a bucket."},"gold_plated_conveyor":{"name":"Gold-Plated Conveyor","machine":"assembler","category":"infrastructure","inputs":[{"item":"conveyor_belt","count":1},{"item":"copper_ingot","count":2},{"item":"patriot_ingot","count":1}],"outputs":[{"item":"gold_plated_conveyor","count":1}],"process_time":10.0,"fail_chance":0.0,"fail_result":null,"power_cost":25,"unlock_tier":3,"collectors_patch":true,"description":"For the factory owner who has everything except taste."},"hot_dog":{"name":"Hot Dog","machine":"smelter","category":"products","inputs":[{"item":"scrap_metal","count":2},{"item":"mystery_gizmo","count":1}],"outputs":[{"item":"hot_dog","count":3}],"process_time":4.0,"fail_chance":0.0,"fail_result":null,"power_cost":15,"unlock_tier":3,"description":"Don't ask what's in it. You don't want to know."},"hot_dog_launcher":{"name":"Hot Dog Launcher","machine":"assembler","category":"products","inputs":[{"item":"metal_casing","count":1},{"item":"hot_dog","count":3},{"item":"spring","count":2}],"outputs":[{"item":"hot_dog_launcher","count":1}],"process_time":8.0,"fail_chance":0.01,"fail_result":"jammed_parts","power_cost":20,"unlock_tier":3,"description":"Fires lunch at 60mph. OSHA violation #47."},"liberty_bell":{"name":"Liberty Bell","machine":"welding_station","category":"products","inputs":[{"item":"patriot_ingot","count":2},{"item":"copper_ingot","count":1},{"item":"iron_ingot","count":1}],"outputs":[{"item":"liberty_bell","count":1}],"process_time":12.0,"fail_chance":0.0,"fail_result":null,"power_cost":35,"unlock_tier":3,"description":"Pre-cracked for authenticity. Rings on placement."},"power_drill":{"name":"Power Drill","machine":"assembler","category":"products","inputs":[{"item":"motor","count":1},{"item":"gear","count":2},{"item":"plastic_handle","count":1}],"outputs":[{"item":"power_drill","count":1}],"process_time":8.0,"fail_chance":0.03,"fail_result":"jammed_parts","power_cost":15,"unlock_tier":3,"description":"Drills holes in things. Very satisfying."},"tool_belt":{"name":"Tool Belt","machine":"textile_loom","category":"products","inputs":[{"item":"leather_strip","count":3},{"item":"canvas","count":1},{"item":"rusty_bolt","count":4}],"outputs":[{"item":"tool_belt","count":1}],"process_time":6.0,"fail_chance":0.02,"fail_result":"tangled_thread","power_cost":10,"unlock_tier":3,"description":"Holds all your tools. +2 hotbar slots when worn."},"firecracker":{"name":"Firecracker","machine":"assembler","category":"products","inputs":[{"item":"gunpowder_mix","count":1},{"item":"cardboard","count":1}],"outputs":[{"item":"firecracker","count":5}],"process_time":3.0,"fail_chance":0.02,"fail_result":"jammed_parts","power_cost":10,"unlock_tier":3,"description":"Pop pop pop. Legal in most states."},"roman_candle":{"name":"Roman Candle","machine":"assembler","category":"products","inputs":[{"item":"gunpowder_mix","count":2},{"item":"copper_tube","count":1},{"item":"dye","count":2}],"outputs":[{"item":"roman_candle","count":2}],"process_time":5.0,"fail_chance":0.03,"fail_result":"jammed_parts","power_cost":10,"unlock_tier":3,"description":"Shoots colored balls of fire. Do not aim at siblings."},"packaged_drill":{"name":"Packaged Power Drill","machine":"packaging_station","category":"products","inputs":[{"item":"power_drill","count":1},{"item":"cardboard","count":2}],"outputs":[{"item":"packaged_drill","count":1}],"process_time":3.0,"fail_chance":0.01,"fail_result":"crushed_box","power_cost":5,"unlock_tier":3,"description":"Ready to ship. Retail markup: 400%."},"packaged_launcher":{"name":"Packaged Hot Dog Launcher","machine":"packaging_station","category":"products","inputs":[{"item":"hot_dog_launcher","count":1},{"item":"cardboard","count":3}],"outputs":[{"item":"packaged_launcher","count":1}],"process_time":4.0,"fail_chance":0.01,"fail_result":"crushed_box","power_cost":5,"unlock_tier":3,"description":"Gift-wrapped chaos. Ages 12 and up."},"firework_box":{"name":"Firework Assortment Box","machine":"packaging_station","category":"products","inputs":[{"item":"firecracker","count":5},{"item":"roman_candle","count":2},{"item":"cardboard","count":2}],"outputs":[{"item":"firework_box","count":1}],"process_time":4.0,"fail_chance":0.01,"fail_result":"crushed_box","power_cost":5,"unlock_tier":3,"description":"Fourth of July in a box. Warning: highly patriotic."},"radio":{"name":"Patriot Radio","machine":"circuit_assembler","category":"products","inputs":[{"item":"circuit_board","count":1},{"item":"plastic_casing","count":1},{"item":"insulated_wire","count":2}],"outputs":[{"item":"radio","count":1}],"process_time":7.0,"fail_chance":0.05,"fail_result":"fried_board","power_cost":20,"unlock_tier":4,"description":"Picks up AM only. Plays nothing but country."},"american_flag":{"name":"American Flag","machine":"textile_loom","category":"products","inputs":[{"item":"canvas","count":2},{"item":"dye","count":3},{"item":"rope","count":1}],"outputs":[{"item":"american_flag","count":1}],"process_time":8.0,"fail_chance":0.0,"fail_result":null,"power_cost":10,"unlock_tier":4,"description":"Old Glory. Place it and salute."},"boombox":{"name":"Freedom Boombox","machine":"assembler","category":"products","inputs":[{"item":"circuit_board","count":1},{"item":"plastic_casing","count":1},{"item":"motor","count":1}],"outputs":[{"item":"boombox","count":1}],"process_time":9.0,"fail_chance":0.03,"fail_result":"jammed_parts","power_cost":15,"unlock_tier":4,"description":"Plays patriotic anthems. Boosts factory morale."},"muscle_car_engine":{"name":"Muscle Car Engine","machine":"welding_station","category":"products","inputs":[{"item":"steel_frame","count":1},{"item":"motor","count":2},{"item":"exhaust_pipe","count":1}],"outputs":[{"item":"muscle_car_engine","count":1}],"process_time":15.0,"fail_chance":0.02,"fail_result":"slag","power_cost":35,"unlock_tier":4,"description":"V8 power. 0 to freedom in 4 seconds."},"neon_sign":{"name":"Neon Sign","machine":"circuit_assembler","category":"products","inputs":[{"item":"copper_tube","count":3},{"item":"insulated_wire","count":2},{"item":"paint","count":1}],"outputs":[{"item":"neon_sign","count":1}],"process_time":7.0,"fail_chance":0.04,"fail_result":"fried_board","power_cost":20,"unlock_tier":4,"description":"Glows in the dark. Perfect for 'OPEN' or 'FREEDOM'."},"jukebox":{"name":"Jukebox","machine":"assembler","category":"products","inputs":[{"item":"steel_frame","count":1},{"item":"circuit_board","count":1},{"item":"neon_sign","count":1},{"item":"plastic_casing","count":1}],"outputs":[{"item":"jukebox","count":1}],"process_time":12.0,"fail_chance":0.01,"fail_result":"jammed_parts","power_cost":15,"unlock_tier":4,"rare":true,"description":"Plays your top 40. All 40 are Born in the USA."},"packaged_radio":{"name":"Packaged Radio","machine":"packaging_station","category":"products","inputs":[{"item":"radio","count":1},{"item":"cardboard","count":2}],"outputs":[{"item":"packaged_radio","count":1}],"process_time":3.0,"fail_chance":0.01,"fail_result":"crushed_box","power_cost":5,"unlock_tier":4,"description":"AM radio in a box. The gift that keeps on giving."},"scrap_dust_recycle":{"name":"Recycle Slag","machine":"grinder","category":"recycling","inputs":[{"item":"slag","count":5},{"item":"jammed_parts","count":3}],"outputs":[{"item":"rusted_metal","count":2}],"process_time":3.0,"fail_chance":0.02,"fail_result":"scrap_dust","power_cost":15,"unlock_tier":1,"description":"Even trash has trash inside it."},"grind_scrap":{"name":"Grind Scrap","machine":"grinder","category":"recycling","inputs":[{"item":"scrap_metal","count":3}],"outputs":[{"item":"rusted_metal","count":4}],"process_time":4.0,"fail_chance":0.04,"fail_result":"scrap_dust","power_cost":20,"unlock_tier":1,"description":"Bigger scrap into smaller scrap. Efficiency!"},"grind_stone":{"name":"Grind Stone","machine":"grinder","category":"recycling","inputs":[{"item":"stone","count":4}],"outputs":[{"item":"iron_ore","count":1}],"process_time":5.0,"fail_chance":0.06,"fail_result":"scrap_dust","power_cost":20,"unlock_tier":1,"description":"Crush rocks to extract trace minerals. Geology!"},"recycle_plastic":{"name":"Recycle Plastic","machine":"grinder","category":"recycling","inputs":[{"item":"plastic_blob","count":4}],"outputs":[{"item":"plastic_pellets","count":2}],"process_time":3.0,"fail_chance":0.03,"fail_result":"scrap_dust","power_cost":20,"unlock_tier":3,"description":"Reduce, reuse, regrind."},"explosive_eagle":{"name":"Explosive Eagle","machine":"bald_eagle_launcher","category":"products","inputs":[{"item":"scrap_metal","count":3},{"item":"patriot_ingot","count":1}],"outputs":[{"item":"explosive_eagle","count":1}],"process_time":2.0,"fail_chance":0.0,"fail_result":null,"power_cost":40,"unlock_tier":-1,"secret":true,"description":"Screams the national anthem on impact. Clears rubble in 5-tile radius."},"freedom_firework":{"name":"Freedom Firework","machine":"bald_eagle_launcher","category":"products","inputs":[{"item":"explosive_eagle","count":1},{"item":"patriot_ingot","count":1},{"item":"gunpowder_mix","count":2}],"outputs":[{"item":"freedom_firework","count":1}],"process_time":3.0,"fail_chance":0.0,"fail_result":null,"power_cost":50,"unlock_tier":-1,"secret":true,"description":"Clears ALL rubble in the zone. One nation, under rubble, now cleared."}};
+
+const ITEMS={"rusted_metal":{"display":"Rusted Metal","stack_max":20,"tier":0,"sell_value":25,"description":"Corroded scrap. Still good for smelting."},"scrap_metal":{"display":"Scrap Metal","stack_max":10,"tier":0,"sell_value":35,"description":"Bent panels and torn sheet metal."},"rusty_bolt":{"display":"Rusty Bolt","stack_max":20,"tier":0,"sell_value":15,"description":"Holds things together. Barely."},"copper_wire":{"display":"Copper Wire","stack_max":10,"tier":0,"sell_value":50,"description":"Salvaged wiring. Still conducts."},"tar_patch":{"display":"Tar Patch","stack_max":5,"tier":0,"sell_value":75,"description":"Sticky sealant. Use near leaks."},"mystery_gizmo":{"display":"Mystery Gizmo","stack_max":3,"tier":0,"sell_value":100,"description":"Nobody knows what this does. Dad loved them."},"coal":{"display":"Coal","stack_max":15,"tier":0,"sell_value":40,"description":"Burns hot. Feeds the generator."},"iron_ore":{"display":"Iron Ore","stack_max":15,"tier":0,"sell_value":60,"description":"Raw iron. Smelt into something useful."},"copper_ore":{"display":"Copper Ore","stack_max":15,"tier":0,"sell_value":75,"description":"Raw copper. Valuable when refined."},"stone":{"display":"Stone","stack_max":20,"tier":0,"sell_value":15,"description":"A chunk of rock. Good for building."},"plastic_pellets":{"display":"Plastic Pellets","stack_max":20,"tier":0,"sell_value":30,"description":"Tiny plastic beads. Melt and mold."},"fabric_roll":{"display":"Fabric Roll","stack_max":10,"tier":0,"sell_value":40,"description":"Bolt of cloth. American cotton."},"leather_hide":{"display":"Leather Hide","stack_max":5,"tier":0,"sell_value":80,"description":"Tanned leather. Smells like freedom."},"thread_spool":{"display":"Thread Spool","stack_max":15,"tier":0,"sell_value":20,"description":"Industrial thread. Strong and thin."},"chemical_base":{"display":"Chemical Base","stack_max":10,"tier":0,"sell_value":45,"description":"Generic chemical solution. Don't drink."},"rubber_compound":{"display":"Rubber Compound","stack_max":10,"tier":0,"sell_value":35,"description":"Raw rubber. Stretchy and useful."},"dye":{"display":"Dye","stack_max":15,"tier":0,"sell_value":25,"description":"Coloring agent. Red, white, or blue."},"solder_wire":{"display":"Solder Wire","stack_max":10,"tier":0,"sell_value":55,"description":"Tin-lead wire. Joins circuits."},"silicon_chip":{"display":"Silicon Chip","stack_max":10,"tier":0,"sell_value":70,"description":"Tiny semiconductor. Brain of machines."},"cardboard":{"display":"Cardboard","stack_max":20,"tier":0,"sell_value":10,"description":"Brown and boring. Essential for shipping."},"gunpowder":{"display":"Gunpowder","stack_max":10,"tier":0,"sell_value":65,"description":"Boom powder. Handle with extreme patriotism."},"basic_ingot":{"display":"Basic Ingot","stack_max":10,"tier":1,"sell_value":200,"description":"Smelted metal. The building block of everything."},"copper_ingot":{"display":"Copper Ingot","stack_max":10,"tier":1,"sell_value":350,"description":"Refined copper. Shiny and useful."},"iron_ingot":{"display":"Iron Ingot","stack_max":10,"tier":1,"sell_value":250,"description":"Proper metal. Your dad would approve."},"steel_ingot":{"display":"Steel Ingot","stack_max":10,"tier":2,"sell_value":500,"description":"Iron plus fire. The backbone of industry."},"patriot_ingot":{"display":"Patriot Ingot","stack_max":5,"tier":2,"sell_value":500,"description":"Red, white, and blue. Machines run faster near it.","rare":true},"copper_plate":{"display":"Copper Plate","stack_max":10,"tier":1,"sell_value":200,"description":"Flattened copper. Shiny side up."},"iron_sheet":{"display":"Iron Sheet","stack_max":10,"tier":2,"sell_value":280,"description":"Flat iron. Good for casings."},"steel_sheet":{"display":"Steel Sheet","stack_max":10,"tier":3,"sell_value":550,"description":"Pressed steel. Industrial grade."},"iron_rod":{"display":"Iron Rod","stack_max":10,"tier":2,"sell_value":150,"description":"Turned on a lathe. Smooth as freedom."},"steel_rod":{"display":"Steel Rod","stack_max":10,"tier":3,"sell_value":300,"description":"Hardened steel bar. Don't drop on toes."},"copper_tube":{"display":"Copper Tube","stack_max":10,"tier":2,"sell_value":200,"description":"Hollow copper pipe. Plumbers love these."},"metal_casing":{"display":"Metal Casing","stack_max":5,"tier":2,"sell_value":400,"description":"A box made of metal. Revolutionary."},"gear":{"display":"Gear","stack_max":10,"tier":2,"sell_value":220,"description":"Meshing teeth. Heart of any machine."},"spring":{"display":"Spring","stack_max":15,"tier":2,"sell_value":120,"description":"Boing. Boing. Boing."},"rubber_gasket":{"display":"Rubber Gasket","stack_max":10,"tier":2,"sell_value":150,"description":"Keeps the wet out and the dry in."},"adhesive":{"display":"Industrial Adhesive","stack_max":10,"tier":2,"sell_value":110,"description":"Sticks anything to anything."},"paint":{"display":"Paint","stack_max":10,"tier":2,"sell_value":80,"description":"Covers rust beautifully. Doesn't fix rust."},"solvent":{"display":"Industrial Solvent","stack_max":10,"tier":2,"sell_value":90,"description":"Dissolves grease, paint, and ambition."},"gunpowder_mix":{"display":"Gunpowder Mix","stack_max":10,"tier":3,"sell_value":130,"description":"Volatile. Handle with patriotic care."},"canvas":{"display":"Canvas","stack_max":10,"tier":2,"sell_value":180,"description":"Heavy duty fabric."},"leather_strip":{"display":"Leather Strip","stack_max":15,"tier":2,"sell_value":100,"description":"Thin leather. Good for handles."},"rope":{"display":"Rope","stack_max":10,"tier":2,"sell_value":80,"description":"Braided cord. 100 uses."},"insulated_wire":{"display":"Insulated Wire","stack_max":10,"tier":2,"sell_value":160,"description":"Won't shock you. Probably."},"plastic_sheet":{"display":"Plastic Sheet","stack_max":10,"tier":3,"sell_value":120,"description":"Flat plastic. Cheap and everywhere."},"plastic_tube":{"display":"Plastic Tube","stack_max":10,"tier":3,"sell_value":90,"description":"Hollow plastic pipe. Light and cheap."},"plastic_casing":{"display":"Plastic Casing","stack_max":5,"tier":4,"sell_value":300,"description":"Injection molded shell. Fits anything."},"plastic_handle":{"display":"Plastic Handle","stack_max":10,"tier":4,"sell_value":200,"description":"Ergonomic grip. Made in America."},"circuit_board":{"display":"Circuit Board","stack_max":5,"tier":3,"sell_value":600,"description":"The brain of modern machines."},"sensor_module":{"display":"Sensor Module","stack_max":5,"tier":3,"sell_value":800,"description":"Detects temperature, pressure, freedom levels."},"motor":{"display":"Electric Motor","stack_max":5,"tier":3,"sell_value":700,"description":"Spins really fast. The muscle of industry."},"steel_frame":{"display":"Steel Frame","stack_max":3,"tier":3,"sell_value":1200,"description":"Skeleton of a machine."},"exhaust_pipe":{"display":"Exhaust Pipe","stack_max":5,"tier":3,"sell_value":450,"description":"Vents hot gas. Loud and proud."},"reinforced_plate":{"display":"Reinforced Plate","stack_max":5,"tier":3,"sell_value":650,"description":"Double-thick steel. For serious work."},"pickaxe":{"display":"Pickaxe","stack_max":1,"tier":0,"sell_value":200,"description":"Swing at rocks to mine ore.","tool":true},"repair_kit":{"display":"Repair Kit","stack_max":3,"tier":2,"sell_value":600,"description":"Seals 3 leaks at once.","consumable":true},"fuel_canister":{"display":"Fuel Canister","stack_max":5,"tier":2,"sell_value":300,"description":"60 seconds of generator fuel.","consumable":true},"wrench":{"display":"Wrench","stack_max":3,"tier":2,"sell_value":350,"description":"Tightens and loosens.","tool":true},"hammer":{"display":"Hammer","stack_max":3,"tier":2,"sell_value":300,"description":"Hits things. Effective problem-solving.","tool":true},"fire_extinguisher":{"display":"Fire Extinguisher","stack_max":2,"tier":3,"sell_value":500,"description":"Puts out fires.","consumable":true},"conveyor_belt":{"display":"Conveyor Belt","stack_max":10,"tier":1,"sell_value":750,"description":"Moves items from A to B."},"gold_plated_conveyor":{"display":"Gold-Plated Conveyor","stack_max":5,"tier":3,"sell_value":5000,"description":"2x speed. For the factory owner who has everything.","speed_multiplier":2.0},"wire_spool":{"display":"Wire Spool","stack_max":20,"tier":0,"sell_value":60,"description":"Bundled cable."},"hot_dog":{"display":"Hot Dog","stack_max":10,"tier":3,"sell_value":150,"description":"Don't ask what's in it."},"hot_dog_launcher":{"display":"Hot Dog Launcher","stack_max":1,"tier":3,"sell_value":3000,"description":"Fires lunch at 60mph.","consumable":true},"liberty_bell":{"display":"Liberty Bell","stack_max":1,"tier":3,"sell_value":4000,"description":"Pre-cracked. Integrity regen aura.","placeable":true},"power_drill":{"display":"Power Drill","stack_max":3,"tier":3,"sell_value":2000,"description":"Drills holes. Very satisfying."},"tool_belt":{"display":"Tool Belt","stack_max":1,"tier":3,"sell_value":1800,"description":"+2 hotbar slots when worn.","equippable":true},"canned_food":{"display":"Canned Food","stack_max":10,"tier":2,"sell_value":400,"description":"Mystery meat in a can."},"boxed_bolts":{"display":"Boxed Bolts","stack_max":10,"tier":2,"sell_value":250,"description":"A box of bolts."},"paint_bucket":{"display":"Paint Bucket","stack_max":5,"tier":2,"sell_value":500,"description":"A gallon of paint."},"firecracker":{"display":"Firecracker","stack_max":20,"tier":3,"sell_value":100,"description":"Pop pop pop."},"roman_candle":{"display":"Roman Candle","stack_max":10,"tier":3,"sell_value":250,"description":"Shoots colored fire."},"radio":{"display":"Patriot Radio","stack_max":3,"tier":4,"sell_value":2500,"description":"AM only. Nothing but country."},"american_flag":{"display":"American Flag","stack_max":3,"tier":4,"sell_value":3000,"description":"Old Glory.","placeable":true},"boombox":{"display":"Freedom Boombox","stack_max":2,"tier":4,"sell_value":3500,"description":"Plays patriotic anthems.","placeable":true},"muscle_car_engine":{"display":"Muscle Car Engine","stack_max":1,"tier":4,"sell_value":8000,"description":"V8 power. 0 to freedom in 4 seconds.","rare":true},"neon_sign":{"display":"Neon Sign","stack_max":3,"tier":4,"sell_value":2000,"description":"Glows in the dark.","placeable":true},"jukebox":{"display":"Jukebox","stack_max":1,"tier":4,"sell_value":6000,"description":"All 40 tracks are Born in the USA.","rare":true,"placeable":true},"packaged_drill":{"display":"Packaged Power Drill","stack_max":5,"tier":3,"sell_value":3000,"description":"Ready to ship."},"packaged_launcher":{"display":"Packaged Hot Dog Launcher","stack_max":3,"tier":3,"sell_value":5000,"description":"Gift-wrapped chaos."},"packaged_radio":{"display":"Packaged Radio","stack_max":5,"tier":4,"sell_value":4000,"description":"AM radio in a box."},"firework_box":{"display":"Firework Assortment","stack_max":5,"tier":3,"sell_value":2000,"description":"Fourth of July in a box."},"explosive_eagle":{"display":"Explosive Eagle","stack_max":3,"tier":-1,"sell_value":2500,"description":"Screams the anthem on impact.","secret":true},"freedom_firework":{"display":"Freedom Firework","stack_max":1,"tier":-1,"sell_value":5000,"description":"Clears ALL rubble in the zone.","secret":true,"consumable":true},"slag":{"display":"Slag","stack_max":20,"tier":0,"sell_value":5,"description":"Smelting waste. Worthless junk."},"jammed_parts":{"display":"Jammed Parts","stack_max":10,"tier":0,"sell_value":10,"description":"A failed assembly. Toss it."},"tangled_wire":{"display":"Tangled Wire","stack_max":10,"tier":0,"sell_value":10,"description":"Wire spool gone wrong."},"scrap_dust":{"display":"Scrap Dust","stack_max":20,"tier":0,"sell_value":3,"description":"The dust of a thousand failed ambitions."},"bent_plate":{"display":"Bent Plate","stack_max":10,"tier":0,"sell_value":8,"description":"Bent beyond repair. Sell it."},"metal_shavings":{"display":"Metal Shavings","stack_max":20,"tier":0,"sell_value":5,"description":"Curly metal bits. Mildly hazardous."},"toxic_sludge":{"display":"Toxic Sludge","stack_max":10,"tier":0,"sell_value":2,"description":"Green and glowing. Do not taste."},"plastic_blob":{"display":"Plastic Blob","stack_max":10,"tier":0,"sell_value":5,"description":"Melted plastic gone wrong. Recyclable."},"tangled_thread":{"display":"Tangled Thread","stack_max":10,"tier":0,"sell_value":3,"description":"A knotted mess."},"fried_board":{"display":"Fried Board","stack_max":10,"tier":0,"sell_value":8,"description":"Burnt circuit. Smells like progress."},"crushed_box":{"display":"Crushed Box","stack_max":10,"tier":0,"sell_value":2,"description":"Flattened cardboard. Not shippable."},"lumber_wall":{"display":"Lumber Wall","stack_max":20,"tier":0,"sell_value":30,"description":"Wooden wall section.","building":true},"concrete_floor":{"display":"Concrete Floor","stack_max":20,"tier":0,"sell_value":25,"description":"Poured concrete.","building":true},"brick_wall":{"display":"Brick Wall","stack_max":20,"tier":0,"sell_value":50,"description":"Sturdy brick. Built to last.","building":true},"wooden_door":{"display":"Wooden Door","stack_max":10,"tier":0,"sell_value":40,"description":"A simple door.","building":true}};
+
+const MACHINES={"generator":{"name":"Scrap Generator","type":"generator","power_output":50,"fuel_items":["scrap_metal","coal","rusty_bolt","fuel_canister"],"fuel_burn_rate":1.0,"fuel_per_item":{"scrap_metal":15.0,"coal":30.0,"rusty_bolt":5.0,"fuel_canister":60.0},"heat_output":8,"max_heat":100,"craft_cost":{"scrap_metal":5,"copper_wire":3},"size":[2,2],"description":"Burns junk to make juice. America runs on garbage."},"smelter":{"name":"Smelter","type":"machine","power_in":20,"heat_output":5,"max_heat":80,"recipe_slots":2,"process_time":4.0,"fail_chance":0.08,"craft_cost":{"scrap_metal":8,"rusty_bolt":4},"size":[2,1],"description":"Melts trash into treasure. Sometimes melts itself."},"assembler":{"name":"Assembler","type":"machine","power_in":15,"heat_output":2,"max_heat":60,"recipe_slots":3,"process_time":6.0,"fail_chance":0.05,"craft_cost":{"basic_ingot":4,"copper_wire":2,"rusty_bolt":6},"size":[2,2],"description":"Bolts things together. Precision not guaranteed."},"bald_eagle_launcher":{"name":"Bald Eagle Launcher","type":"machine","power_in":40,"heat_output":15,"max_heat":120,"recipe_slots":1,"process_time":2.0,"fail_chance":0.0,"craft_cost":{"patriot_ingot":2,"copper_wire":5,"mystery_gizmo":1},"size":[2,2],"secret":true,"description":"Launches explosive eagles at terminal velocity. For freedom."},"grinder":{"name":"Grinder","type":"machine","power_in":20,"heat_output":4,"max_heat":70,"recipe_slots":2,"process_time":4.0,"fail_chance":0.06,"fail_result":"scrap_dust","craft_cost":{"basic_ingot":3,"rusty_bolt":2},"size":[2,1],"description":"Shreds metal into smaller metal. Progress."},"stamping_press":{"name":"Stamping Press","type":"machine","power_in":30,"heat_output":6,"max_heat":90,"recipe_slots":2,"process_time":5.0,"fail_chance":0.05,"fail_result":"bent_plate","craft_cost":{"basic_ingot":4,"copper_ingot":2,"rusty_bolt":4},"size":[2,2],"description":"Stamps metal flat. Also stamps fingers flat. Be careful."},"lathe":{"name":"Lathe","type":"machine","power_in":25,"heat_output":5,"max_heat":80,"recipe_slots":2,"process_time":5.0,"fail_chance":0.05,"fail_result":"metal_shavings","craft_cost":{"basic_ingot":3,"iron_ingot":2,"copper_wire":3},"size":[2,1],"description":"Spins metal really fast and cuts shapes. Do not wear a tie."},"welding_station":{"name":"Welding Station","type":"machine","power_in":35,"heat_output":10,"max_heat":110,"recipe_slots":3,"process_time":6.0,"fail_chance":0.04,"fail_result":"slag","craft_cost":{"iron_ingot":3,"copper_ingot":2,"basic_ingot":4},"size":[2,2],"description":"Joins metal with fire. Protective eyewear strongly recommended."},"chemical_mixer":{"name":"Chemical Mixer","type":"machine","power_in":15,"heat_output":3,"max_heat":65,"recipe_slots":3,"process_time":4.0,"fail_chance":0.06,"fail_result":"toxic_sludge","craft_cost":{"copper_ingot":2,"basic_ingot":3,"rusty_bolt":4},"size":[2,1],"description":"Mixes chemicals together. What could go wrong?"},"plastic_extruder":{"name":"Plastic Extruder","type":"machine","power_in":25,"heat_output":7,"max_heat":85,"recipe_slots":2,"process_time":5.0,"fail_chance":0.05,"fail_result":"plastic_blob","craft_cost":{"iron_ingot":3,"copper_wire":4,"rubber_compound":2},"size":[2,1],"description":"Melts pellets into plastic shapes. Smells awful."},"textile_loom":{"name":"Textile Loom","type":"machine","power_in":10,"heat_output":1,"max_heat":50,"recipe_slots":2,"process_time":4.0,"fail_chance":0.04,"fail_result":"tangled_thread","craft_cost":{"basic_ingot":2,"rusty_bolt":3,"copper_wire":2},"size":[2,1],"description":"Weaves fabric from thread. Like grandma's but industrial."},"circuit_assembler":{"name":"Circuit Assembler","type":"machine","power_in":20,"heat_output":4,"max_heat":70,"recipe_slots":3,"process_time":6.0,"fail_chance":0.08,"fail_result":"fried_board","craft_cost":{"copper_ingot":3,"iron_ingot":2,"copper_wire":5},"size":[2,1],"description":"Solders tiny components onto boards. Magnifying glass required."},"injection_molder":{"name":"Injection Molder","type":"machine","power_in":30,"heat_output":8,"max_heat":95,"recipe_slots":2,"process_time":5.0,"fail_chance":0.04,"fail_result":"plastic_blob","craft_cost":{"steel_ingot":3,"copper_ingot":2,"iron_ingot":4},"size":[2,2],"description":"Injects molten plastic into molds. Mass production achieved."},"packaging_station":{"name":"Packaging Station","type":"machine","power_in":5,"heat_output":0,"max_heat":40,"recipe_slots":4,"process_time":3.0,"fail_chance":0.02,"fail_result":"crushed_box","craft_cost":{"basic_ingot":2,"rusty_bolt":4},"size":[2,2],"description":"Boxes things up for shipping. The final step before profit."}};
+
+const TIERS={"0":{"name":"Scrapper","description":"You found the factory. Now what?","unlocked_by_default":true,"recipes":["basic_ingot","conveyor_belt","wire_spool","pickaxe"]},"1":{"name":"Tinkerer","description":"First ingots smelted. The machines remember.","unlock_condition":{"craft_item":"basic_ingot","count":3},"recipes":["copper_ingot","iron_ingot","copper_plate","scrap_dust_recycle","grind_scrap","grind_stone"]},"2":{"name":"Patriot","description":"You mixed mystery with metal. The factory hums with pride.","unlock_condition":{"type":"multi_craft","requirements":[{"craft_item":"copper_ingot","count":2},{"craft_item":"iron_ingot","count":2}]},"recipes":["steel_ingot","patriot_ingot","iron_sheet","iron_rod","copper_tube","metal_casing","gear","spring","adhesive","paint","rubber_gasket","solvent","canvas","leather_strip","rope","insulated_wire","repair_kit","fuel_canister","wrench","hammer","canned_food","boxed_bolts","paint_bucket"]},"3":{"name":"Collector","description":"Gold? In THIS economy? The factory approves.","unlock_condition":{"type":"multi_craft","requirements":[{"craft_item":"patriot_ingot","count":2},{"craft_item":"steel_ingot","count":1}]},"recipes":["steel_sheet","steel_rod","plastic_sheet","plastic_tube","gunpowder_mix","circuit_board","sensor_module","motor","steel_frame","exhaust_pipe","reinforced_plate","recycle_plastic","gold_plated_conveyor","hot_dog","hot_dog_launcher","liberty_bell","power_drill","tool_belt","fire_extinguisher","firecracker","roman_candle","packaged_drill","packaged_launcher","firework_box"]},"4":{"name":"Mogul","description":"The shipping trucks are lined up. Time to build an empire.","unlock_condition":{"type":"cumulative_sell","total_value":50000},"recipes":["plastic_casing","plastic_handle","radio","american_flag","boombox","muscle_car_engine","neon_sign","jukebox","packaged_radio"]}};
+
+const SECRET_TIER={"name":"Eagle Scout","description":"You found the forbidden shape. The factory shudders with pride.","unlock_condition":"easter_egg:bald_eagle_launcher","recipes":["explosive_eagle","freedom_firework"]};
+
+const MACHINE_ICONS={"smelter":"\u{1F525}","grinder":"\u2699\uFE0F","stamping_press":"\u{1F528}","lathe":"\u{1F529}","welding_station":"\u26A1","chemical_mixer":"\u{1F9EA}","plastic_extruder":"\u{1F527}","textile_loom":"\u{1F9F5}","circuit_assembler":"\u{1F4BB}","injection_molder":"\u{1F3ED}","packaging_station":"\u{1F4E6}","assembler":"\u{1F527}","bald_eagle_launcher":"\u{1F985}","generator":"\u{1F50B}"};
+
+const MACHINE_IMAGES={"smelter":"../assets/sprites/machines/smelter.png","grinder":"../assets/sprites/machines/grinder.png","stamping_press":"../assets/sprites/machines/stamping_press.png","lathe":"../assets/sprites/machines/lathe.png","welding_station":"../assets/sprites/machines/welding_station.png","chemical_mixer":"../assets/sprites/machines/chemical_mixer.png","plastic_extruder":"../assets/sprites/machines/plastic_extruder.png","textile_loom":"../assets/sprites/machines/textile_loom.png","circuit_assembler":"../assets/sprites/machines/circuit_assembler.png","injection_molder":"../assets/sprites/machines/injection_molder.png","packaging_station":"../assets/sprites/machines/packaging_station.png","assembler":"../assets/sprites/machines/assembler.png","bald_eagle_launcher":"../assets/sprites/machines/bald_eagle_launcher.png","generator":"../assets/sprites/machines/generator.png"};
+
+const CHARACTER_IMAGES={"player":"../assets/sprites/characters/main_character_v2/rotations/south.png","earl":"../assets/sprites/characters/earl_v2/rotations/south.png"};
+
+const HAZARD_IMAGES={"rubble_pile":{"name":"Rubble Pile","path":"../assets/sprites/hazards/rubble_pile.png","description":"Blocks passage. Clear with pickaxe."},"leak_puddle":{"name":"Leak Puddle","path":"../assets/sprites/hazards/leak_puddle.png","description":"Spreads corrosion. Seal with tar patch."},"exposed_wire":{"name":"Exposed Wire","path":"../assets/sprites/hazards/exposed_wire.png","description":"Sparks dangerously. Powered state tied to grid."},"broken_window":{"name":"Broken Window","path":"../assets/sprites/hazards/broken_window.png","description":"Lets in weather. Board up to stabilize integrity."}};
+
+const FURNITURE_IMAGES={"workbench":{"name":"Workbench","path":"../assets/sprites/furniture/workbench.png","description":"Work surface with storage slots."},"fuse_box":{"name":"Fuse Box","path":"../assets/sprites/furniture/fuse_box.png","description":"Electrical panel. Interactable."},"pipe_valve":{"name":"Pipe Valve","path":"../assets/sprites/furniture/pipe_valve.png","description":"Controls fluid flow."},"tool_rack":{"name":"Tool Rack","path":"../assets/sprites/furniture/tool_rack.png","description":"Wall-mounted tool display."},"trash_can":{"name":"Trash Can","path":"../assets/sprites/furniture/trash_can.png","description":"Dispose of unwanted items."},"crates":{"name":"Crates","path":"../assets/sprites/furniture/crates.png","description":"Stacked storage crates. May contain loot."}};
+
+function itemSpriteTag(itemId,size){
+  size=size||32;
+  const path='../assets/sprites/items/'+itemId+'.png';
+  return `<img class="item-sprite" src="${path}" alt="" style="width:${size}px;height:${size}px" onerror="this.style.display='none'">`;
+}
+
+const ITEM_SOURCES={"rusted_metal":["rubble"],"scrap_metal":["rubble"],"rusty_bolt":["rubble"],"copper_wire":["rubble"],"tar_patch":["rubble"],"mystery_gizmo":["rubble"],"coal":["rubble"],"wire_spool":["rubble","crafting"],"iron_ore":["mining","rubble"],"copper_ore":["mining"],"stone":["mining"],"plastic_pellets":["store"],"fabric_roll":["store"],"leather_hide":["store"],"thread_spool":["store"],"chemical_base":["store"],"rubber_compound":["store"],"dye":["store"],"solder_wire":["store"],"silicon_chip":["store"],"cardboard":["store"],"gunpowder":["store"]};
+
+// ==================== HELPERS ====================
+const TIER_COLORS={0:'var(--t0)',1:'var(--t1)',2:'var(--t2)',3:'var(--t3)',4:'var(--t4)','-1':'var(--ts)'};
+const TIER_NAMES={0:'Tier 0',1:'Tier 1',2:'Tier 2',3:'Tier 3',4:'Tier 4','-1':'Secret'};
+
+function itemName(id){return ITEMS[id]?ITEMS[id].display:id.replace(/_/g,' ').replace(/\b\w/g,l=>l.toUpperCase())}
+function tierColor(t){return TIER_COLORS[t]||'var(--t0)'}
+function tierName(t){return TIER_NAMES[t]||('Tier '+t)}
+function machineName(id){return MACHINES[id]?MACHINES[id].name:id.replace(/_/g,' ').replace(/\b\w/g,l=>l.toUpperCase())}
+function machineIcon(id){return MACHINE_ICONS[id]||'\u2699\uFE0F'}
+function pct(v){return Math.round(v*100)+'%'}
+
+// Build reverse lookups
+const itemToRecipe={};// item_id -> recipe_id that produces it
+const itemUsedIn={};// item_id -> [{recipe_id, recipe}]
+for(const[rid,r]of Object.entries(RECIPES)){
+  for(const o of r.outputs){if(!itemToRecipe[o.item])itemToRecipe[o.item]=rid;}
+  for(const inp of r.inputs){
+    if(!itemUsedIn[inp.item])itemUsedIn[inp.item]=[];
+    itemUsedIn[inp.item].push({recipe_id:rid,recipe:r});
+  }
+}
+
+// Build machine -> recipes lookup
+const machineRecipes={};
+for(const[rid,r]of Object.entries(RECIPES)){
+  if(!machineRecipes[r.machine])machineRecipes[r.machine]=[];
+  machineRecipes[r.machine].push({id:rid,...r});
+}
+
+// ==================== STATE ====================
+let currentTab='recipes';
+let filterCategory='all';
+let filterMachineId='all';
+let filterTierId='all';
+let searchQuery='';
+let itemSortCol='name';
+let itemSortAsc=true;
+
+// ==================== SIDEBAR MACHINES ====================
+(function buildSidebarMachines(){
+  const el=document.getElementById('sb-machines');
+  let html='';
+  for(const[mid,m]of Object.entries(MACHINES)){
+    if(mid==='generator')continue;
+    html+=`<div class="sb-item" data-machine="${mid}" onclick="filterMachine('${mid}')">${machineIcon(mid)} ${m.name}</div>`;
+  }
+  el.innerHTML=html;
+})();
+
+// ==================== TAB SWITCHING ====================
+function switchTab(tab){
+  currentTab=tab;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+  ['recipes','items','machines','tiers','buildings','characters','sprites','assetref'].forEach(t=>{
+    document.getElementById(t+'-view').style.display=tab===t?'':'none';
+  });
+  render();
+  updateHash();
+}
+
+// ==================== FILTERS ====================
+function filterCat(cat){
+  filterCategory=cat;
+  document.querySelectorAll('[data-cat]').forEach(e=>e.classList.toggle('active',e.dataset.cat===cat));
+  if(currentTab!=='recipes')switchTab('recipes');
+  else render();
+}
+function filterMachine(mid){
+  filterMachineId=mid;
+  document.querySelectorAll('[data-machine]').forEach(e=>e.classList.toggle('active',e.dataset.machine===mid));
+  if(currentTab!=='recipes')switchTab('recipes');
+  else render();
+}
+function filterTier(t){
+  filterTierId=t==='all'?'all':Number(t);
+  document.querySelectorAll('[data-tier]').forEach(e=>e.classList.toggle('active',e.dataset.tier===String(t)));
+  if(currentTab!=='recipes')switchTab('recipes');
+  else render();
+}
+
+// ==================== SEARCH ====================
+document.getElementById('search').addEventListener('input',function(){
+  searchQuery=this.value.toLowerCase().trim();
+  render();
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){
+    e.preventDefault();
+    document.getElementById('search').focus();
+  }
+  if(e.key==='Escape'){closeItemModal();closeTreeModal();document.getElementById('search').blur();}
+});
+
+// ==================== RECIPE MATCHING ====================
+function recipeMatches(rid,r){
+  if(filterCategory!=='all'&&r.category!==filterCategory)return false;
+  if(filterMachineId!=='all'&&r.machine!==filterMachineId)return false;
+  if(filterTierId!=='all'&&r.unlock_tier!==filterTierId)return false;
+  if(searchQuery){
+    const hay=[r.name,r.description||'',r.machine,r.category,
+      ...r.inputs.map(i=>itemName(i.item)),
+      ...r.outputs.map(o=>itemName(o.item))].join(' ').toLowerCase();
+    if(!hay.includes(searchQuery))return false;
+  }
+  return true;
+}
+
+// ==================== RENDER ====================
+function render(){
+  if(currentTab==='recipes')renderRecipes();
+  else if(currentTab==='items')renderItems();
+  else if(currentTab==='machines')renderMachines();
+  else if(currentTab==='tiers')renderTiers();
+  else if(currentTab==='buildings')renderBuildings();
+  else if(currentTab==='characters')renderCharacters();
+  else if(currentTab==='sprites')renderSprites();
+  else if(currentTab==='assetref')renderAssetRef();
+}
+
+function renderRecipes(){
+  const grid=document.getElementById('recipe-grid');
+  let html='';let shown=0;const total=Object.keys(RECIPES).length;
+  for(const[rid,r]of Object.entries(RECIPES)){
+    if(!recipeMatches(rid,r))continue;
+    shown++;
+    const tc=tierColor(r.unlock_tier);
+    const tn=r.unlock_tier===-1?'Secret':('T'+r.unlock_tier);
+    html+=`<div class="recipe-card" id="recipe-${rid}">
+      <div class="rc-header">
+        <span class="rc-machine">${itemSpriteTag(r.outputs[0].item,24)||machineIcon(r.machine)}</span>
+        <span class="rc-name">${r.name}</span>
+        <span class="tier-badge" style="background:${tc};color:#000">${tn}</span>
+      </div>
+      <div class="rc-body">
+        <div class="rc-io">
+          <div class="rc-inputs">
+            ${r.inputs.map(i=>`<div class="rc-io-item"><span class="bullet-in">\u25C6</span> <a class="item-link" onclick="openItemDetail('${i.item}')">${itemName(i.item)}</a> <span class="qty">\u00D7${i.count}</span></div>`).join('')}
+          </div>
+          <div class="rc-arrow">\u2192</div>
+          <div class="rc-outputs">
+            ${r.outputs.map(o=>`<div class="rc-io-item"><span class="bullet-out">\u25C7</span> <a class="item-link" onclick="openItemDetail('${o.item}')">${itemName(o.item)}</a> <span class="qty">\u00D7${o.count}</span></div>`).join('')}
+          </div>
+        </div>
+        <div class="rc-stats">
+          <span>\u23F1 ${r.process_time}s</span>
+          <span>\u26A1${r.power_cost}W</span>
+          ${r.fail_chance>0?`<span style="color:var(--danger)">\u2716 ${pct(r.fail_chance)} fail \u2192 ${itemName(r.fail_result)}</span>`:'<span style="color:var(--success)">\u2714 No fail</span>'}
+        </div>
+        <div class="rc-desc">"${r.description}"</div>
+        <div class="rc-actions">
+          ${r.outputs.map(o=>`<button class="btn-tree" onclick="openCraftingTree('${o.item}')">\u{1F333} Crafting Tree</button>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  }
+  grid.innerHTML=html||'<p style="color:var(--text2);padding:20px">No recipes match your filters.</p>';
+  document.getElementById('result-count').textContent=`Showing ${shown} of ${total} recipes`;
+}
+
+function renderItems(){
+  const view=document.getElementById('items-view');
+  let entries=Object.entries(ITEMS);
+  // Filter by search
+  if(searchQuery){
+    entries=entries.filter(([id,it])=>{
+      const hay=[it.display,it.description,id].join(' ').toLowerCase();
+      return hay.includes(searchQuery);
+    });
+  }
+  // Sort
+  entries.sort((a,b)=>{
+    let va,vb;
+    if(itemSortCol==='name'){va=a[1].display;vb=b[1].display;}
+    else if(itemSortCol==='tier'){va=a[1].tier;vb=b[1].tier;}
+    else if(itemSortCol==='value'){va=a[1].sell_value;vb=b[1].sell_value;}
+    else if(itemSortCol==='stack'){va=a[1].stack_max;vb=b[1].stack_max;}
+    else{va=a[1].display;vb=b[1].display;}
+    if(typeof va==='string')return itemSortAsc?va.localeCompare(vb):vb.localeCompare(va);
+    return itemSortAsc?(va-vb):(vb-va);
+  });
+
+  function sortIcon(col){
+    if(itemSortCol!==col)return'<span class="sort-arrow">\u2195</span>';
+    return itemSortAsc?'<span class="sort-arrow">\u25B2</span>':'<span class="sort-arrow">\u25BC</span>';
+  }
+
+  let html=`<table id="items-table">
+    <thead><tr>
+      <th onclick="sortItems('name')">Name ${sortIcon('name')}</th>
+      <th onclick="sortItems('tier')">Tier ${sortIcon('tier')}</th>
+      <th onclick="sortItems('value')">Value ${sortIcon('value')}</th>
+      <th onclick="sortItems('stack')">Stack ${sortIcon('stack')}</th>
+      <th>Description</th>
+      <th>Tags</th>
+      <th>Used In</th>
+    </tr></thead><tbody>`;
+  for(const[id,it]of entries){
+    const tc=tierColor(it.tier);
+    const tn=it.tier===-1?'Secret':('T'+it.tier);
+    const tags=[];
+    if(it.tool)tags.push('tool');if(it.consumable)tags.push('consumable');
+    if(it.rare)tags.push('rare');if(it.secret)tags.push('secret');
+    if(it.placeable)tags.push('placeable');if(it.equippable)tags.push('equippable');
+    if(it.building)tags.push('building');
+    const usedCount=itemUsedIn[id]?itemUsedIn[id].length:0;
+    html+=`<tr>
+      <td class="item-name-cell" onclick="openItemDetail('${id}')">${itemSpriteTag(id,24)}${it.display}</td>
+      <td><span class="tier-badge" style="background:${tc};color:#000;font-size:10px;padding:1px 6px">${tn}</span></td>
+      <td>$${it.sell_value}</td>
+      <td>${it.stack_max}</td>
+      <td style="color:var(--text2);font-size:12px;max-width:250px">${it.description}</td>
+      <td>${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</td>
+      <td style="color:var(--text2);font-size:12px">${usedCount>0?usedCount+' recipes':'-'}</td>
+    </tr>`;
+  }
+  html+='</tbody></table>';
+  view.innerHTML=html;
+  document.getElementById('result-count').textContent=`Showing ${entries.length} of ${Object.keys(ITEMS).length} items`;
+}
+function sortItems(col){
+  if(itemSortCol===col)itemSortAsc=!itemSortAsc;
+  else{itemSortCol=col;itemSortAsc=true;}
+  renderItems();
+}
+
+function renderMachines(){
+  const view=document.getElementById('machines-view');
+  let html='';
+  for(const[mid,m]of Object.entries(MACHINES)){
+    const recipes=machineRecipes[mid]||[];
+    const isSecret=m.secret?'<span class="mc-secret">SECRET</span>':'';
+    const power=m.type==='generator'?`Output: ${m.power_output}W`:`Power: ${m.power_in||0}W`;
+    const spriteImg=MACHINE_IMAGES[mid]?`<img class="mc-sprite" src="${MACHINE_IMAGES[mid]}" alt="${m.name}" onerror="this.style.display='none'">`:'';
+    html+=`<div class="machine-card" id="machine-${mid}">
+      <div class="mc-header">
+        ${spriteImg}
+        <span class="mc-icon">${machineIcon(mid)}</span>
+        <h3>${m.name}</h3>${isSecret}
+      </div>
+      <div class="mc-desc">"${m.description}"</div>
+      <div class="mc-stats">
+        <div class="mc-stat"><b>${power}</b></div>
+        <div class="mc-stat">Size: <b>${m.size[0]}\u00D7${m.size[1]}</b></div>
+        <div class="mc-stat">Slots: <b>${m.recipe_slots||'-'}</b></div>
+        <div class="mc-stat">Heat: <b>${m.heat_output}/${m.max_heat}</b></div>
+        <div class="mc-stat">Fail: <b>${m.fail_chance!==undefined?pct(m.fail_chance):'-'}</b></div>
+        ${m.fail_result?`<div class="mc-stat">Fail \u2192 <b>${itemName(m.fail_result)}</b></div>`:''}
+      </div>
+      <div class="mc-cost"><b>Craft Cost:</b> ${Object.entries(m.craft_cost).map(([k,v])=>`${v}\u00D7 ${itemName(k)}`).join(', ')}</div>
+      <div class="mc-recipes">
+        <h4>Recipes (${recipes.length}):</h4>
+        ${recipes.length?recipes.map(r=>`<div class="mc-recipe-item">\u2022 <a onclick="scrollToRecipe('${r.id}')">${r.name}</a> (${r.process_time}s)</div>`).join(''):'<div class="mc-recipe-item" style="color:var(--text2)">No recipes</div>'}
+      </div>
+    </div>`;
+  }
+  view.innerHTML=html;
+  document.getElementById('result-count').textContent=`${Object.keys(MACHINES).length} machines`;
+}
+
+function renderTiers(){
+  const view=document.getElementById('tiers-view');
+  let html='<div class="tier-timeline">';
+  for(const[tid,t]of Object.entries(TIERS)){
+    const tc=tierColor(Number(tid));
+    let unlockText='Unlocked by default';
+    if(t.unlock_condition){
+      const uc=t.unlock_condition;
+      if(uc.craft_item)unlockText=`Craft ${uc.count}\u00D7 ${itemName(uc.craft_item)}`;
+      else if(uc.type==='multi_craft')unlockText=uc.requirements.map(r=>`${r.count}\u00D7 ${itemName(r.craft_item)}`).join(' + ');
+      else if(uc.type==='cumulative_sell')unlockText=`Sell $${uc.total_value.toLocaleString()} total`;
+    }
+    html+=`<div class="tier-block">
+      <div class="tb-header">
+        <span class="tb-num" style="color:${tc}">T${tid}</span>
+        <span class="tb-name" style="color:${tc}">${t.name}</span>
+        <span class="tb-sub">${t.description}</span>
+      </div>
+      <div class="tb-unlock"><b>Unlock:</b> ${unlockText}</div>
+      <div class="tb-recipes">
+        ${t.recipes.map(rid=>{
+          const r=RECIPES[rid];
+          return r?`<span class="tb-recipe-chip" onclick="scrollToRecipe('${rid}')">${r.name}</span>`:'';
+        }).join('')}
+      </div>
+    </div>`;
+    if(Number(tid)<4)html+='<div class="tb-arrow">\u25BC</div>';
+  }
+  // Secret tier
+  html+=`<div class="tb-arrow">\u25BC</div>
+  <div class="tier-block" style="border-color:var(--ts)">
+    <div class="tb-header">
+      <span class="tb-num" style="color:var(--ts)">\u2605</span>
+      <span class="tb-name" style="color:var(--ts)">${SECRET_TIER.name}</span>
+      <span class="tb-sub">${SECRET_TIER.description}</span>
+    </div>
+    <div class="tb-unlock"><b>Unlock:</b> Easter Egg - Find the Bald Eagle Launcher</div>
+    <div class="tb-recipes">
+      ${SECRET_TIER.recipes.map(rid=>{
+        const r=RECIPES[rid];
+        return r?`<span class="tb-recipe-chip" onclick="scrollToRecipe('${rid}')">${r.name}</span>`:'';
+      }).join('')}
+    </div>
+  </div>`;
+  html+='</div>';
+  view.innerHTML=html;
+  document.getElementById('result-count').textContent='6 tiers';
+}
+
+// ==================== ITEM DETAIL MODAL ====================
+function openItemDetail(itemId){
+  const it=ITEMS[itemId];
+  if(!it)return;
+  const tc=tierColor(it.tier);
+  const tn=it.tier===-1?'Secret':('Tier '+it.tier);
+  const tags=[];
+  if(it.tool)tags.push('tool');if(it.consumable)tags.push('consumable');
+  if(it.rare)tags.push('rare');if(it.secret)tags.push('secret');
+  if(it.placeable)tags.push('placeable');if(it.equippable)tags.push('equippable');
+  if(it.building)tags.push('building');
+
+  // Sources
+  let sourcesHtml='';
+  const src=ITEM_SOURCES[itemId];
+  if(src){
+    sourcesHtml=src.map(s=>{
+      if(s==='rubble')return'<div class="id-source"><span class="src-badge src-rubble">RUBBLE</span> Found in rubble piles</div>';
+      if(s==='mining')return'<div class="id-source"><span class="src-badge src-mining">MINING</span> Mined from deposits</div>';
+      if(s==='store')return'<div class="id-source"><span class="src-badge src-store">STORE</span> Purchased from store</div>';
+      if(s==='crafting')return'<div class="id-source"><span class="src-badge src-crafting">CRAFTING</span> Crafted via recipe</div>';
+      return'';
+    }).join('');
+  }
+  const recipeId=itemToRecipe[itemId];
+  if(recipeId){
+    const r=RECIPES[recipeId];
+    sourcesHtml+=`<div class="id-source"><span class="src-badge src-crafting">CRAFTING</span> <a onclick="scrollToRecipe('${recipeId}')">${r.name}</a> (${machineIcon(r.machine)} ${machineName(r.machine)})</div>`;
+  }
+  if(!sourcesHtml)sourcesHtml='<div class="id-source" style="color:var(--text2)">Fail product / byproduct</div>';
+
+  // Used in
+  const usedIn=itemUsedIn[itemId]||[];
+
+  let html=`<div class="id-header">
+    ${itemSpriteTag(itemId,64).replace('item-sprite','id-sprite')}
+    <h2>${it.display}</h2>
+    <span class="tier-badge" style="background:${tc};color:#000">${tn}</span>
+  </div>
+  <div class="id-body">
+    <div class="id-desc">"${it.description}"</div>
+    <div class="id-stats">
+      <div class="id-stat">Stack: <b>${it.stack_max}</b></div>
+      <div class="id-stat">Sell: <b>$${it.sell_value}</b></div>
+      <div class="id-stat">Tier: <b style="color:${tc}">${tn}</b></div>
+    </div>
+    ${tags.length?`<div class="id-tags">${tags.map(t=>`<span class="id-tag">${t}</span>`).join('')}</div>`:''}
+    <div class="id-section">
+      <h3>\u{1F4E5} How to Obtain</h3>
+      ${sourcesHtml}
+    </div>
+    <div class="id-section">
+      <h3>\u{1F4E4} Used In (${usedIn.length})</h3>
+      ${usedIn.length?usedIn.map(u=>`<div class="id-link">\u2022 <a onclick="scrollToRecipe('${u.recipe_id}')">${u.recipe.name}</a> (${machineIcon(u.recipe.machine)} ${machineName(u.recipe.machine)})</div>`).join(''):'<div style="color:var(--text2);font-size:13px">Not used in any recipe</div>'}
+    </div>
+    <div style="margin-top:12px">
+      <button class="btn-tree" onclick="closeItemModal();openCraftingTree('${itemId}')">\u{1F333} Full Crafting Tree</button>
+    </div>
+  </div>`;
+
+  document.getElementById('item-modal-content').innerHTML=html;
+  document.getElementById('item-modal-overlay').classList.add('open');
+  location.hash='#item/'+itemId;
+}
+function closeItemModal(){
+  document.getElementById('item-modal-overlay').classList.remove('open');
+}
+
+// ==================== CRAFTING TREE ====================
+function openCraftingTree(itemId){
+  const it=ITEMS[itemId];
+  if(!it)return;
+  let html=`<div class="ct-header"><h2>\u{1F333} Crafting Tree: ${it.display}</h2></div><div class="ct-body"><div class="ct-tree">`;
+  html+=buildTreeNode(itemId,1,0,new Set());
+  html+='</div></div>';
+  document.getElementById('tree-modal-content').innerHTML=html;
+  document.getElementById('tree-modal-overlay').classList.add('open');
+}
+function buildTreeNode(itemId,qty,depth,visited){
+  const it=ITEMS[itemId];
+  const display=it?it.display:itemId;
+  const tier=it?it.tier:0;
+  const tc=tierColor(tier);
+  const recipeId=itemToRecipe[itemId];
+  const isRaw=!recipeId||depth>=4||visited.has(itemId);
+  const src=ITEM_SOURCES[itemId];
+  const isStore=src&&src.includes('store')&&!recipeId;
+  const isMined=src&&src.includes('mining')&&!recipeId;
+  const isRubble=src&&!recipeId;
+
+  let cls='ct-item';
+  if(isStore)cls+=' store-bought';
+  else if(isRaw&&!recipeId)cls+=' raw';
+
+  let html=`<div class="ct-node">`;
+  html+=`<div class="${cls}" style="border-color:${tc}" onclick="closeTreeModal();openItemDetail('${itemId}')">
+    ${display}${qty>1?` <span class="ct-qty">\u00D7${qty}</span>`:''}
+  </div>`;
+
+  if(!isRaw&&recipeId){
+    const r=RECIPES[recipeId];
+    const newVisited=new Set(visited);
+    newVisited.add(itemId);
+    html+=`<div class="ct-machine">${machineIcon(r.machine)} ${machineName(r.machine)}</div>`;
+    html+=`<div class="ct-children">`;
+    for(const inp of r.inputs){
+      html+=`<div class="ct-branch">`;
+      html+=buildTreeNode(inp.item,inp.count,depth+1,newVisited);
+      html+=`</div>`;
+    }
+    html+=`</div>`;
+  }
+  html+=`</div>`;
+  return html;
+}
+function closeTreeModal(){
+  document.getElementById('tree-modal-overlay').classList.remove('open');
+}
+
+// ==================== BUILDINGS & CHARACTERS DATA ====================
+const FACTORY_ZONES=[
+  {id:"office",name:"Dad's Office",size:"6×5",crack_ratio:0.10,rubble_density:0.05,narrative:"A faded photo of you as a kid is taped to the desk.",loot:["mystery_gizmo","copper_wire"],machines:[],props:["Dad's Desk","Table"]},
+  {id:"factory_floor",name:"Main Factory Floor",size:"30×25",crack_ratio:0.40,rubble_density:0.10,narrative:"Conveyor tracks bolted into the floor. Dad spent every day here.",loot:["scrap_metal","rusty_bolt"],machines:["smelter","assembler"],props:["Parts Shelf","Supply Crate","Tool Rack","Factory Crate"]},
+  {id:"break_room",name:"Break Room",size:"6×6",crack_ratio:0.15,rubble_density:0.10,narrative:"Someone left a half-played game of solitaire.",loot:["copper_wire","mystery_gizmo"],machines:[],props:["Table","Vending Machine","Break Room Shelf"]},
+  {id:"generator_room",name:"Generator Room",size:"6×12",crack_ratio:0.30,rubble_density:0.08,narrative:"Pipes drip. Wires spark. The old generator sits cold.",loot:["copper_wire","coal","copper_ore"],machines:["generator"],props:["Pipes","Dad's Wire Stash"]},
+  {id:"loading_dock",name:"Loading Dock",size:"12×12",crack_ratio:0.50,rubble_density:0.30,narrative:"A collapsed delivery sits half-in, half-out.",loot:["scrap_metal","rusted_metal"],machines:["packaging_station"],props:["Shipping Crates ×3","Shipping Container"]},
+  {id:"storage",name:"Storage Area",size:"12×13",crack_ratio:0.40,rubble_density:0.40,narrative:"Dense with old stock. Heavy rubble blocks the entrance.",loot:["tar_patch","mystery_gizmo"],machines:[],props:["Storage Shelves ×2","Old Crates ×2"],blocked:true},
+  {id:"east_wing",name:"East Wing",size:"26×26",crack_ratio:0.55,rubble_density:0.20,narrative:"This section has been sealed off for years. The ceiling sags.",loot:["scrap_metal","rusted_metal","coal","iron_ore"],machines:[],props:["Sealed Crate","East Wing Shelf"]},
+  {id:"south_warehouse",name:"South Warehouse",size:"30×20",crack_ratio:0.45,rubble_density:0.15,narrative:"A vast open space. Once used for staging shipments.",loot:["scrap_metal","rusty_bolt","rusted_metal"],machines:[],props:["Warehouse Crate","Warehouse Shelf"]},
+  {id:"basement_access",name:"Basement Access",size:"6×20",crack_ratio:0.35,rubble_density:0.25,narrative:"Stairs leading down. Flooded long ago.",loot:["copper_wire","mystery_gizmo","coal","copper_ore"],machines:[],props:[]},
+  {id:"machine_shop",name:"Machine Shop",size:"26×20",crack_ratio:0.50,rubble_density:0.18,narrative:"Heavy equipment lines the walls. Most of it rusted solid.",loot:["rusty_bolt","copper_wire","scrap_metal","iron_ore"],machines:["grinder","stamping_press"],props:[]}
+];
+
+const TOWN_BUILDINGS=[
+  {id:"factory",name:"Dad's Factory",status:"open",icon:"\u{1F3ED}",description:"The heart of the game. A crumbling factory inherited from your father. 10 zones of rust, rubble, and opportunity. Repair machines, clear debris, and rebuild an industrial empire.",connection:"factory",shopkeeper:null},
+  {id:"general_store",name:"General Store",status:"open",icon:"\u{1F6D2}",description:"Martha's shop. Sells building materials, basic supplies, coal, and pickaxes. Also stocks recipe blueprints for early-game crafting.",connection:"general_store",shopkeeper:"martha"},
+  {id:"post_office",name:"Post Office",status:"closed",icon:"\u{1F4EE}",description:"Under renovation. Jim the mailman still hangs around outside. Packages can be shipped from the factory loading dock instead.",connection:null,closed_message:"CLOSED — Under renovation."},
+  {id:"trucking_co",name:"Harmon Trucking Co.",status:"closed",icon:"\u{1F69A}",description:"The town's shipping company. Currently closed for business. May open in future updates to enable bulk shipping contracts.",connection:null,closed_message:"CLOSED — Come back later."},
+  {id:"quarry_entrance",name:"Quarry",status:"open",icon:"\u26CF\uFE0F",description:"An active quarry outside town. Mine iron ore, copper ore, and stone with your pickaxe. The deeper you go, the better the yields.",connection:"quarry"},
+  {id:"player_house",name:"Your House",status:"closed",icon:"\u{1F3E0}",description:"Your childhood home in Harmon Falls. The door is jammed shut for now. Might hold some of Dad's old belongings.",connection:null,closed_message:"The door is jammed shut. Maybe later."},
+  {id:"hardware_store",name:"Hardware Store",status:"open",icon:"\u{1F527}",description:"Run by \"Big\" Rick. Sells plastic pellets, rubber compound, ore, and machine blueprints for the Grinder, Stamping Press, Lathe, Packaging Station, and Injection Molder.",connection:"hardware_store"},
+  {id:"chemical_supply",name:"Chemical Supply",status:"open",icon:"\u{1F9EA}",description:"Run by \"Doc\" Helen. Sells chemical base, dyes, rubber compound, gunpowder, and the Chemical Mixer blueprint.",connection:"chemical_supply"},
+  {id:"fabric_supply",name:"Fabric Supply",status:"open",icon:"\u{1F9F5}",description:"Run by Dolly Weaver. Sells fabric rolls, leather hides, thread spools, and the Textile Loom blueprint.",connection:"fabric_supply"},
+  {id:"electronics_supply",name:"Electronics Supply",status:"open",icon:"\u{1F4BB}",description:"Run by \"Sparky\" Jim. Sells solder wire, silicon chips, copper wire, and the Circuit Assembler blueprint.",connection:"electronics_supply"},
+  {id:"welding_depot",name:"Welding Depot",status:"open",icon:"\u26A1",description:"Run by \"Iron\" Mike. Sells iron ingots, basic ingots, coal, and blueprints for the Welding Station and Plastic Extruder.",connection:"welding_depot"}
+];
+
+const SPECIALTY_STORES=[
+  {id:"hardware_store",name:"Hardware Store",icon:"\u{1F527}",shopkeeper:"Big Rick",sells:["plastic_pellets","rubber_compound","ore (markup)"],blueprints:"Stamping, machining recipes",machine_blueprints:["Grinder","Stamping Press","Lathe","Packaging Station","Injection Molder"]},
+  {id:"chemical_supply",name:"Chemical Supply",icon:"\u{1F9EA}",shopkeeper:"Doc Helen",sells:["chemical_base","dyes","rubber_compound","gunpowder"],blueprints:"Paint, adhesive, coating recipes",machine_blueprints:["Chemical Mixer"]},
+  {id:"fabric_supply",name:"Fabric Supply",icon:"\u{1F9F5}",shopkeeper:"Dolly Weaver",sells:["fabric_roll","leather_hide","thread_spool"],blueprints:"Textile, leather recipes",machine_blueprints:["Textile Loom"]},
+  {id:"electronics_supply",name:"Electronics Supply",icon:"\u{1F4BB}",shopkeeper:"Sparky Jim",sells:["solder_wire","silicon_chip","copper_wire"],blueprints:"Electronics product recipes",machine_blueprints:["Circuit Assembler"]},
+  {id:"welding_depot",name:"Welding Depot",icon:"\u26A1",shopkeeper:"Iron Mike",sells:["iron_ingot","basic_ingot","coal"],blueprints:"Welding, structural recipes",machine_blueprints:["Welding Station","Plastic Extruder"]}
+];
+
+const CHARACTERS=[
+  {id:"player",name:"The Kid",role:"player",icon:"\u{1F3AE}",location:"Everywhere",description:"That's you. You inherited Dad's crumbling factory in Harmon Falls and decided to rebuild it. Armed with nothing but determination and a knack for turning junk into gold. Well, into basic ingots at least."},
+  {id:"earl",name:"Earl",role:"npc",icon:"\u{1F474}",location:"Town Square, Harmon Falls",description:"Dad's old foreman. A grizzled factory veteran who stuck around after the closure. He's your tutorial guide and emotional anchor — always ready with a gruff word of encouragement and practical advice.",dialogue:[{speaker:"Earl",text:"Hey kid. How\u2019s the factory coming along?"},{speaker:"Earl",text:"Your old man would be proud."},{speaker:"Earl",text:"The General Store\u2019s open if you need supplies."}]},
+  {id:"mailman",name:"Jim the Mailman",role:"npc",icon:"\u{1F4EC}",location:"Near Post Office, Harmon Falls",description:"The town's mailman. Still doing deliveries even though the post office is under renovation. He'll tell you about the shipping container at the loading dock — your main way to sell finished products.",dialogue:[{speaker:"Jim",text:"Post office is under renovation."},{speaker:"Jim",text:"But I can still ship packages for you at the factory."},{speaker:"Jim",text:"Just use the shipping container in the loading dock."}]},
+  {id:"martha",name:"Martha",role:"shopkeeper",icon:"\u{1F9D1}\u200D\u{1F373}",location:"General Store",description:"The friendly General Store owner. Sells everything a scrappy factory operator needs: coal, tar patches, building materials, pickaxes, and recipe blueprints. Open 8 AM to 6 PM.",sells:"Coal, tar patches, wire, bolts, building materials, pickaxes, blueprints"},
+  {id:"big_rick",name:'"Big" Rick',role:"shopkeeper",icon:"\u{1F4AA}",location:"Hardware Store",description:"The hardware man. Big hands, bigger inventory. Sells plastic pellets, rubber compound, ore at a markup, and machine blueprints for heavy-duty equipment like the Grinder, Stamping Press, and Lathe.",sells:"Plastic pellets, rubber compound, ore, machine blueprints"},
+  {id:"doc_helen",name:'"Doc" Helen',role:"shopkeeper",icon:"\u{1F9D1}\u200D\u{1F52C}",location:"Chemical Supply",description:"The chemistry expert. Used to work at a research lab before it shut down. Now she sells chemical bases, dyes, rubber compound, and gunpowder to anyone with the cash and the courage.",sells:"Chemical base, dyes, rubber compound, gunpowder"},
+  {id:"dolly",name:"Dolly Weaver",role:"shopkeeper",icon:"\u{1F9F6}",location:"Fabric Supply",description:"A master weaver who runs the fabric shop. Sells fabric rolls, leather hides, thread spools, and textile-related blueprints. Her loom is always humming.",sells:"Fabric rolls, leather hides, thread spools"},
+  {id:"sparky_jim",name:'"Sparky" Jim',role:"shopkeeper",icon:"\u{1F50C}",location:"Electronics Supply",description:"No relation to Jim the Mailman. Sparky is the town's self-taught electrician who turned his garage into an electronics shop. Sells solder wire, silicon chips, and circuit-related blueprints.",sells:"Solder wire, silicon chips, copper wire"},
+  {id:"iron_mike",name:'"Iron" Mike',role:"shopkeeper",icon:"\u{1F525}",location:"Welding Depot",description:"A retired welder who smells permanently of flux. Runs the Welding Depot, selling iron and basic ingots, coal, and blueprints for welding and structural recipes. Don't shake his hand \u2014 it's still hot.",sells:"Iron ingot, basic ingot, coal"}
+];
+
+// ==================== RENDER BUILDINGS ====================
+function buildingMatches(text){
+  if(!searchQuery)return true;
+  return text.toLowerCase().includes(searchQuery);
+}
+function renderBuildings(){
+  const view=document.getElementById('buildings-view');
+  let html='';let totalShown=0;
+
+  // Factory Zones Section
+  const filteredZones=FACTORY_ZONES.filter(z=>buildingMatches([z.name,z.narrative,z.id,...z.loot,...z.machines.map(m=>machineName(m)),...z.props].join(' ')));
+  totalShown+=filteredZones.length;
+  html+=`<div class="building-section">
+    <h2><span class="section-icon">\u{1F3ED}</span>Dad's Factory — Zones (${filteredZones.length})</h2>
+    <div class="zone-grid">`;
+  for(const z of filteredZones){
+    const crackPct=Math.round(z.crack_ratio*100);
+    const rubblePct=Math.round(z.rubble_density*100);
+    const dangerLevel=crackPct>=50?'var(--danger)':crackPct>=30?'var(--accent)':'var(--success)';
+    html+=`<div class="zone-card">
+      <div class="zc-header">
+        <h3>${z.name}</h3>
+        <span class="zc-tag" style="background:${dangerLevel};color:#000">${crackPct>=50?'Dangerous':crackPct>=30?'Damaged':'Light'}</span>
+      </div>
+      <div class="zc-body">
+        <div class="zc-narrative">${z.narrative}</div>
+        <div class="zc-stats">
+          <span>\u{1F4D0} ${z.size} tiles</span>
+          <span style="color:${dangerLevel}">\u{1F4A5} ${crackPct}% cracked</span>
+          <span>\u{1FAA8} ${rubblePct}% rubble</span>
+          ${z.blocked?'<span style="color:var(--danger)">\u{1F6AB} Blocked entrance</span>':''}
+        </div>
+        ${z.machines.length?`<div class="zc-machines"><h4>\u2699\uFE0F Machines Found Here</h4>${z.machines.map(mid=>`<span class="zc-machine-chip">${machineIcon(mid)} ${machineName(mid)}</span>`).join('')}</div>`:''}
+        ${z.loot.length?`<div class="zc-loot"><h4>\u{1F4B0} Notable Loot</h4>${z.loot.map(id=>`<span class="zc-loot-item" onclick="openItemDetail('${id}')">${itemName(id)}</span>`).join('')}</div>`:''}
+        ${z.props.length?`<div style="margin-top:8px;font-size:12px;color:var(--text2)">\u{1F4E6} Props: ${z.props.join(', ')}</div>`:''}
+      </div>
+    </div>`;
+  }
+  html+=`</div></div>`;
+
+  // Town Buildings Section
+  const filteredTown=TOWN_BUILDINGS.filter(b=>buildingMatches([b.name,b.description,b.id,b.status].join(' ')));
+  totalShown+=filteredTown.length;
+  html+=`<div class="building-section">
+    <h2><span class="section-icon">\u{1F3D8}\uFE0F</span>Harmon Falls — Town (${filteredTown.length} buildings)</h2>
+    <div class="town-grid">`;
+  for(const b of filteredTown){
+    const isOpen=b.status==='open';
+    html+=`<div class="town-card${isOpen?'':' closed'}">
+      <div class="tc-header">
+        <h3>${b.icon} ${b.name}</h3>
+        <span class="tc-status ${b.status}">${isOpen?'OPEN':'CLOSED'}</span>
+      </div>
+      <div class="tc-body">
+        ${b.description}
+        ${b.closed_message?`<div class="tc-note">"${b.closed_message}"</div>`:''}
+        ${b.shopkeeper?`<div class="tc-shopkeeper"><span class="sk-icon">${CHARACTERS.find(c=>c.id===b.shopkeeper)?.icon||'\u{1F464}'}</span><div><span class="sk-name">${CHARACTERS.find(c=>c.id===b.shopkeeper)?.name||b.shopkeeper}</span><br><span class="sk-role">Shopkeeper</span></div></div>`:''}
+      </div>
+    </div>`;
+  }
+  html+=`</div></div>`;
+
+  // Planned Stores Section
+  const filteredPlanned=SPECIALTY_STORES.filter(s=>buildingMatches([s.name,s.shopkeeper,...s.sells,s.blueprints,...s.machine_blueprints].join(' ')));
+  totalShown+=filteredPlanned.length;
+  html+=`<div class="building-section">
+    <h2><span class="section-icon">\u{1F3EA}</span>Specialty Stores (${filteredPlanned.length})</h2>
+    <div class="town-grid">`;
+  for(const s of filteredPlanned){
+    html+=`<div class="town-card" style="border-color:var(--success)">
+      <div class="tc-header">
+        <h3>${s.icon} ${s.name}</h3>
+        <span class="tc-status open">OPEN</span>
+      </div>
+      <div class="tc-body">
+        <div class="tc-shopkeeper"><span class="sk-icon">\u{1F464}</span><div><span class="sk-name">${s.shopkeeper}</span><br><span class="sk-role">Shopkeeper</span></div></div>
+        <div style="margin-top:8px;font-size:12px"><b style="color:var(--accent)">Sells:</b> ${s.sells.map(i=>ITEMS[i]?`<span class="zc-loot-item" onclick="openItemDetail('${i}')">${itemName(i)}</span>`:i).join(', ')}</div>
+        <div style="margin-top:6px;font-size:12px"><b style="color:var(--accent)">Blueprints:</b> ${s.blueprints}</div>
+        ${s.machine_blueprints.length?`<div style="margin-top:6px;font-size:12px"><b style="color:var(--machine)">Machine Blueprints:</b> ${s.machine_blueprints.join(', ')}</div>`:''}
+      </div>
+    </div>`;
+  }
+  html+=`</div></div>`;
+
+  // Factory Hazards Section
+  html+=`<div class="building-section">
+    <h2><span class="section-icon">\u26A0\uFE0F</span>Factory Hazards (${Object.keys(HAZARD_IMAGES).length})</h2>
+    <div class="env-grid">`;
+  for(const [hid,h] of Object.entries(HAZARD_IMAGES)){
+    html+=`<div class="env-card hazard">
+      <img src="${h.path}" alt="${h.name}" onerror="this.style.display='none'">
+      <div class="env-name">${h.name}</div>
+      <div class="env-desc">${h.description}</div>
+    </div>`;
+  }
+  html+=`</div></div>`;
+
+  // Factory Furniture Section
+  html+=`<div class="building-section">
+    <h2><span class="section-icon">\u{1F6CB}\uFE0F</span>Factory Furniture &amp; Props (${Object.keys(FURNITURE_IMAGES).length})</h2>
+    <div class="env-grid">`;
+  for(const [fid,f] of Object.entries(FURNITURE_IMAGES)){
+    html+=`<div class="env-card furniture">
+      <img src="${f.path}" alt="${f.name}" onerror="this.style.display='none'">
+      <div class="env-name">${f.name}</div>
+      <div class="env-desc">${f.description}</div>
+    </div>`;
+  }
+  html+=`</div></div>`;
+
+  view.innerHTML=html;
+  const totalAll=FACTORY_ZONES.length+TOWN_BUILDINGS.length+SPECIALTY_STORES.length;
+  document.getElementById('result-count').textContent=searchQuery?`Showing ${totalShown} of ${totalAll} locations`:`${FACTORY_ZONES.length} zones, ${TOWN_BUILDINGS.length+SPECIALTY_STORES.length} buildings`;
+}
+
+// ==================== RENDER CHARACTERS ====================
+function renderCharacters(){
+  const view=document.getElementById('characters-view');
+  const filtered=CHARACTERS.filter(c=>{
+    if(!searchQuery)return true;
+    const hay=[c.name,c.role,c.description,c.location,c.sells||'',...(c.dialogue||[]).map(d=>d.text)].join(' ').toLowerCase();
+    return hay.includes(searchQuery);
+  });
+  let html=`<div class="character-grid">`;
+  for(const c of filtered){
+    const roleCls=c.role;
+    const roleLabel=c.role==='player'?'PLAYER':c.role==='npc'?'NPC':c.role==='shopkeeper'?'SHOPKEEPER':'CHARACTER';
+    const charImg=CHARACTER_IMAGES[c.id]?`<img class="cc-sprite" src="${CHARACTER_IMAGES[c.id]}" alt="${c.name}" onerror="this.style.display='none'">`:'';
+    html+=`<div class="char-card"${c.planned?' style="border-style:dashed;border-color:var(--machine)"':''}>
+      <div class="cc-header">
+        ${charImg}
+        <span class="cc-icon">${c.icon}</span>
+        <h3>${c.name}</h3>
+        <span class="cc-role ${roleCls}">${roleLabel}</span>
+        ${c.planned?'<span class="cc-role" style="background:var(--machine);color:#000;margin-left:4px">PLANNED</span>':''}
+      </div>
+      <div class="cc-body">
+        <div class="cc-desc">${c.description}</div>
+        <div class="cc-location">\u{1F4CD} <b>${c.location}</b></div>
+        ${c.dialogue?`<div class="cc-dialogue"><h4>\u{1F4AC} Dialogue</h4>${c.dialogue.map(d=>`<div class="cc-dialogue-line"><span class="speaker">${d.speaker}:</span> "${d.text}"</div>`).join('')}</div>`:''}
+        ${c.sells?`<div class="cc-sells"><h4>\u{1F6D2} Sells</h4><div class="cc-sells-list"><span class="cc-sells-item">${c.sells}</span></div></div>`:''}
+      </div>
+    </div>`;
+  }
+  html+='</div>';
+  view.innerHTML=html;
+  document.getElementById('result-count').textContent=searchQuery?`Showing ${filtered.length} of ${CHARACTERS.length} characters`:`${CHARACTERS.length} characters`;
+}
+
+// ==================== SPRITE PREVIEW ====================
+const SPRITE_CACHE_BUST='v='+Date.now();
+function renderSprites(){
+  const view=document.getElementById('sprites-view');
+  const dirs=['south','south_west','west','north_west','north','north_east','east','south_east'];
+  const dirLabels={'south':'S','south_west':'SW','west':'W','north_west':'NW','north':'N','north_east':'NE','east':'E','south_east':'SE'};
+  const tools=['pickaxe']; // Add more as they're composited
+
+  // Get current tool from state or default
+  if(!window._spriteToolSel)window._spriteToolSel='pickaxe';
+  if(!window._spriteDirSel)window._spriteDirSel='south';
+  const tool=window._spriteToolSel;
+  const selDir=window._spriteDirSel;
+
+  let html=`<div class="sprite-page">`;
+  html+=`<h2>Character Sprite Preview</h2>`;
+  html+=`<p style="color:var(--text2);margin-bottom:16px">Preview held item composites across all 8 directions. Swing animations are generated by <code>tools/build_tool_animations.py</code> (4 frames @ 12fps per cardinal direction). Idle/walk composites by <code>tools/composite_held_item.py</code>.</p>`;
+
+  // Tool selector
+  html+=`<div class="sprite-toolbar">`;
+  html+=`<label>Held Item:</label>`;
+  for(const t of tools){
+    html+=`<button class="sprite-btn${t===tool?' active':''}" onclick="window._spriteToolSel='${t}';renderSprites()">${t.replace(/_/g,' ').replace(/\\b\\w/g,l=>l.toUpperCase())}</button>`;
+  }
+  html+=`<button class="sprite-btn${tool==='none'?' active':''}" onclick="window._spriteToolSel='none';renderSprites()">None (Base)</button>`;
+  html+=`</div>`;
+
+  // --- Section 1: All 8 idle directions ---
+  html+=`<div class="sprite-section">`;
+  html+=`<h3>Idle — All Directions</h3>`;
+  html+=`<div class="sprite-grid">`;
+  for(const d of dirs){
+    const src=tool==='none'
+      ?`../assets/sprites/characters/main_character/rotations/${d.replace(/_/g,'-')}.png`
+      :`sprites/${tool}/idle_${d}.png`;
+    const isSelected=d===selDir;
+    html+=`<div class="sprite-cell${isSelected?' style="border-color:var(--accent)"':''}" onclick="window._spriteDirSel='${d}';renderSprites()" style="cursor:pointer">`;
+    html+=`<img src="${src}?${SPRITE_CACHE_BUST}" alt="${d}">`;
+    html+=`<div class="dir-label">${dirLabels[d]} — ${d.replace(/_/g,' ')}</div>`;
+    html+=`</div>`;
+  }
+  html+=`</div></div>`;
+
+  // --- Section 2: Walk cycle for selected direction ---
+  html+=`<div class="sprite-section">`;
+  html+=`<h3>Walk Cycle — ${selDir.replace(/_/g,' ')} <span style="font-size:12px;color:var(--text2)">(click a direction above to change)</span></h3>`;
+
+  if(tool!=='none'){
+    // Animated GIF
+    html+=`<div class="anim-preview">`;
+    html+=`<div class="anim-cell">`;
+    html+=`<img src="sprites/${tool}/walk_${selDir}.gif?${SPRITE_CACHE_BUST}" alt="Walk ${selDir} animated">`;
+    html+=`<div class="dir-label">Animated</div>`;
+    html+=`</div>`;
+    html+=`</div>`;
+
+    // Individual frames
+    html+=`<h3 style="font-size:13px;margin-top:16px">Individual Frames</h3>`;
+    html+=`<div class="walk-row">`;
+    for(let f=0;f<6;f++){
+      html+=`<div class="walk-cell">`;
+      html+=`<img src="../assets/sprites/characters/main_character/held_items/${tool}/walk_${selDir}_${String(f).padStart(3,'0')}.png?${SPRITE_CACHE_BUST}" alt="frame ${f}" style="width:96px;height:96px">`;
+      html+=`<div class="frame-label">Frame ${f}</div>`;
+      html+=`</div>`;
+    }
+    html+=`</div>`;
+  } else {
+    html+=`<p style="color:var(--text2)">Select a held item above to see walk cycle composites.</p>`;
+  }
+  html+=`</div>`;
+
+  // --- Section 3: Swing animation ---
+  if(tool!=='none'){
+    html+=`<div class="sprite-section">`;
+    html+=`<h3>Swing Action — ${selDir.replace(/_/g,' ')}</h3>`;
+    html+=`<div class="swing-preview">`;
+    html+=`<div class="swing-cell">`;
+    html+=`<img src="sprites/${tool}/swing_${selDir}.gif?${SPRITE_CACHE_BUST}" alt="Swing ${selDir}">`;
+    html+=`<div class="dir-label">Swing Animation (12fps)</div>`;
+    html+=`</div>`;
+    // Show idle with tool for comparison
+    html+=`<div class="swing-cell">`;
+    html+=`<img src="sprites/${tool}/idle_${selDir}.png?${SPRITE_CACHE_BUST}" alt="Idle ${selDir}">`;
+    html+=`<div class="dir-label">Idle (for comparison)</div>`;
+    html+=`</div>`;
+    html+=`</div>`;
+
+    // Frame breakdown (cardinal directions only)
+    const cardinalDir=['south','east','west','north'].includes(selDir)?selDir:({'south_west':'south','south_east':'south','north_west':'north','north_east':'north'}[selDir]||selDir);
+    const frameLabels=['Wind-up','Mid-swing','Impact','Recovery'];
+    html+=`<h3 style="font-size:13px;margin-top:16px">Frame Breakdown <span style="font-size:11px;color:var(--text2)">(4 frames @ 12fps = 0.33s swing)</span></h3>`;
+    html+=`<div class="walk-row">`;
+    for(let f=0;f<4;f++){
+      html+=`<div class="walk-cell">`;
+      html+=`<img src="sprites/${tool}/swing_${cardinalDir}_frame${f}.png?${SPRITE_CACHE_BUST}" alt="Frame ${f}" style="width:128px;height:128px;image-rendering:pixelated">`;
+      html+=`<div class="frame-label">${frameLabels[f]}</div>`;
+      html+=`</div>`;
+    }
+    html+=`</div>`;
+
+    // All 4 cardinal swing GIFs side by side
+    html+=`<h3 style="font-size:13px;margin-top:20px">All Directions</h3>`;
+    html+=`<div class="sprite-grid" style="grid-template-columns:repeat(4,1fr)">`;
+    for(const cd of ['south','east','west','north']){
+      html+=`<div class="sprite-cell" style="cursor:pointer" onclick="window._spriteDirSel='${cd}';renderSprites()">`;
+      html+=`<img src="sprites/${tool}/swing_${cd}.gif?${SPRITE_CACHE_BUST}" alt="Swing ${cd}" style="width:128px;height:128px">`;
+      html+=`<div class="dir-label">${cd.charAt(0).toUpperCase()+cd.slice(1)}</div>`;
+      html+=`</div>`;
+    }
+    html+=`</div>`;
+
+    html+=`</div>`;
+  }
+
+  html+=`</div>`; // close sprite-page
+  view.innerHTML=html;
+  document.getElementById('result-count').textContent='Sprite Preview';
+}
+
+// ==================== ASSET REFERENCE ====================
+function renderAssetRef(){
+  const view=document.getElementById('assetref-view');
+  const sheets=[
+    {file:'8_Worksite_16x16.png',name:'Worksite',desc:'Generator, forklifts, metal shelving, wrenches, pipes, lumber, crates, caution signs.',
+     matches:['generator','wrench','hammer','iron_rod','steel_rod','copper_tube','conveyor_belt']},
+    {file:'3_City_Props_16x16.png',name:'City Props',desc:'Vending machines, dumpsters, gas canisters, fire extinguisher, electrical panels, pipes, ventilation.',
+     matches:['fuel_canister','chemical_base','fire_extinguisher','circuit_board','scrap_metal']},
+    {file:'12_Kitchen_16x16.png',name:'Kitchen',desc:'Microwave, fridge, stove, counters, cabinets, pots/pans.',
+     matches:['microwave_dinner','canned_food','smelter','chemical_mixer']},
+    {file:'6_Garage_Sales_16x16.png',name:'Garage Sales',desc:'Cardboard boxes, old electronics, junk piles, folding tables.',
+     matches:['cardboard','boxed_bolts','scrap_metal']},
+    {file:'9_Shopping_Center_and_Markets_16x16.png',name:'Shopping Center & Markets',desc:'Store shelves with products, cash registers, display cases.',
+     matches:['general_store','hardware_store','shop interiors']},
+    {file:'18_Fire_Station_16x16.png',name:'Fire Station',desc:'Fire extinguishers, lockers, fire trucks.',
+     matches:['fire_extinguisher']},
+  ];
+
+  let html=`<div style="padding:8px">`;
+  html+=`<h2 style="color:var(--accent);margin-bottom:8px">Asset Reference — Modern Interiors/Exteriors</h2>`;
+  html+=`<p style="color:var(--text2);margin-bottom:24px">Tileset sheets that match game items, machines, and components. Click images to zoom.</p>`;
+
+  for(const s of sheets){
+    html+=`<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:20px">`;
+    html+=`<h3 style="color:var(--accent);margin-bottom:4px">${s.name}</h3>`;
+    html+=`<p style="color:var(--text2);margin-bottom:6px;font-size:13px">${s.desc}</p>`;
+    html+=`<div style="margin-bottom:10px">`;
+    for(const m of s.matches){
+      html+=`<span style="display:inline-block;background:var(--card-hover);border:1px solid var(--border);border-radius:4px;padding:2px 8px;margin:2px 4px 2px 0;font-size:12px;color:var(--text2);font-family:monospace">${m}</span>`;
+    }
+    html+=`</div>`;
+    html+=`<div style="overflow-x:auto;cursor:zoom-in" onclick="this.querySelector('img').style.imageRendering=this.querySelector('img').style.imageRendering==='pixelated'?'auto':'pixelated';this.querySelector('img').style.width=this.querySelector('img').style.width==='100%'?'400%':'100%'">`;
+    html+=`<img src="asset-reference/${s.file}" alt="${s.name}" style="width:100%;image-rendering:pixelated;border:1px solid var(--border);border-radius:4px">`;
+    html+=`</div>`;
+    html+=`</div>`;
+  }
+
+  html+=`</div>`;
+  view.innerHTML=html;
+  document.getElementById('result-count').textContent='Asset Reference';
+}
+
+// ==================== NAVIGATION ====================
+function scrollToRecipe(rid){
+  closeItemModal();closeTreeModal();
+  if(currentTab!=='recipes'){filterCategory='all';filterMachineId='all';filterTierId='all';switchTab('recipes');}
+  setTimeout(()=>{
+    const el=document.getElementById('recipe-'+rid);
+    if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>el.style.boxShadow='',2000);}
+  },100);
+}
+
+// ==================== HASH ROUTING ====================
+function updateHash(){
+  // Only update if not already set by item/recipe click
+}
+function handleHash(){
+  const h=location.hash.slice(1);
+  if(!h)return;
+  const parts=h.split('/');
+  if(parts[0]==='item'&&parts[1])openItemDetail(parts[1]);
+  else if(parts[0]==='recipe'&&parts[1]){switchTab('recipes');setTimeout(()=>scrollToRecipe(parts[1]),200);}
+  else if(parts[0]==='machine'&&parts[1]){switchTab('machines');setTimeout(()=>{const el=document.getElementById('machine-'+parts[1]);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},200);}
+  else if(parts[0]==='tab'&&parts[1]&&['recipes','items','machines','tiers','buildings','characters','sprites','assetref'].includes(parts[1]))switchTab(parts[1]);
+}
+window.addEventListener('hashchange',handleHash);
+
+// ==================== BACK TO TOP ====================
+window.addEventListener('scroll',function(){
+  document.getElementById('back-top').classList.toggle('show',window.scrollY>300);
+});
+
+// ==================== INIT ====================
+render();
+setTimeout(handleHash,300);
+</script>
+</body>
+</html>
