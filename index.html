@@ -27,14 +27,18 @@
     "name": "Totem Works, LLC",
     "legalName": "Totem Works, LLC",
     "url": "https://thetotemworks.com/",
+    "logo": "https://thetotemworks.com/assets/logo.svg",
     "foundingDate": "2024",
     "description": "An indie game studio making original pixel-art games with soul.",
     "slogan": "Small studio. Big scrap."
   }
   </script>
 
-  <!-- Favicon — matryoshka doll SVG -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2310121c' rx='4'/><text x='4' y='26' font-size='24'>🪆</text></svg>">
+  <!-- Also set the americanjunk subpage canonical favicon to the brand logo -->
+  <!-- (the americanjunk page has its own favicon; this one's for the root) -->
+
+  <!-- Favicon — Totem Works totem mark -->
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -117,6 +121,8 @@
 
     .nav-logo span { font-size: 1.1rem; }
 
+    .nav-logo img { height: 24px; width: auto; display: block; }
+
     .nav-links {
       display: flex;
       gap: 2rem;
@@ -171,8 +177,9 @@
     }
 
     .hero-doll {
-      font-size: 4rem;
-      margin-bottom: 1.5rem;
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 1.5rem;
       display: block;
       animation: float 4s ease-in-out infinite;
       filter: drop-shadow(0 0 20px rgba(233, 133, 55, 0.4));
@@ -602,7 +609,12 @@
       font-size: 0.45rem;
       color: var(--orange);
       letter-spacing: 0.1em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
+
+    .footer-brand img { height: 18px; width: auto; display: block; }
 
     .footer-links {
       display: flex;
@@ -660,7 +672,7 @@
   <!-- NAV -->
   <nav>
     <div class="nav-logo">
-      <span>🪆</span> TOTEM WORKS
+      <img src="/assets/logo.svg" alt="Totem Works logo"> TOTEM WORKS
     </div>
     <ul class="nav-links">
       <li><a href="#games">Games</a></li>
@@ -672,7 +684,7 @@
   <!-- HERO -->
   <section class="hero">
     <p class="hero-eyebrow">Est. 2024 &nbsp;·&nbsp; USA</p>
-    <span class="hero-doll" aria-hidden="true">🪆</span>
+    <img class="hero-doll" src="/assets/logo.svg" alt="Totem Works logo — stacked totem with eagle and skull faces">
     <h1 class="hero-title">
       <span class="highlight">TOTEM WORKS</span><br>
       Indie Game Studio
@@ -818,7 +830,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <span class="footer-brand">🪆 TOTEM WORKS, LLC</span>
+    <span class="footer-brand"><img src="/assets/logo.svg" alt=""> TOTEM WORKS, LLC</span>
     <div class="footer-links">
       <a href="./americanjunk/">American Junk</a>
       <a href="#about">Studio</a>
