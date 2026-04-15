@@ -79,6 +79,72 @@
   }
   </script>
 
+  <!-- Structured data: FAQ (matches the #faq section body) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is American Junk?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "American Junk is a sandbox factory builder set in the Midwest rust belt. You inherit your late father's derelict factory and rebuild it by scavenging the town for scrap, wiring together a power grid, automating production with conveyor belts, and manufacturing increasingly absurd American products."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When does it release?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "American Junk is in active development. A playable web demo will launch at thetotemworks.com/americanjunk when it's ready. A full PC release via Steam is planned; the release date has not been announced yet."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What platforms will it be on?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Web browser for the free demo, and PC (Windows) at full launch via Steam. Mac and Linux support is being evaluated. No console plans at this time."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much will it cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The web demo is free. Pricing for the full PC release has not been locked in yet and will be posted on this page once it is."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there a demo I can play right now?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not publicly yet. A browser-playable demo is in the pipeline. Early builds are occasionally shared in our Discord — follow the social links at the bottom of the page to be notified when the public demo drops."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who makes American Junk?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Totem Works, LLC — a small independent game studio founded in 2024, based in the USA. We are a tiny team making pixel-art games that are playful, handcrafted, and built with serious attention to detail."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I support the game?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Wishlist on Steam when it goes live, follow us on social media, and tell a friend who likes factory builders. Press and content creators: see the Press Kit section for assets and a contact."
+        }
+      }
+    ]
+  }
+  </script>
+
   <!-- Favicon — inline pixel gear SVG -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2310121c' rx='4'/><text x='4' y='26' font-size='24'>⚙</text></svg>">
 
@@ -572,6 +638,56 @@
       position: relative;
     }
     .section-alt { background: var(--ink-mid); }
+
+    /* ============================================
+       FAQ
+    ============================================ */
+    .faq-list {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .faq-item {
+      background: var(--ink-panel);
+      border: 1px solid rgba(233, 133, 55, 0.15);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+    .faq-item[open] { border-color: rgba(233, 133, 55, 0.45); }
+    .faq-item summary {
+      cursor: pointer;
+      padding: 14px 48px 14px 20px;
+      color: var(--cream);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 15px;
+      list-style: none;
+      position: relative;
+      user-select: none;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '+';
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-px);
+      font-size: 18px;
+      color: var(--orange);
+      transition: transform 0.2s var(--ease);
+    }
+    .faq-item[open] summary::after { content: '−'; }
+    .faq-item summary:hover { color: var(--amber); }
+    .faq-item p {
+      padding: 0 20px 16px;
+      color: rgba(246, 232, 224, 0.75);
+      font-size: 14px;
+      line-height: 1.6;
+    }
 
     .section-inner { max-width: 1120px; margin: 0 auto; }
 
@@ -1256,6 +1372,7 @@
     <li><a href="#features">Features</a></li>
     <li><a href="#screenshots">Screenshots</a></li>
     <li><a href="#studio">Studio</a></li>
+    <li><a href="#faq">FAQ</a></li>
     <li><a href="#press-kit">Press Kit</a></li>
     <li><a href="wiki/">Wiki</a></li>
     <li class="nav-btn-wrap"><a href="#follow" class="nav-btn">Follow Dev</a></li>
@@ -1272,6 +1389,7 @@
     <li><a href="#features"    onclick="closeNav()">Features</a></li>
     <li><a href="#screenshots" onclick="closeNav()">Screenshots</a></li>
     <li><a href="#studio"      onclick="closeNav()">Studio</a></li>
+    <li><a href="#faq"         onclick="closeNav()">FAQ</a></li>
     <li><a href="#press-kit"   onclick="closeNav()">Press Kit</a></li>
     <li><a href="wiki/">Wiki</a></li>
     <li><a href="#follow"      onclick="closeNav()">Follow Development</a></li>
@@ -1587,6 +1705,57 @@
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONVEYOR ───────────────────────────── -->
+<div class="conveyor-belt" aria-hidden="true"></div>
+
+<!-- ─── FAQ ───────────────────────────────── -->
+<section class="section" id="faq">
+  <div class="section-inner">
+    <div class="reveal" style="text-align:center">
+      <span class="eyebrow">// common questions</span>
+      <h2 class="section-h">The Basics</h2>
+      <div class="divider divider-center"></div>
+    </div>
+
+    <div class="faq-list stagger" style="margin-top:36px">
+      <details class="faq-item">
+        <summary>What is American Junk?</summary>
+        <p>American Junk is a sandbox factory builder set in the Midwest rust belt. You inherit your late father's derelict factory and rebuild it by scavenging the town for scrap, wiring together a power grid, automating production with conveyor belts, and manufacturing increasingly absurd American products.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>When does it release?</summary>
+        <p>American Junk is in active development. A playable web demo will launch at thetotemworks.com/americanjunk when it's ready. A full PC release via Steam is planned — the release date hasn't been announced yet. Follow the dev log (below) for build updates.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>What platforms will it be on?</summary>
+        <p>Web browser for the free demo, and PC (Windows) at full launch via Steam. Mac and Linux support is being evaluated. No console plans at this time.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How much will it cost?</summary>
+        <p>The web demo is free. Pricing for the full PC release hasn't been locked in yet; it will be posted here once we do.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Is there a demo I can play right now?</summary>
+        <p>Not publicly yet. A browser-playable demo is in the pipeline. Early builds are occasionally shared in our Discord — follow the links at the bottom of the page to get pinged when the public demo drops.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Who makes American Junk?</summary>
+        <p>Totem Works, LLC — a small independent game studio founded in 2024, based in the USA. We're a tiny team making pixel-art games that are playful, handcrafted, and built with serious attention to detail.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How can I support the game?</summary>
+        <p>Wishlist on Steam when it goes live, follow us on social media (links at the bottom), and tell a friend who likes factory builders. Press and content creators: see the Press Kit section for assets and a contact.</p>
+      </details>
     </div>
   </div>
 </section>
