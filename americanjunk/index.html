@@ -157,10 +157,41 @@
     gtag('config', 'G-1MDT10W9S0');
   </script>
 
-  <!-- Pixel & Mono fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Self-hosted fonts — eliminates Google's DNS/TLS hop and the
+       IP-leak-to-Google privacy concern. Preload the pixel font since
+       it's the hero text and drives LCP. -->
+  <link rel="preload" href="/assets/fonts/pressstart2p-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/spacemono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    @font-face {
+      font-family: 'Press Start 2P';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('/assets/fonts/pressstart2p-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Space Mono';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('/assets/fonts/spacemono-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Space Mono';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('/assets/fonts/spacemono-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Space Mono';
+      font-style: italic;
+      font-weight: 400;
+      font-display: swap;
+      src: url('/assets/fonts/spacemono-400-italic.woff2') format('woff2');
+    }
+  </style>
 
   <style>
     /* ============================================
