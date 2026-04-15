@@ -1344,7 +1344,9 @@
     .footer-links a:hover { color: var(--orange); }
     .footer-copy {
       font-size: 11px;
-      color: rgba(246,232,224,.25);
+      /* Was .25 alpha = 1.96:1 on ink background (fails WCAG AA).
+         Bump to .55 for ~4.6:1 while staying visually subdued. */
+      color: rgba(246,232,224,.55);
       width: 100%;
       text-align: center;
       margin-top: 8px;
