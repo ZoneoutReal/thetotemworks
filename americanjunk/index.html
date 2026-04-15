@@ -1124,7 +1124,9 @@
     .marquee-item {
       font-family: var(--font-px);
       font-size: 8px;
-      color: rgba(246,232,224,.4);
+      /* Contrast bumped from .4 to .65 to clear WCAG AA 4.5:1 — the
+         marquee text is decorative scroll but reads as content. */
+      color: rgba(246,232,224,.65);
       padding: 0 36px;
       white-space: nowrap;
       letter-spacing: 1px;
@@ -1301,8 +1303,10 @@
     .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
     .footer-links a {
       font-family: var(--font-px);
-      font-size: 6px;
-      color: rgba(246,232,224,.35);
+      /* 6px pixel font at .35 alpha was 2.79:1 contrast — well under WCAG
+         AA. Bump to 8px + .7 alpha to clear 4.5:1 and be easier to read. */
+      font-size: 8px;
+      color: rgba(246,232,224,.7);
       letter-spacing: 1px;
       transition: color .2s;
     }
@@ -1395,6 +1399,11 @@
     <li><a href="#follow"      onclick="closeNav()">Follow Development</a></li>
   </ul>
 </div>
+
+<!-- Wrap primary content in <main> so screen-reader landmark
+     navigation and Lighthouse accessibility audits recognize the
+     skip-to-content target. -->
+<main>
 
 <!-- ─── HERO ───────────────────────────────── -->
 <section class="hero" id="hero">
@@ -1808,6 +1817,8 @@
 
   </div>
 </section>
+
+</main>
 
 <!-- ─── FOOTER ─────────────────────────────── -->
 <footer>
