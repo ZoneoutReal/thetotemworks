@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <style>
+      .l { fill: none; stroke: #FFAA00; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .f { fill: #FFAA00; stroke: none; }
+    </style>
+  </defs>
+
+  <!-- ===== UPPER FACE ===== -->
+
+  <rect class="l" x="34" y="8" width="52" height="40" rx="4"/>
+  <!-- Brow -->
+  <line class="l" x1="34" y1="18" x2="86" y2="18"/>
+  <!-- Eyes -->
+  <rect class="l" x="40" y="22" width="14" height="11" rx="2"/>
+  <rect class="l" x="66" y="22" width="14" height="11" rx="2"/>
+  <rect class="f" x="43" y="25" width="8" height="5" rx="1"/>
+  <rect class="f" x="69" y="25" width="8" height="5" rx="1"/>
+  <!-- Beak -->
+  <polygon class="l" points="54,35 60,31 66,35 63,45 57,45"/>
+
+  <!-- ===== WINGS ===== -->
+
+  <polygon class="l" points="34,54 8,48 6,72 34,76"/>
+  <circle class="l" cx="7" cy="60" r="5"/>
+  <circle class="f" cx="7" cy="60" r="2.5"/>
+  <polygon class="l" points="86,54 112,48 114,72 86,76"/>
+  <circle class="l" cx="113" cy="60" r="5"/>
+  <circle class="f" cx="113" cy="60" r="2.5"/>
+
+  <!-- ===== LOWER FACE ===== -->
+
+  <rect class="l" x="34" y="48" width="52" height="42" rx="4"/>
+  <!-- Eyes -->
+  <ellipse class="l" cx="51" cy="63" rx="8" ry="8.5"/>
+  <ellipse class="l" cx="69" cy="63" rx="8" ry="8.5"/>
+  <ellipse class="f"  cx="51" cy="63" rx="3.5" ry="4"/>
+  <ellipse class="f"  cx="69" cy="63" rx="3.5" ry="4"/>
+  <!-- Nose -->
+  <polygon class="l" points="60,70 56,79 64,79"/>
+  <!-- Mouth teeth -->
+  <line class="l" x1="42" y1="83" x2="78" y2="83"/>
+  <line class="l" x1="46" y1="83" x2="46" y2="90"/>
+  <line class="l" x1="56" y1="83" x2="56" y2="90"/>
+  <line class="l" x1="60" y1="83" x2="60" y2="90"/>
+  <line class="l" x1="64" y1="83" x2="64" y2="90"/>
+  <line class="l" x1="74" y1="83" x2="74" y2="90"/>
+
+  <!-- ===== BASE ===== -->
+
+  <rect class="l" x="40" y="92" width="40" height="10" rx="2"/>
+  <rect class="l" x="34" y="102" width="52" height="10" rx="2"/>
+</svg>

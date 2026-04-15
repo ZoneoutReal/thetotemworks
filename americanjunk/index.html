@@ -1410,7 +1410,7 @@
     <li><a href="#screenshots">Screenshots</a></li>
     <li><a href="#studio">Studio</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="#press-kit">Press Kit</a></li>
+    <li><a href="presskit/">Press Kit</a></li>
     <li><a href="wiki/">Wiki</a></li>
     <li class="nav-btn-wrap"><a href="#follow" class="nav-btn">Follow Dev</a></li>
   </ul>
@@ -1427,7 +1427,7 @@
     <li><a href="#screenshots" onclick="closeNav()">Screenshots</a></li>
     <li><a href="#studio"      onclick="closeNav()">Studio</a></li>
     <li><a href="#faq"         onclick="closeNav()">FAQ</a></li>
-    <li><a href="#press-kit"   onclick="closeNav()">Press Kit</a></li>
+    <li><a href="presskit/">Press Kit</a></li>
     <li><a href="wiki/">Wiki</a></li>
     <li><a href="#follow"      onclick="closeNav()">Follow Development</a></li>
   </ul>
@@ -1743,7 +1743,7 @@
         <p>We're building in public, sharing development updates, and making exactly the game we want to play.</p>
         <div class="studio-links">
           <a href="https://thetotemworks.com" class="studio-link" target="_blank" rel="noopener noreferrer">🌐 thetotemworks.com</a>
-          <a href="#press-kit" class="studio-link" id="press-kit">📄 Press Kit</a>
+          <a href="presskit/" class="studio-link">📄 Press Kit</a>
         </div>
       </div>
 
@@ -1858,7 +1858,7 @@
   <div class="footer-row">
     <div class="footer-logo">AMERICAN JUNK</div>
     <div class="footer-links">
-      <a href="#press-kit">Press Kit</a>
+      <a href="presskit/">Press Kit</a>
       <a href="https://thetotemworks.com/" rel="noopener">Totem Works</a>
       <a href="/privacy/">Privacy Policy</a>
       <a href="#">Contact</a>
@@ -2072,7 +2072,7 @@ function handleNewsletter(e) {
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const href = a.getAttribute('href');
-    if (href === '#' || href === '#press-kit') return;
+    if (href === '#') return;
     const target = document.querySelector(href);
     if (target) {
       e.preventDefault();
@@ -2081,13 +2081,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
-/* =============================================
-   PRESS KIT placeholder
-============================================= */
-document.getElementById('press-kit').addEventListener('click', e => {
-  e.preventDefault();
-  alert('Press kit coming soon! Email press@thetotemworks.com in the meantime.');
-});
+/* Press kit is now its own page at /americanjunk/presskit/ —
+   no placeholder alert needed. */
 </script>
 
 </body>
