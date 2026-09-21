@@ -168,8 +168,8 @@ These are public-page facts, not taste:
 5. **Store page is a shell** plus an eCom script; almost no on-page merchandising.
 6. **No on-site golf hours.** Visitors cannot see “are we open today” without calling.
 7. **Color / chrome drift** — course green, Chronogolf blue, CookieYes blue.
-8. **Sitemap.xml 500** on the conventional URL (Yoast redirects `/sitemap.xml` → `/sitemap_index.xml`; a direct fetch of `/sitemap.xml` 500’d via one client). Not fatal, but sloppy.
-9. **Restaurant hours copy disagrees with itself** on dinetherambler.com (Wednesday listed both open and closed).
+8. **Restaurant hours copy disagrees with itself** on dinetherambler.com (Wednesday listed both open and closed).
+9. **Sitemap lives at** `/sitemap_index.xml`. Apex `/sitemap.xml` 301s there via Yoast (`X-Redirect-By: Yoast SEO`) — fine, just non-default.
 
 None of this requires talking to the course. It is the case for a quieter, staff-editable brochure.
 
