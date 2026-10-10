@@ -243,6 +243,7 @@
     }
 
     img { image-rendering: pixelated; image-rendering: crisp-edges; max-width: 100%; }
+    img[src^="media/"] { image-rendering: auto; }
 
     a { color: var(--orange); text-decoration: none; transition: color .2s; }
     a:hover { color: var(--amber); }
@@ -1539,61 +1540,20 @@
   <div class="section-inner">
     <div class="about-grid">
 
-      <!-- Left: fake game window -->
+      <!-- Left: in-game screenshot -->
       <div class="reveal from-left">
-        <div class="game-window">
-          <div class="win-bar">
-            <div class="win-dot"></div>
-            <div class="win-dot"></div>
-            <div class="win-dot"></div>
-            <span class="win-title">American Junk</span>
-          </div>
-          <div class="win-body">
-            <div class="factory-art" id="factory-art">
-              <div class="sky-clouds"></div>
-              <div class="bldg-1"></div>
-              <div class="bldg-2"></div>
-              <div class="bldg-3"></div>
-              <div class="ground-items">
-                <div class="px-box"></div>
-                <div class="px-box"></div>
-                <div class="px-box"></div>
-                <div class="px-box"></div>
-                <div class="px-box"></div>
-                <div class="px-box"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <img src="media/shot-workshop.jpg" alt="In-game: inside Dad's machine works" loading="lazy" style="width:100%;border-radius:4px;display:block">
       </div>
 
       <!-- Right: copy -->
       <div class="reveal from-right">
         <span class="eyebrow">// about the game</span>
-        <h2 class="section-h">Your Dad Died.<br>You Inherited His Mess.</h2>
+        <h2 class="section-h">Dad's Shop<br>Is Yours Now.</h2>
         <div class="divider"></div>
         <div class="about-body">
-          <p>Somewhere between Detroit and nowhere, there's a factory. Scrap piles, broken machines, a town that grew up around the mess. He ran it. Now it's yours.</p>
-          <p>Salvage what's left. Set up machines. Sell what you make. Watch shops and streets fill in as the place comes back to life.</p>
-          <p>That's the loop. That's the whole game.</p>
-        </div>
-        <div class="stat-row stagger">
-          <div class="stat-card">
-            <span class="stat-n">🔧</span>
-            <span class="stat-l">Salvage Scrap</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-n">⚙️</span>
-            <span class="stat-l">Build Machines</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-n">🏘️</span>
-            <span class="stat-l">Grow the Town</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-n">🖥️</span>
-            <span class="stat-l">PC / Steam</span>
-          </div>
+          <p>Earl, the old caretaker, hands you the key to Dad's machine works in Harmon Falls, a small Rust Belt town. Dad didn't get to finish what he started. Now it's up to you to keep the shop going.</p>
+          <p>Salvage junk, repair and tune machines, fix up Dad's pickup to haul ore and stone from the quarry, mine the old tunnel, and help your neighbors with 20 town projects.</p>
+          <p>A cozy third-person factory game. No combat, no rush.</p>
         </div>
       </div>
 
@@ -1616,33 +1576,32 @@
   <div class="section-inner">
     <div class="features-head reveal">
       <span class="eyebrow">// what you'll be doing</span>
-      <h2 class="section-h">Four Pillars</h2>
+      <h2 class="section-h">What You Do</h2>
       <div class="divider divider-center"></div>
     </div>
     <div class="features-grid stagger">
-
       <div class="feature-card">
         <span class="feat-icon">🔧</span>
-        <h3 class="feat-title">Salvage</h3>
-        <p class="feat-desc">Haul scrap from the yard and the town. What you pick up feeds what you can build.</p>
+        <h3 class="feat-title">Salvage &amp; Haul</h3>
+        <p class="feat-desc">Sweep the yard and the edges of town for salvage that renews every morning. Fix up Dad's pickup and haul iron, copper, limestone and clay home from Harmon Quarry.</p>
       </div>
 
       <div class="feature-card">
         <span class="feat-icon">⚙️</span>
-        <h3 class="feat-title">Build Machines</h3>
-        <p class="feat-desc">Set up the factory. Turn scrap into products. Keep the floor working.</p>
+        <h3 class="feat-title">Repair &amp; Tune Machines</h3>
+        <p class="feat-desc">Place, link and power machines on the shop floor. Tune each for speed, yield or energy, and work through more than 100 recipes to fill daily orders.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feat-icon">⛏️</span>
+        <h3 class="feat-title">Go Underground</h3>
+        <p class="feat-desc">Take Dad's survey lamp into the old timbered mine at the quarry. Mine the iron gallery and coal crosscut, and look for keepsakes his crew left behind.</p>
       </div>
 
       <div class="feature-card">
         <span class="feat-icon">🏘️</span>
-        <h3 class="feat-title">Grow the Town</h3>
-        <p class="feat-desc">As the factory comes back, the town around it grows. More shops. More places worth walking to.</p>
-      </div>
-
-      <div class="feature-card">
-        <span class="feat-icon">💼</span>
-        <h3 class="feat-title">Sell Anything</h3>
-        <p class="feat-desc">Launchers to lipstick. The catalog gets weirder as you go. That's the fun.</p>
+        <h3 class="feat-title">Help Harmon Falls</h3>
+        <p class="feat-desc">Meet 12 residents and finish 20 town projects, starting with Bea's stopped water wheel at Mill Creek. Cozy and fair: no combat, and goals never expire.</p>
       </div>
 
     </div>
@@ -1683,7 +1642,7 @@
         <span class="eyebrow">// the studio</span>
         <h2 class="section-h">Totem Works Studio, LLC</h2>
         <div class="divider"></div>
-        <p><strong>Totem Works Studio, LLC</strong> is a small indie studio in the USA. American Junk is our debut: a cozy PC factory game about a junkyard plant, salvage, machines, and a town that grows around the mess. We're building in public.</p>
+        <p><strong>Totem Works Studio, LLC</strong> is a small indie studio in the USA. American Junk is our debut: a cozy PC factory game about Dad's old machine works, salvage, machines, and the neighbors of Harmon Falls. We're building in public.</p>
         <div class="studio-links">
           <a href="https://thetotemworks.com" class="studio-link" target="_blank" rel="noopener noreferrer">🌐 thetotemworks.com</a>
           <a href="presskit/" class="studio-link">📄 Press Kit</a>
@@ -1973,12 +1932,8 @@ window.addEventListener('scroll', () => {
 ============================================= */
 (function() {
   const products = [
-    'Hot Dog Launcher', 'Electric Guitar', 'BBQ Grill',
-    'Roman Candle', 'Fireworks', 'Cowboy Boot', 'Denim Jacket',
-    'Power Drill', 'Liberty Bell', 'Monster Truck Toy',
-    'Bald Eagle Launcher', 'Firecracker Pack', 'Copper Wire Spool',
-    'Steel Ingot', 'Circuit Board', 'Injection Mold', 'Conveyor Belt',
-    'Radio Set', 'Patriot Alloy', 'Stamped Sheet Metal'
+    'Planks', 'Bolts', 'Mailbox Kit', 'Park Bench', 'Radio',
+    'Old Telescope', 'Iron Ore', 'Copper Ore', 'Limestone', 'Clay'
   ];
   const track = document.getElementById('marqueeTrack');
   if (!track) return;
