@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CONCEPT — Riverside Golf brochure wireframe (Totem Works)</title>
+  <style>
+    :root {
+      --ink: #1c2418;
+      --green: #2f4a33;
+      --green-deep: #1e3222;
+      --moss: #5a7a58;
+      --cream: #f4efe4;
+      --paper: #fffdf8;
+      --stone: #c8c0b0;
+      --muted: #5e6758;
+      --alert: #8a4b1f;
+      --line: rgba(28, 36, 24, 0.12);
+      --totem: #6b3d1f;
+      --sanity: #1f4d6b;
+      --max: 1080px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .banner {
+      background: #3b2414;
+      color: #f6e8d8;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-align: center;
+      padding: 10px 16px;
+    }
+    .banner strong { color: #f0c27a; }
+
+    .own {
+      display: inline-block;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 2px 8px;
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+    .own-staff { background: #d7eaf4; color: var(--sanity); }
+    .own-totem { background: #f0dfc8; color: var(--totem); }
+    .own-out { background: #e4e0d6; color: #444; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(244, 239, 228, 0.94);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .wordmark {
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .wordmark span { display: block; font-size: 10px; letter-spacing: 0.18em; color: var(--muted); font-weight: 500; }
+    nav { display: flex; gap: 18px; flex-wrap: wrap; font-family: ui-sans-serif, system-ui, sans-serif; font-size: 13px; }
+    nav a { text-decoration: none; color: var(--muted); }
+    nav a:hover { color: var(--ink); }
+    .btn {
+      display: inline-block;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: 4px;
+      border: 1px solid transparent;
+    }
+    .btn-primary { background: var(--green); color: var(--cream); }
+    .btn-ghost { background: transparent; color: var(--green-deep); border-color: var(--green); }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+
+    .announce {
+      background: #efe4c8;
+      border-bottom: 1px solid #d9c89a;
+      color: var(--alert);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 13px;
+    }
+    .announce-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 8px 20px;
+    }
+
+    .hero {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 36px 20px 48px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 36px;
+      align-items: center;
+    }
+    .kicker {
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--moss);
+      margin-bottom: 10px;
+    }
+    h1 { font-size: clamp(36px, 5vw, 58px); line-height: 1.05; font-weight: 500; }
+    .lede { margin-top: 16px; font-size: 18px; color: var(--muted); max-width: 36em; }
+    .photo {
+      background:
+        linear-gradient(180deg, rgba(30, 50, 34, 0.15), rgba(30, 50, 34, 0.45)),
+        repeating-linear-gradient(135deg, #8aa07a 0 12px, #7a916b 12px 24px);
+      min-height: 320px;
+      border-radius: 6px;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+      color: var(--cream);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    section { padding: 48px 20px; }
+    .wrap { max-width: var(--max); margin: 0 auto; }
+    h2 { font-size: 28px; font-weight: 500; margin-bottom: 8px; }
+    .sub { color: var(--muted); margin-bottom: 24px; }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .fact {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 18px 16px;
+      border-radius: 6px;
+    }
+    .fact b { display: block; font-size: 22px; font-weight: 500; }
+    .fact span { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 12px; color: var(--muted); }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    table { width: 100%; border-collapse: collapse; font-family: ui-sans-serif, system-ui, sans-serif; font-size: 14px; }
+    th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); }
+    th { color: var(--muted); font-weight: 600; font-size: 12px; letter-spacing: 0.04em; }
+
+    .hours { list-style: none; font-family: ui-sans-serif, system-ui, sans-serif; font-size: 14px; }
+    .hours li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--line); }
+
+    .league {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    .league a {
+      text-decoration: none;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 14px 12px;
+    }
+    .league small { display: block; color: var(--muted); font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .league b { display: block; margin-top: 6px; font-weight: 500; }
+
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 22px;
+    }
+    .card h3 { font-size: 22px; font-weight: 500; margin-bottom: 8px; }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .gallery i {
+      display: block;
+      height: 110px;
+      border-radius: 4px;
+      background: #9aaf86;
+      font-style: normal;
+    }
+    .gallery i:nth-child(2) { background: #6d7f58; }
+    .gallery i:nth-child(3) { background: #c4b496; }
+    .gallery i:nth-child(4) { background: #4f6b4a; }
+    .gallery i:nth-child(5) { background: #8b7355; }
+    .gallery i:nth-child(6) { background: #a3b48d; }
+    .cap { margin-top: 10px; font-family: ui-sans-serif, system-ui, sans-serif; font-size: 12px; color: var(--muted); }
+
+    .visit {
+      background: var(--green-deep);
+      color: var(--cream);
+    }
+    .visit .sub, .visit .own { color: #d5dcc8; }
+    .visit a { color: var(--cream); }
+    .note {
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 13px;
+      margin-top: 18px;
+      opacity: 0.85;
+    }
+
+    footer {
+      background: #141910;
+      color: #c9c6b8;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 13px;
+      padding: 28px 20px 40px;
+    }
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    footer a { color: #e8e2d4; }
+
+    .legend {
+      background: #ebe4d6;
+      border-top: 1px solid var(--line);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 13px;
+    }
+    .legend .wrap { padding-top: 28px; padding-bottom: 28px; }
+    .legend ul { margin: 12px 0 0 18px; color: var(--muted); }
+
+    @media (max-width: 800px) {
+      .hero, .split, .facts, .league, .cards, .gallery { grid-template-columns: 1fr 1fr; }
+      .facts, .league { grid-template-columns: 1fr 1fr; }
+      nav { display: none; }
+    }
+    @media (max-width: 520px) {
+      .hero, .facts, .league, .cards, .gallery, .split { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="banner">
+    <strong>CONCEPT ONLY</strong> — Totem Works managed-site wireframe for Riverside Golf (Cambridge Springs, PA).
+    Not a live site. Not affiliated with the course. Tee times stay on Chronogolf.
+  </div>
+
+  <div class="announce">
+    <div class="announce-inner">
+      Sample announcement: Cart-path only after overnight rain. Updated 7:10 a.m.
+      <span class="own own-staff">Staff · Sanity</span>
+    </div>
+  </div>
+
+  <header>
+    <div class="header-inner">
+      <a class="wordmark" href="#top">
+        Riverside Golf
+        <span>Cambridge Springs · Est. 1915</span>
+      </a>
+      <nav>
+        <a href="#play">Play</a>
+        <a href="#rates">Rates</a>
+        <a href="#leagues">Leagues</a>
+        <a href="#events">Events</a>
+        <a href="#visit">Visit</a>
+      </nav>
+      <a class="btn btn-primary" href="https://www.chronogolf.com/club/riverside-golf-course-pennsylvania" target="_blank" rel="noopener">
+        Book a tee time
+        <span class="own own-out">Chronogolf</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div>
+        <p class="kicker">Public 18 · Northwestern Pennsylvania <span class="own own-totem">Totem · layout</span></p>
+        <h1>Walkable parkland golf, a century on.</h1>
+        <p class="lede">
+          Eighteen holes beside US-6 in Cambridge Springs. Playable from the regular tees, a test from the tips. Restaurant on site.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="https://www.chronogolf.com/club/riverside-golf-course-pennsylvania" target="_blank" rel="noopener">Book on Chronogolf</a>
+          <a class="btn btn-ghost" href="#rates">View 2026 rates</a>
+        </div>
+      </div>
+      <div class="photo">Placeholder hero — course photography, not stock from another club</div>
+    </section>
+
+    <section id="play" style="padding-top: 0;">
+      <div class="wrap">
+        <div class="facts">
+          <div class="fact"><b>18</b><span>Holes · par 71</span></div>
+          <div class="fact"><b>1915</b><span>Lagerblade layout</span></div>
+          <div class="fact"><b>Walk</b><span>Flat parkland · Finn cycles</span></div>
+          <div class="fact"><b>Dine</b><span>The Rambler on site</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rates">
+      <div class="wrap split">
+        <div>
+          <p class="kicker">This week</p>
+          <h2>Hours &amp; starting rates <span class="own own-staff">Staff · Sanity</span></h2>
+          <p class="sub">Staff edit the table and hours. Totem owns the component. Prices shown are sample values from the current public rate sheet — not a live feed.</p>
+          <table>
+            <thead>
+              <tr><th></th><th>18 walk</th><th>18 ride</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Weekday</td><td>$21</td><td>$35</td></tr>
+              <tr><td>Weekend / holiday</td><td>$29</td><td>$44</td></tr>
+              <tr><td>Senior weekday</td><td>$17</td><td>$28</td></tr>
+            </tbody>
+          </table>
+          <p class="cap">Full sheet includes 9-hole, Finn, memberships, and game passes. “Subject to change” stays in Sanity.</p>
+        </div>
+        <div>
+          <p class="kicker">Clubhouse</p>
+          <h2>Hours <span class="own own-staff">Staff · Sanity</span></h2>
+          <p class="sub">Not published on the current golf homepage. This is the field that should exist.</p>
+          <ul class="hours">
+            <li><span>Mon–Thu</span><span>Dawn – dusk</span></li>
+            <li><span>Fri–Sun</span><span>Dawn – dusk</span></li>
+            <li><span>Season note</span><span>Weather / frost first</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="leagues" style="background: var(--paper);">
+      <div class="wrap">
+        <p class="kicker">Weeknights</p>
+        <h2>Leagues <span class="own own-staff">Staff · copy</span></h2>
+        <p class="sub">One page, five weekday cards — not seven leftover URLs.</p>
+        <div class="league">
+          <a href="#leagues"><small>Mon</small><b>Ryder Cup 2-man</b></a>
+          <a href="#leagues"><small>Tue</small><b>Women’s</b></a>
+          <a href="#leagues"><small>Wed</small><b>Spa Men</b></a>
+          <a href="#leagues"><small>Thu</small><b>Men’s + Women’s</b></a>
+          <a href="#leagues"><small>Fri</small><b>Couples</b></a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap cards">
+        <article class="card">
+          <p class="kicker">Dine</p>
+          <h3>The Rambler</h3>
+          <p>Contemporary American on the course. Menu, hours, and reservations live on their own site.</p>
+          <div class="btn-row">
+            <a class="btn btn-ghost" href="https://dinetherambler.com/" target="_blank" rel="noopener">dinetherambler.com <span class="own own-out">Outbound</span></a>
+          </div>
+        </article>
+        <article class="card" id="events">
+          <p class="kicker">Gather</p>
+          <h3>Kelly Ballroom &amp; outings</h3>
+          <p>Weddings to 220, pavilion ceremonies, corporate days. Tournament intake stays on PerfectVenue. Inquiry is still Jeremy.</p>
+          <div class="btn-row">
+            <a class="btn btn-ghost" href="https://app.perfectvenue.com/venues/the-kelly-ballroom-at-riverside-golf/hello" target="_blank" rel="noopener">Host a tournament <span class="own own-out">PerfectVenue</span></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <p class="kicker">Grounds</p>
+        <h2>Gallery <span class="own own-staff">Staff · max 12</span></h2>
+        <p class="sub">Hard cap. Totem owns crop, compression, and the grid. No 30-image dump.</p>
+        <div class="gallery" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <p class="cap">Placeholders only — do not hotlink course photography in this artifact.</p>
+      </div>
+    </section>
+
+    <section class="visit" id="visit">
+      <div class="wrap split">
+        <div>
+          <p class="kicker">Find us</p>
+          <h2>Visit</h2>
+          <p>24527 US-6<br>Cambridge Springs, PA 16403</p>
+          <p style="margin-top:12px">(814) 398-4537<br>jeremy@golftheriverside.com</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="https://www.google.com/maps/place/Riverside+Golf/@41.8166251,-80.0576847,15z" target="_blank" rel="noopener">Open map</a>
+          </div>
+        </div>
+        <div>
+          <p class="kicker">Contact</p>
+          <h2>Message the shop <span class="own own-totem">Totem · spam</span></h2>
+          <p>One form. Honeypot + provider captcha + rate limit. Staff do not install plugins to “add a form”.</p>
+          <p class="note">Wireframe only — this control does not submit.</p>
+          <div class="btn-row">
+            <span class="btn btn-ghost" style="opacity:.7">Send message (disabled)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        Riverside Golf · Cambridge Springs, PA<br>
+        Tee times via Chronogolf · Dining via The Rambler
+      </div>
+      <div>
+        <a href="https://www.facebook.com/golftheriverside" target="_blank" rel="noopener">Facebook</a>
+        ·
+        <a href="https://riversidegolf.shop.securetree.com/egift-card" target="_blank" rel="noopener">Gift cards</a>
+      </div>
+      <div>CONCEPT wireframe · Totem Works · not in production</div>
+    </div>
+  </footer>
+
+  <aside class="legend">
+    <div class="wrap">
+      <strong>Ownership key</strong>
+      <ul>
+        <li><span class="own own-staff">Staff · Sanity</span> rates, hours, announcements, events, gallery (capped), booking URL, contact, league blurbs</li>
+        <li><span class="own own-totem">Totem · owned</span> layout, design system, DNS/hosting/SSL, page types, Chronogolf embed wiring, spam hardening</li>
+        <li><span class="own own-out">Outbound</span> Chronogolf, The Rambler, PerfectVenue, SecureTree — do not rebuild</li>
+      </ul>
+      <p class="cap" style="margin-top:16px">See <a href="./brief.md">brief.md</a> for the current-site read and evidence. Sample prices/hours are illustrative of the component, not a live CMS.</p>
+    </div>
+  </aside>
+</body>
+</html>
